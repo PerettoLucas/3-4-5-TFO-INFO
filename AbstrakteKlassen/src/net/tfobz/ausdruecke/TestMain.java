@@ -24,7 +24,12 @@ public class TestMain
 		
 		Operation pow = new Potenz(new Konstante(3),new Konstante(3));
 		
-		System.out.println(pow.toString());
+		System.out.println(pow.toString()+"\n");
+		
+		Logarithmus log = new Logarithmus(new Argument(2), new Addition(new Konstante(2), new Konstante(3)));
+		
+		System.out.println(log.toString());
+		
 	}
 
 }

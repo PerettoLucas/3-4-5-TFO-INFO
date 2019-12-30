@@ -5,8 +5,7 @@ public class Potenz extends Operation
 
 	public Potenz(Operand operand0 , Operand operand1)
 	{
-		this.setOperand(operand0);
-		this.setOperand(operand1);
+		super(operand0, operand1);
 	}
 	public Potenz()
 	{
