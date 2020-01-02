@@ -19,7 +19,7 @@ public class Logarithmus extends ArgOperation
 		if(this.getOperand() != null) 
 			ergebnis = this.getOperand().getErgebnis();
 		if(this.getArgument() != null)
-			ergebnis = Math.log(this.getArgument().getErgebnis()) / Math.log(ergebnis);
+			ergebnis = Math.log(ergebnis) / Math.log(this.getArgument().getErgebnis()) ;
 		return ergebnis;
 	}
 
@@ -27,7 +27,7 @@ public class Logarithmus extends ArgOperation
 	public String toString()
 	{
 		if(this.getArgument() != null && this.getOperand() != null)
-			return "(Log(" + this.getArgument() + "(" + this.getOperand() + "))=" + getErgebnis() + ")"  ;
+			return "(Log(" + this.getArgument() + "(" + this.getOperand() + "))=" + this.getErgebnis() + ")"  ;
 		return null;
 	}
 	

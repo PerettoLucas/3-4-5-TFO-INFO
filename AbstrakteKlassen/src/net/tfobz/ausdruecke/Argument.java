@@ -2,12 +2,10 @@ package net.tfobz.ausdruecke;
 
 public class Argument extends Konstante
 {
-
-	private double argument = 0;
 	
-	public Argument(double argument)
+	public Argument(double ergebnis)
 	{
-		this.argument = argument;
+		setErgebnis(ergebnis); 
 	}
 	
 	public Argument()
@@ -21,18 +19,12 @@ public class Argument extends Konstante
 		ergebnis = Math.round(ergebnis*1000)/1000.0;
 		if(ergebnis <= 1 && ergebnis != 0) ergebnis *= -1;
 		
-//		super.setErgebnis(ergebnis);
-		this.argument = ergebnis;
+		super.setErgebnis(ergebnis);
 	}
 	
-	public double getArgument()
+	public double getErgebnis()
 	{
-		return argument;
-	}
-	
-	public void setArgument(int argument)
-	{
-		this.argument = argument;
+		return super.getErgebnis();
 	}
 	
 }
