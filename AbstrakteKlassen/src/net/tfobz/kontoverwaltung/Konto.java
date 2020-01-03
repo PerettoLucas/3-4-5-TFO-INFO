@@ -19,12 +19,7 @@ package net.tfobz.kontoverwaltung;
  *		werden, wird in Gehalts- und Sparkonto definiert
  *	</li>
  *	<li>
- *		Auf das Konto bzw. vom Konto kann gebucht werden. Nach welchen Regeln dies erfolgen 
- *		muss wird erst in Gehalts- und Sparkonto festgelegt
- *	</li>
- *	<li>
- *		Vom Konto kann ein Betrag auf ein anderes Konto überwiesen werden
- *	</li>
+ *	/
  * </ul>
  * @author Michael Wild
  */
