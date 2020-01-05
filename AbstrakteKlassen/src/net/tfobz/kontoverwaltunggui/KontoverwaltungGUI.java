@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -31,6 +35,7 @@ public class KontoverwaltungGUI extends JFrame
 	private JTextField betrag2;
 	private JTextField kontonummer1;
 	private JTextField kontonummer2;
+	private boolean functionactive = false;
 
 	private static final double STARTZINSSATZ = 0.25;
 	private static final double STARTUEBERZIEHUNG = -1000;
@@ -159,40 +164,12 @@ public class KontoverwaltungGUI extends JFrame
 		textArea.setBounds(10, 140, 674, 288);
 		contentPane.add(textArea);
 		
-		JButton btnTestss = new JButton("Testss");
-		btnTestss.setBounds(176, 117, 89, 23);
-		contentPane.add(btnTestss);
+		//Deactivatin Parameter Fields
+		betrag1.setEnabled(false);
+		betrag2.setEnabled(false);
+		kontonummer1.setEnabled(false);
+		kontonummer2.setEnabled(false);
 		
-		btnTestss.addActionListener(new ActionListener() {
-			
-			boolean flag = false ;
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{	
-				if(!flag)
-				{
-					flag = true;
-					//Color and Text
-					btnTestss.setBackground(Color.GREEN);
-					btnTestss.setText("fertig:");
-					
-					//Disenabling other Fields
-					btnAnzeigen.setEnabled(false);
-				}
-				else if(flag) 
-				{
-					// Doing action and ReEnebling Fields
-					setTextArea("guat morgen");
-					btnAnzeigen.setEnabled(true);
-					
-					//Restore Color and Text of Button
-					btnTestss.setText("Testss");
-					btnTestss.setBackground(Color.LIGHT_GRAY);
-					flag = false;
-				}
-			}
-		});
-
 		btnGehaltkonto.addActionListener(new ActionListener() {
 			boolean flag = false ;
 			public void actionPerformed(ActionEvent arg0)
@@ -201,15 +178,12 @@ public class KontoverwaltungGUI extends JFrame
 				if(!flag)
 				{
 					flag = true;
+					functionactive = true;
 					//Color and Text
 					btnGehaltkonto.setBackground(Color.GREEN);
 					btnGehaltkonto.setText("click to Confirm");
 					
-					//Disenabling other Fields
-					betrag1.setEnabled(false);
-					betrag2.setEnabled(false);
-					kontonummer1.setEnabled(false);
-					kontonummer2.setEnabled(false);
+					//Disenabling / Enabling other Fields
 					
 					btnSparkonto.setEnabled(false);
 					btnAnzeigen.setEnabled(false);
@@ -224,11 +198,6 @@ public class KontoverwaltungGUI extends JFrame
 					kontenliste.add(gehaltskonto);
 					
 					//ReEnebling Fields
-					betrag1.setEnabled(true);
-					betrag2.setEnabled(true);
-					kontonummer1.setEnabled(true);
-					kontonummer2.setEnabled(true);
-					
 					btnSparkonto.setEnabled(true);
 					btnAnzeigen.setEnabled(true);
 					btnBuchen.setEnabled(true);
@@ -238,39 +207,80 @@ public class KontoverwaltungGUI extends JFrame
 					btnGehaltkonto.setText("Neues Gehaltskonto");
 					btnGehaltkonto.setBackground(Color.LIGHT_GRAY);
 					flag = false;
-				}
+					functionactive = false;
 				
-				
-					
+				}	
 			}
 		});
 		btnSparkonto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				int option = JOptionPane.showConfirmDialog(null, "Neues Sparkonto erstellen ?",
-						"Erstellen eines Sparkontos", JOptionPane.YES_NO_OPTION);
-				if (option == JOptionPane.YES_OPTION) 
+				boolean flag = false ;
+				public void actionPerformed(ActionEvent arg0)
 				{
-					Sparkonto sparkonto;
-					try 
+					
+					if(!flag)
 					{
-						sparkonto = new Sparkonto(Double.parseDouble(betrag1.getText()),
-								Double.parseDouble(betrag2.getText()));
-						setTextArea("Sparkonto erstellt :" + sparkonto.toString());
-						kontenliste.add(sparkonto);
-					} catch (NumberFormatException nu) {
-						JOptionPane.showMessageDialog(null,
-								"Fehlerhafte Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
-						setTextArea("Fehlerhafte Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
-					} catch (KontoException e) {
-						System.out.println(e.toString());
-						System.out.println(e.getMessage());
-						JOptionPane.showMessageDialog(null, e.getMessage());
-						setTextArea("Ungültige Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
+						flag = true;
+						functionactive = true;
+						//Color and Text
+						btnSparkonto.setBackground(Color.GREEN);
+						btnSparkonto.setText("click to Confirm");
+						
+						//Disenabling / Enabling other Fields
+						betrag1.setEnabled(true);
+						betrag2.setEnabled(true);
+						
+						betrag1.setText("->");
+						betrag2.setText("->");
+						
+						
+						btnGehaltkonto.setEnabled(false);
+						btnAnzeigen.setEnabled(false);
+						btnBuchen.setEnabled(false);
+						btnUberweisen.setEnabled(false);
 					}
-				}
-				betrag1.setText("");
-				betrag2.setText("");
+					else if(flag) 
+					{
+						// Doing action 
+						Sparkonto sparkonto;
+						try 
+						{
+							sparkonto = new Sparkonto(Double.parseDouble(betrag1.getText()),
+									Double.parseDouble(betrag2.getText()));
+							setTextArea("Sparkonto erstellt :" + sparkonto.toString());
+							kontenliste.add(sparkonto);
+						} catch (NumberFormatException nu) {
+							JOptionPane.showMessageDialog(null,
+									"Fehlerhafte Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
+							setTextArea("Fehlerhafte Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
+						} catch (KontoException e) {
+							System.out.println(e.toString());
+							System.out.println(e.getMessage());
+							JOptionPane.showMessageDialog(null, e.getMessage());
+							setTextArea("Ungültige Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
+						}
+						betrag1.setText("");
+						betrag2.setText("");
+						
+						
+						
+						//ReEnebling Fields
+						betrag1.setEnabled(false);
+						betrag2.setEnabled(false);
+						
+						btnGehaltkonto.setEnabled(true);
+						btnAnzeigen.setEnabled(true);
+						btnBuchen.setEnabled(true);
+						btnUberweisen.setEnabled(true);
+						
+						//Restore Color and Text of Button
+						btnSparkonto.setText("Neues Sparkonto");
+						btnSparkonto.setBackground(Color.LIGHT_GRAY);
+						flag = false;
+						functionactive = false;
+					}
+					
+				
+				
 			}
 		});
 		btnAnzeigen.addActionListener(new ActionListener() {
@@ -294,90 +304,225 @@ public class KontoverwaltungGUI extends JFrame
 		});
 		btnBuchen.addActionListener(new ActionListener() {
 
-			@Override
+			boolean flag = false ;
 			public void actionPerformed(ActionEvent arg0)
 			{
-
-				int kontonummer = -1;
-				double betrag = 0;
-				try {
-					kontonummer = Integer.parseInt(kontonummer1.getText());
-					betrag = Double.parseDouble(betrag1.getText());
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null,
-							"Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder [" + betrag1.getText() + "]");
-					setTextArea(
-							"Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder [" + betrag1.getText() + "]");
+				
+				if(!flag)
+				{
+					flag = true;
+					functionactive = true;
+					//Color and Text
+					btnBuchen.setBackground(Color.GREEN);
+					btnBuchen.setText("click to Confirm");
+					
+					//Disenabling other Fields
+					betrag1.setEnabled(true);
+					kontonummer1.setEnabled(true);
+					
+					betrag1.setText("->");
+					kontonummer1.setText("->");
+					
+					
+					btnGehaltkonto.setEnabled(false);
+					btnSparkonto.setEnabled(false);
+					btnAnzeigen.setEnabled(false);
+					btnUberweisen.setEnabled(false);
 				}
-				for (Konto konto : kontenliste) {
-					if (konto.getKontoNummer() == kontonummer) {
-						try {
-							konto.buchen(betrag);
-							setTextArea("Buchen erfolgreich " + konto.toString());
-						} catch (KontoException e) {
-							JOptionPane.showMessageDialog(null, e.getMessage());
-							System.out.println(e.toString());
-							System.out.println(e.getMessage());
-						}
-						break;
+				else if(flag) 
+				{
+					// Doing action 
+					int kontonummer = -1;
+					double betrag = 0;
+					try {
+						kontonummer = Integer.parseInt(kontonummer1.getText());
+						betrag = Double.parseDouble(betrag1.getText());
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null,
+								"Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder [" + betrag1.getText() + "]");
+						setTextArea(
+								"Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder [" + betrag1.getText() + "]");
 					}
+					for (Konto konto : kontenliste) {
+						if (konto.getKontoNummer() == kontonummer) {
+							try {
+								konto.buchen(betrag);
+								setTextArea("Buchen erfolgreich " + konto.toString());
+							} catch (KontoException e) {
+								JOptionPane.showMessageDialog(null, e.getMessage());
+								System.out.println(e.toString());
+								System.out.println(e.getMessage());
+							}
+							break;
+						}
+					}
+					betrag1.setText("");
+					kontonummer1.setText("");
+					
+					//ReEnebling Fields
+					betrag1.setEnabled(false);
+					kontonummer1.setEnabled(false);
+					
+					btnGehaltkonto.setEnabled(true);
+					btnSparkonto.setEnabled(true);
+					btnAnzeigen.setEnabled(true);
+					btnUberweisen.setEnabled(true);
+					
+					//Restore Color and Text of Button
+					btnBuchen.setText("Buchen");
+					btnBuchen.setBackground(Color.LIGHT_GRAY);
+					flag = false;
+					functionactive = false;
 				}
-				betrag1.setText("");
-				kontonummer1.setText("");
+					
+
+				
 			}
 		});
 		btnUberweisen.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e)
+			boolean flag = false ;
+			public void actionPerformed(ActionEvent arg0)
 			{
+				
+				if(!flag)
+				{
+					flag = true;
+					functionactive = true;
+					//Color and Text
+					btnUberweisen.setBackground(Color.GREEN);
+					btnUberweisen.setText("click to Confirm");
+					
+					//Disenabling other Fields
+					betrag1.setEnabled(true);
+					kontonummer1.setEnabled(true);
+					kontonummer2.setEnabled(true);
+					
+					betrag1.setText("->");
+					kontonummer1.setText("->");
+					kontonummer2.setText("->");
+					
+					
+					btnGehaltkonto.setEnabled(false);
+					btnSparkonto.setEnabled(false);
+					btnAnzeigen.setEnabled(false);
+					btnBuchen.setEnabled(false);
+				}
+				else if(flag) 
+				{
+					// Doing action 
+					int konto1 = -1;
+					int konto2 = -1;
+					double betrag = 0;
+					try {
+						konto1 = Integer.parseInt(kontonummer1.getText());
+						konto2 = Integer.parseInt(kontonummer2.getText());
+						betrag = Double.parseDouble(betrag1.getText());
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder ["
+								+ betrag1.getText() + "] oder [" + kontonummer2.getText() + "]");
+						setTextArea("Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder [" + betrag1.getText()
+								+ "] oder [" + kontonummer2.getText() + "]");
+					}
+					if (betrag > 0) {
+						for (Konto konto : kontenliste) {
+							if (konto.getKontoNummer() == konto1) {
+								try {
+									konto.buchen(-betrag);
+									setTextArea("Buchen erfolgreich " + konto.toString());
+								} catch (KontoException e1) {
+									JOptionPane.showMessageDialog(null, e1.getMessage());
+									System.out.println(e1.toString());
+									System.out.println(e1.getMessage());
+									return;
+								}
+							}
+						}
+						for (Konto konto : kontenliste) {
+							if (konto.getKontoNummer() == konto2) {
+								try {
+									konto.buchen(betrag);
+									setTextArea("Buchen erfolgreich " + konto.toString());
+								} catch (KontoException e1) {
+									JOptionPane.showMessageDialog(null, e1.getMessage());
+									System.out.println(e1.toString());
+									System.out.println(e1.getMessage());
+									return;
+								}
+							}
+						}
+						JOptionPane.showMessageDialog(null,
+								"Überweisung von Konto " + konto1 + " nach " + konto2 + " erfolgreich, Betrag: " + betrag);
+					}
+					
+					//ReEnebling Fields
+					betrag1.setEnabled(false);
+					kontonummer1.setEnabled(false);
+					kontonummer2.setEnabled(false);
+					
+					btnGehaltkonto.setEnabled(true);
+					btnSparkonto.setEnabled(true);
+					btnAnzeigen.setEnabled(true);
+					btnBuchen.setEnabled(true);
+					
+					//Restore Color and Text of Button
+					btnUberweisen.setText("Neues Gehaltskonto");
+					btnUberweisen.setBackground(Color.LIGHT_GRAY);
+					flag = false;
+					functionactive = false;
+				}
+				
+				
+					
 
-				int konto1 = -1;
-				int konto2 = -1;
-				double betrag = 0;
-				try {
-					konto1 = Integer.parseInt(kontonummer1.getText());
-					konto2 = Integer.parseInt(kontonummer2.getText());
-					betrag = Double.parseDouble(betrag1.getText());
-				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder ["
-							+ betrag1.getText() + "] oder [" + kontonummer2.getText() + "]");
-					setTextArea("Fehlerhafte Eingabe [" + kontonummer1.getText() + "] oder [" + betrag1.getText()
-							+ "] oder [" + kontonummer2.getText() + "]");
-				}
-				if (betrag > 0) {
-					for (Konto konto : kontenliste) {
-						if (konto.getKontoNummer() == konto1) {
-							try {
-								konto.buchen(-betrag);
-								setTextArea("Buchen erfolgreich " + konto.toString());
-							} catch (KontoException e1) {
-								JOptionPane.showMessageDialog(null, e1.getMessage());
-								System.out.println(e1.toString());
-								System.out.println(e1.getMessage());
-								return;
-							}
-						}
-					}
-					for (Konto konto : kontenliste) {
-						if (konto.getKontoNummer() == konto2) {
-							try {
-								konto.buchen(betrag);
-								setTextArea("Buchen erfolgreich " + konto.toString());
-							} catch (KontoException e1) {
-								JOptionPane.showMessageDialog(null, e1.getMessage());
-								System.out.println(e1.toString());
-								System.out.println(e1.getMessage());
-								return;
-							}
-						}
-					}
-					JOptionPane.showMessageDialog(null,
-							"Überweisung von Konto " + konto1 + " nach " + konto2 + " erfolgreich, Betrag: " + betrag);
-				}
+				
 			}
 		});
+	
+		
+		betrag1.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				if(functionactive) betrag1.setText("");
+				
+			}
+			
+		});
+		betrag2.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				if(functionactive) betrag2.setText("");
+				
+			}
+			
+		});
+		
+		kontonummer1.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				if(functionactive) kontonummer1.setText("");
+				
+			}
+			
+		});
+		kontonummer2.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				if(functionactive) kontonummer2.setText("");
+				
+			}
+			
+		});
 
+		
 	}
 
 	public void setTextArea(String text)
