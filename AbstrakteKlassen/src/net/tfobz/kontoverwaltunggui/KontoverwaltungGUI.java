@@ -284,22 +284,58 @@ public class KontoverwaltungGUI extends JFrame
 			}
 		});
 		btnAnzeigen.addActionListener(new ActionListener() {
+			boolean flag = false ;
 			public void actionPerformed(ActionEvent arg0)
 			{
-				int kontonummer = -1;
-				try {
-					kontonummer = Integer.parseInt(kontonummer1.getText());
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe [" + kontonummer1.getText() + "]");
-					setTextArea("Fehlerhafte Eingabe [" + kontonummer1.getText() + "]");
+				
+				if(!flag)
+				{
+					flag = true;
+					functionactive = true;
+					//Color and Text
+					btnAnzeigen.setBackground(Color.GREEN);
+					btnAnzeigen.setText("click to Confirm");
+					
+					//Disenabling / Enabling other Fields
+					kontonummer1.setEnabled(true);
+					kontonummer1.setText("->");
+					
+					btnSparkonto.setEnabled(false);
+					btnBuchen.setEnabled(false);
+					btnUberweisen.setEnabled(false);
 				}
-				for (Konto konto : kontenliste) {
-					if (konto.getKontoNummer() == kontonummer) {
-						setTextArea(konto.toString());
-						break;
+				else if(flag) 
+				{
+					// Doing action 
+					int kontonummer = -1;
+					try {
+						kontonummer = Integer.parseInt(kontonummer1.getText());
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Fehlerhafte Eingabe [" + kontonummer1.getText() + "]");
+						setTextArea("Fehlerhafte Eingabe [" + kontonummer1.getText() + "]");
 					}
+					for (Konto konto : kontenliste) {
+						if (konto.getKontoNummer() == kontonummer) 
+						{
+							setTextArea(konto.toString());
+							break;
+						}
+					}
+					kontonummer1.setText("");
+					
+					
+					//ReEnebling Fields
+					btnSparkonto.setEnabled(true);
+					btnBuchen.setEnabled(true);
+					btnUberweisen.setEnabled(true);
+					
+					//Restore Color and Text of Button
+					btnAnzeigen.setText("Anzeigen");
+					btnAnzeigen.setBackground(Color.LIGHT_GRAY);
+					flag = false;
+					functionactive = false;
+				
 				}
-				kontonummer1.setText("");
 			}
 		});
 		btnBuchen.addActionListener(new ActionListener() {
@@ -488,6 +524,10 @@ public class KontoverwaltungGUI extends JFrame
 				if(functionactive) betrag1.setText("");
 				
 			}
+			public void mouseEntered(MouseEvent e) 
+			{
+				if(functionactive) betrag1.setText("");
+			}
 			
 		});
 		betrag2.addMouseListener(new MouseAdapter() {
@@ -498,7 +538,10 @@ public class KontoverwaltungGUI extends JFrame
 				if(functionactive) betrag2.setText("");
 				
 			}
-			
+			public void mouseEntered(MouseEvent e) 
+			{
+				if(functionactive) betrag2.setText("");
+			}
 		});
 		
 		kontonummer1.addMouseListener(new MouseAdapter() {
@@ -509,7 +552,10 @@ public class KontoverwaltungGUI extends JFrame
 				if(functionactive) kontonummer1.setText("");
 				
 			}
-			
+			public void mouseEntered(MouseEvent e) 
+			{
+				if(functionactive) kontonummer1.setText("");
+			}
 		});
 		kontonummer2.addMouseListener(new MouseAdapter() {
 			
@@ -519,7 +565,10 @@ public class KontoverwaltungGUI extends JFrame
 				if(functionactive) kontonummer2.setText("");
 				
 			}
-			
+			public void mouseEntered(MouseEvent e) 
+			{
+				if(functionactive) kontonummer2.setText("");
+			}
 		});
 
 		
