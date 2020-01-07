@@ -2,12 +2,11 @@ package net.tfobz.kontoverwaltunggui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,7 +23,6 @@ import net.tfobz.kontoverwaltung.Gehaltskonto;
 import net.tfobz.kontoverwaltung.Konto;
 import net.tfobz.kontoverwaltung.KontoException;
 import net.tfobz.kontoverwaltung.Sparkonto;
-import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class KontoverwaltungGUI extends JFrame
@@ -256,7 +254,7 @@ public class KontoverwaltungGUI extends JFrame
 							System.out.println(e.toString());
 							System.out.println(e.getMessage());
 							JOptionPane.showMessageDialog(null, e.getMessage());
-							setTextArea("Ungültige Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
+							setTextArea("Ungï¿½ltige Eingabe [" + betrag1.getText() + "] oder [" + betrag2.getText() + "]");
 						}
 						betrag1.setText("");
 						betrag2.setText("");
@@ -488,7 +486,7 @@ public class KontoverwaltungGUI extends JFrame
 							}
 						}
 						JOptionPane.showMessageDialog(null,
-								"Überweisung von Konto " + konto1 + " nach " + konto2 + " erfolgreich, Betrag: " + betrag);
+								"ï¿½berweisung von Konto " + konto1 + " nach " + konto2 + " erfolgreich, Betrag: " + betrag);
 					}
 					
 					//ReEnebling Fields
