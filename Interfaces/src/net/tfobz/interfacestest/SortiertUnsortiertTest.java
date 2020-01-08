@@ -1,5 +1,7 @@
 package net.tfobz.interfacestest;
 
+import java.util.ArrayList;
+
 public class SortiertUnsortiertTest
 {
 
@@ -38,7 +40,6 @@ public class SortiertUnsortiertTest
 			Groesse tmp = g[i];
 			g[i] = g[min];
 			g[min] = tmp;
-					
 		}
 		
 		System.out.println("\nAusgabe sortiert: ");

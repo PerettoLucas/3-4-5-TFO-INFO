@@ -49,7 +49,7 @@ public class Papierblatt implements Groesse
 	
 	
 	@Override
-	public int compareTo(Object o)
+	public int compareTo(Groesse o)
 	{
 		if (this.laenge * this.breite < ((Groesse) o).getBreite() * ((Groesse) o).getLaenge()) return -1;
 		else if (this.laenge * this.breite > ((Groesse) o).getBreite() * ((Groesse) o).getLaenge()) return 1;
