@@ -102,7 +102,7 @@ public class MeineDefaultListe implements MeineListe
 			public boolean setzenAktuellesElement(Object element) {
 				if(element != null && this.aktuellesElem != null)
 				{
-					this.aktuellesElem = (ListenElement) element;
+					this.aktuellesElem.element = element;
 					return true;
 				}
 				return false;
@@ -116,13 +116,46 @@ public class MeineDefaultListe implements MeineListe
 			 * dieses Element zurückliefert. 
 			 * @return false falls es noch kein aktuelles Element gibt, das gelöscht werden könnte
 			 */
-			public boolean loeschenAktuellesElement() {
-				if(this.aktuellesElem != null)
+			public boolean loeschenAktuellesElement() 
+			{
+				if (aktuellesElem == null) return false;
+				
+				ListenElement buffer = aktuellesElem;
+				vorheriges().naechstesElem = buffer.naechstesElem;
+				return true;
+			}
+
+			private ListenElement vorheriges() 
+			{
+
+				ListenElement ret = new ListenElement(aktuellesElem.element, aktuellesElem.naechstesElem);
+
+				int aktuell_bis_ende = 0;
+				while (this.hatNaechstesElement()) 
 				{
-					this.aktuellesElem = (ListenElement) naechstesElement();
-					return true;
+					aktuell_bis_ende++;
+					this.naechstesElement();
 				}
-				return false;
+				this.naechstesElement(); //Nulltes element ueberspringen
+				int gesamt_laenge = 0;
+				while (this.hatNaechstesElement()) 
+				{
+					gesamt_laenge++;
+					this.naechstesElement();
+				}
+				this.naechstesElement(); //Nulltes element ueberspringen
+				int position_vorheriges = gesamt_laenge - aktuell_bis_ende - 1;
+				
+				if(!(position_vorheriges <= -1)) 
+				{
+					for (int i = 0; i < position_vorheriges; i++) 
+					{
+						this.naechstesElement();
+					}
+					ret = aktuellesElem;
+				} 
+				return ret;
+
 			}
 		};
 	}

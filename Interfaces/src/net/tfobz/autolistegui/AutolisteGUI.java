@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -51,28 +53,32 @@ public class AutolisteGUI extends JFrame
 	 */
 	public AutolisteGUI()
 	{
+		setTitle("Autoliste");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 446, 186);
+		setBounds(100, 100, 465, 187);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setResizable(false);
-		
+		setLocationRelativeTo(null);
 		
 		JButton btnLoeschen = new JButton("Loeschen");
+		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnLoeschen.setBackground(Color.LIGHT_GRAY);
-		btnLoeschen.setBounds(341, 124, 89, 23);
+		btnLoeschen.setBounds(360, 124, 89, 23);
 		getContentPane().add(btnLoeschen);
 		
 		JButton btnNeu = new JButton("Neu");
+		btnNeu.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNeu.setBackground(Color.LIGHT_GRAY);
-		btnNeu.setBounds(252, 124, 89, 23);
+		btnNeu.setBounds(261, 124, 89, 23);
 		getContentPane().add(btnNeu);
 		
 		JButton btnNaechstes = new JButton("Naechstes");
+		btnNaechstes.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNaechstes.setBackground(Color.LIGHT_GRAY);
-		btnNaechstes.setBounds(163, 124, 89, 23);
+		btnNaechstes.setBounds(162, 124, 89, 23);
 		getContentPane().add(btnNaechstes);
 		
 		txtName = new JTextField();
@@ -103,28 +109,22 @@ public class AutolisteGUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				if(autoListe.istLeer())
-				{
-					if(txtErstzulassung.getText() != null || txtName.getText() != null)
+				
+				try {
+					if(!txtErstzulassung.getText().isEmpty() || !txtName.getText().isEmpty())
 					{
-						MeinIterator tempIterator = autoListe.elemente();
-						
-						while (tempIterator.hatNaechstesElement()) 
+						Auto auto = new Auto(txtName.getText(), Integer.parseInt(txtErstzulassung.getText()));
+	
+						if (autoListe.istLeer()) 
 						{
-							if(tempIterator.naechstesElement().equals(new Auto(txtName.getText(), Integer.parseInt(txtErstzulassung.getText()))) )
-							System.out.println("Doppelt");
+							autoListe.einfuegenErstesElement(auto);
+							autoIterator.naechstesElement();
 						}
-						
-						try {
-							Integer.parseInt(txtErstzulassung.getText());
-							autoIterator.einfuegenElement(new Auto(txtName.getText(), Integer.parseInt(txtErstzulassung.getText())));
-							System.out.println("hinzugefuegt");
-						} catch (Exception e2) {System.out.println("Keine gueltige Jahreszahl");}
-					}
-				}
-				else 
-				{
-					autoIterator.setzenAktuellesElement(new Auto(txtName.getText(), Integer.parseInt(txtErstzulassung.getText())));
+						else autoIterator.einfuegenElement(auto);
+						JOptionPane.showMessageDialog(null, "Element wurde in die Liste eingefuegt"); 
+					} else JOptionPane.showMessageDialog(null, "Die Felder duerfen nicht leer sein!");
+				} catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(null, "Erstzulassung muss vom typ Zahl sein! : "+txtErstzulassung.getText()); 
 				}
 			}
 		});
@@ -136,18 +136,49 @@ public class AutolisteGUI extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				if(autoListe.istLeer()) JOptionPane.showMessageDialog(AutolisteGUI.this, "Liste ist Leer!");
-				else 
-				{
-					autoIterator.setzenAktuellesElement(new Auto(txtName.getText(), Integer.parseInt(txtErstzulassung.getText())));
-					if(autoIterator.hatNaechstesElement())
-						autoIterator.naechstesElement();
-					else 
+				
+				//Vorhaeriges Speichern
+				try {
+					if(!txtErstzulassung.getText().isEmpty() || !txtName.getText().isEmpty())
 					{
-						JOptionPane.showMessageDialog(AutolisteGUI.this, "Keine Elemente mehr Vorhanden!");
-						autoIterator = autoListe.elemente();
-					}
+						Auto auto = new Auto(txtName.getText(), Integer.parseInt(txtErstzulassung.getText()));
+						autoIterator.setzenAktuellesElement(auto);
+					} else JOptionPane.showMessageDialog(null, "Die Felder duerfen nicht leer sein!");
+				} catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(null, "Erstzulassung muss vom typ Zahl sein! : "+txtErstzulassung.getText()); 
+				}
+				
+				//Weiterspringen
+				if (autoIterator.hatNaechstesElement())
+				{
+					Auto auto = (Auto)autoIterator.naechstesElement();
+					txtName.setText(auto.getName());
+					txtErstzulassung.setText(""+auto.getErstzulassung());
+				} else 
+				{
+					JOptionPane.showMessageDialog(null, "Ende der Liste erreicht, springe zum Anfang"); 
+					autoIterator.naechstesElement();
+					Auto auto = (Auto)autoIterator.naechstesElement();
+					txtName.setText(auto.getName());
+					txtErstzulassung.setText(""+auto.getErstzulassung());
 				}
 			}
 		});
+		
+		btnLoeschen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if(autoListe.istLeer()) JOptionPane.showMessageDialog(AutolisteGUI.this, "Liste ist Leer!");
+				else if (autoIterator.loeschenAktuellesElement()) 
+				{
+					JOptionPane.showMessageDialog(null, "Erfolgreich geloescht"); 
+					txtErstzulassung.setText("");
+					txtName.setText("");
+				} else JOptionPane.showMessageDialog(null, "Auto Liste ist leer"); 
+			}
+		});
+		
 	}
 }
