@@ -127,9 +127,13 @@ public class MeineDefaultListe implements MeineListe
 					vorheriges().naechstesElem = buffer.naechstesElem;
 				}catch(Exception e)
 				{
+					while (hatNaechstesElement()) 
+					{
+						naechstesElement();
+					}
+					naechstesElement();
+					naechstesElement();
 					MeineDefaultListe.this.erstesElem = this.aktuellesElem.naechstesElem;
-					this.aktuellesElem = erstesElem;
-					
 				}
 				return true;
 			}
