@@ -93,10 +93,10 @@ public class MeineDefaultListe implements MeineListe
 
 			/**
 			 * Setzt das Element auf welchem momentan der Iterator zeigt, indem es das in der 
-			 * Liste vorhandene Element mit dem übergebenen Element ersetzt. Die Position des 
-			 * Iterators wird dabei nicht verändert.
+			 * Liste vorhandene Element mit dem ï¿½bergebenen Element ersetzt. Die Position des 
+			 * Iterators wird dabei nicht verï¿½ndert.
 			 * @param element das zu setzen ist
-			 * @return false falls das übergebene Element null ist oder kein aktuelles Element 
+			 * @return false falls das ï¿½bergebene Element null ist oder kein aktuelles Element 
 			 * angesprungen wurde
 			 */
 			public boolean setzenAktuellesElement(Object element) {
@@ -109,19 +109,28 @@ public class MeineDefaultListe implements MeineListe
 			}
 
 			/**
-			 * Löscht das Element, welches momentan das aktuelle Element des Iterators ist. Beim 
-			 * Löschen des aktuellen Elementes wird als neues aktuelles Element jenes Element 
-			 * genommen, welches nach dem zu löschenden Element steht. Dabei wird von dieser 
+			 * Lï¿½scht das Element, welches momentan das aktuelle Element des Iterators ist. Beim 
+			 * Lï¿½schen des aktuellen Elementes wird als neues aktuelles Element jenes Element 
+			 * genommen, welches nach dem zu lï¿½schenden Element steht. Dabei wird von dieser 
 			 * Methode der Iterator so gesetzt, dass der nachfolgende Aufruf von naechstesElement() 
-			 * dieses Element zurückliefert. 
-			 * @return false falls es noch kein aktuelles Element gibt, das gelöscht werden könnte
+			 * dieses Element zurï¿½ckliefert. 
+			 * @return false falls es noch kein aktuelles Element gibt, das gelï¿½scht werden kï¿½nnte
 			 */
 			public boolean loeschenAktuellesElement() 
 			{
 				if (aktuellesElem == null) return false;
 				
 				ListenElement buffer = aktuellesElem;
-				vorheriges().naechstesElem = buffer.naechstesElem;
+				
+				try
+				{
+					vorheriges().naechstesElem = buffer.naechstesElem;
+				}catch(Exception e)
+				{
+					MeineDefaultListe.this.erstesElem = this.aktuellesElem.naechstesElem;
+					this.aktuellesElem = erstesElem;
+					
+				}
 				return true;
 			}
 
