@@ -24,6 +24,8 @@ public class Konstante extends Operand
 	public String toString() {
 		return String.valueOf(this.ergebnis);
 	}
+	
+	
 	@Override
 	public TreeNode getChildAt(int childIndex)
 	{
@@ -39,7 +41,6 @@ public class Konstante extends Operand
 	@Override
 	public TreeNode getParent()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
@@ -51,19 +52,17 @@ public class Konstante extends Operand
 	@Override
 	public boolean getAllowsChildren()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public boolean isLeaf()
 	{
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	@Override
 	public Enumeration<? extends TreeNode> children()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

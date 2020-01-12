@@ -23,6 +23,7 @@ import net.tfobz.kontoverwaltung.Gehaltskonto;
 import net.tfobz.kontoverwaltung.Konto;
 import net.tfobz.kontoverwaltung.KontoException;
 import net.tfobz.kontoverwaltung.Sparkonto;
+import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public class KontoverwaltungGUI extends JFrame
@@ -77,11 +78,13 @@ public class KontoverwaltungGUI extends JFrame
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		betrag1 = new JTextField();
+		betrag1.setBackground(UIManager.getColor("CheckBox.darkShadow"));
 		betrag1.setBorder(new EmptyBorder(0, 0, 0, 0));
 		betrag1.setBounds(10, 30, 142, 20);
 		contentPane.add(betrag1);
@@ -500,7 +503,7 @@ public class KontoverwaltungGUI extends JFrame
 					btnBuchen.setEnabled(true);
 					
 					//Restore Color and Text of Button
-					btnUberweisen.setText("Neues Gehaltskonto");
+					btnUberweisen.setText("Ueberweisen");
 					btnUberweisen.setBackground(Color.LIGHT_GRAY);
 					flag = false;
 					functionactive = false;
@@ -520,13 +523,7 @@ public class KontoverwaltungGUI extends JFrame
 			public void mouseClicked(MouseEvent e) 
 			{
 				if(functionactive) betrag1.setText("");
-				
 			}
-			public void mouseEntered(MouseEvent e) 
-			{
-				if(functionactive) betrag1.setText("");
-			}
-			
 		});
 		betrag2.addMouseListener(new MouseAdapter() {
 			
@@ -535,10 +532,6 @@ public class KontoverwaltungGUI extends JFrame
 			{
 				if(functionactive) betrag2.setText("");
 				
-			}
-			public void mouseEntered(MouseEvent e) 
-			{
-				if(functionactive) betrag2.setText("");
 			}
 		});
 		
@@ -550,10 +543,6 @@ public class KontoverwaltungGUI extends JFrame
 				if(functionactive) kontonummer1.setText("");
 				
 			}
-			public void mouseEntered(MouseEvent e) 
-			{
-				if(functionactive) kontonummer1.setText("");
-			}
 		});
 		kontonummer2.addMouseListener(new MouseAdapter() {
 			
@@ -562,10 +551,6 @@ public class KontoverwaltungGUI extends JFrame
 			{
 				if(functionactive) kontonummer2.setText("");
 				
-			}
-			public void mouseEntered(MouseEvent e) 
-			{
-				if(functionactive) kontonummer2.setText("");
 			}
 		});
 

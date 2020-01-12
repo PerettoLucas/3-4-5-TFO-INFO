@@ -42,31 +42,26 @@ public class Addition extends Operation
 	@Override
 	public TreeNode getParent()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public int getIndex(TreeNode node)
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public boolean getAllowsChildren()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public boolean isLeaf()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public Enumeration<? extends TreeNode> children()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
