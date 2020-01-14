@@ -158,6 +158,6 @@ public class RssReader
 	
 	public String getNewest()
 	{
-		return itemList.get(0).toString();
+		return "Channel : |" + channel.getTitle() + "| Newest Item : " + itemList.get(0).getTitle();
 	}
 }

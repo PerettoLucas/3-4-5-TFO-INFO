@@ -13,7 +13,7 @@ public class Channel
 	protected String copyright = null;
 	
 	protected List<Item> items = new ArrayList<>();
-	
+
 	public String getUrl() {
 		return url;
 	}

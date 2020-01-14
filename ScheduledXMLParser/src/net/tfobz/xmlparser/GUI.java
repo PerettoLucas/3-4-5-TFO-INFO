@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.xml.stream.XMLStreamException;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -57,10 +59,10 @@ public class GUI extends JFrame
 		editorPane.setBounds(12, 12, 735, 411);
 		contentPane.add(editorPane);
 		
-		JButton btnNewButton = new JButton("Update");
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
-		btnNewButton.setBounds(633, 438, 114, 25);
-		contentPane.add(btnNewButton);
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBackground(Color.LIGHT_GRAY);
+		btnUpdate.setBounds(633, 438, 114, 25);
+		contentPane.add(btnUpdate);
 		
 		JButton btnDisactivateScheduler = new JButton("Disactivate Scheduler");
 		btnDisactivateScheduler.setBackground(Color.LIGHT_GRAY);
@@ -84,7 +86,21 @@ public class GUI extends JFrame
 			}
 		});
 		
-		
+		btnUpdate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				RssReader reader = new RssReader();
+				try {
+					reader.urlParser("https://www.suedtirolnews.it/feed");
+				} catch (XMLStreamException | IOException e1) {e1.printStackTrace();}
+				
+				editorPane.setText(reader.getNewest());				
+				
+				
+			}
+		});
 		
 	}
 }
