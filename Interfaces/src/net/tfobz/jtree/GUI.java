@@ -1,12 +1,10 @@
 package net.tfobz.jtree;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Enumeration;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -15,7 +13,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
@@ -61,17 +58,31 @@ public class GUI extends JFrame
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		DefaultTreeModel root = new DefaultTreeModel(new Konstante(2));
-		
-		TreeNode k2 = new Konstante(2);
+		TreeNode k = new Division(
+				new Multiplikation(
+						new Konstante(2),
+							new Addition(
+									new Konstante(3.0),
+									new Konstante(4.0)
+							)
+					),
+					new Subtraktion(
+						new Konstante(7.0),
+						new Konstante(2.0)
+					)
+				);
 		/*  http://esus.com/displaying-a-popup-menu-when-right-clicking-on-a-jtree-node/  */
 		
-		TreeModel treeModel = new DefaultTreeModel((TreeNode) root);
-		
+		MeinDefaultTreeCellRenderer meinDefaultTreeCellRenderer = new MeinDefaultTreeCellRenderer();
+		TreeModel treeModel = new DefaultTreeModel(k);
 		JTree tree = new JTree(treeModel);
 		tree.setBounds(12, 0, 600, 418);
 		contentPane.add(tree);
+		
+		
 
+		tree.setCellRenderer(meinDefaultTreeCellRenderer);
+		
 		
 		treePopup = new TreePopup(tree);
 		

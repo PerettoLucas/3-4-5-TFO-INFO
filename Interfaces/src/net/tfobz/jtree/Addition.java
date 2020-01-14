@@ -1,7 +1,5 @@
 package net.tfobz.jtree;
 
-import java.util.Enumeration;
-
 import javax.swing.tree.TreeNode;
 
 public class Addition extends Operation
@@ -28,40 +26,9 @@ public class Addition extends Operation
 		return null;
 	}
 	@Override
-	public TreeNode getChildAt(int childIndex)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public int getChildCount()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
 	public TreeNode getParent()
 	{
-		return null;
-	}
-	@Override
-	public int getIndex(TreeNode node)
-	{
-		return 0;
-	}
-	@Override
-	public boolean getAllowsChildren()
-	{
-		return false;
-	}
-	@Override
-	public boolean isLeaf()
-	{
-		return false;
-	}
-	@Override
-	public Enumeration<? extends TreeNode> children()
-	{
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

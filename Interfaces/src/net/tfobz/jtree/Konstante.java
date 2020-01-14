@@ -2,6 +2,7 @@ package net.tfobz.jtree;
 
 import java.util.Enumeration;
 
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 public class Konstante extends Operand
@@ -24,6 +25,33 @@ public class Konstante extends Operand
 	public String toString() {
 		return String.valueOf(this.ergebnis);
 	}
+
+	
+	@Override
+	public TreeNode getParent()
+	{
+		return null;
+	}
+	
+	@Override
+	public boolean isLeaf()
+	{
+		return true;
+	}
+	
+	@Override
+	public void setUserObject(Object object)
+	{
+		if(object != null)
+			this.ergebnis = ((Operand)object).getErgebnis();
+		
+		
+		//TODO 
+	}
+	
+	
+	
+	
 	
 	
 	@Override
@@ -39,11 +67,6 @@ public class Konstante extends Operand
 		return 0;
 	}
 	@Override
-	public TreeNode getParent()
-	{
-		return null;
-	}
-	@Override
 	public int getIndex(TreeNode node)
 	{
 		// TODO Auto-generated method stub
@@ -52,17 +75,43 @@ public class Konstante extends Operand
 	@Override
 	public boolean getAllowsChildren()
 	{
-		return false;
-	}
-	@Override
-	public boolean isLeaf()
-	{
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 	@Override
 	public Enumeration<? extends TreeNode> children()
 	{
+		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void insert(MutableTreeNode child,int index)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void remove(int index)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void remove(MutableTreeNode node)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void removeFromParent()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setParent(MutableTreeNode newParent)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
