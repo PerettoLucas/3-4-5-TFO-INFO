@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT party (gast+, waechter+)>
+<!ATTLIST party datum CDATA #REQUIRED>
+<!ELEMENT gast (getraenk*, zustand)>
+<!ATTLIST gast name CDATA #REQUIRED>
+<!ELEMENT waechter EMPTY>
+<!ATTLIST waechter name CDATA #REQUIRED>
+<!ELEMENT getraenk (#PCDATA)>
+<!ELEMENT zustand EMPTY>
+<!ATTLIST zustand ledig CDATA #IMPLIED nuechtern CDATA #IMPLIED>

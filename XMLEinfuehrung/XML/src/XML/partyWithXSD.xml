@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pty:party xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.tfobz.net/partySchema party.xsd"
+	xmlns:pty="http://www.tfobz.net/partySchema"
+	datum="31.12.14">
+    
+    <pty:gast name="Daniel Gözz">
+    	<pty:getraenk>
+    		Saftele
+    	</pty:getraenk>
+    	<pty:zustand nuechtern="false" ledig="true"/>
+    </pty:gast>
+    
+    <pty:gast name="Xalenander Soini">
+    	<pty:getraenk>
+    		Tee
+    	</pty:getraenk>
+    	<pty:zustand nuechtern="true" ledig="false"/>
+    </pty:gast>
+    
+   	<pty:waechter name="Schorsch Schrecklich"/>
+   	
+</pty:party>

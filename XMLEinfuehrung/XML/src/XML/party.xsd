@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.tfobz.net/partySchema"
+	targetNamespace="http://www.tfobz.net/partySchema" 
+	elementFormDefault="qualified">
+
+	<xsd:element name="party" type="partyType"/>
+	
+	<xsd:complexType name="partyType">
+		<xsd:sequence>
+			<xsd:element name="gast" type="gastType" minOccurs="1" maxOccurs="unbounded" />
+			<xsd:element name="waechter" type="waechterType" minOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="datum" type="datumType" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="gastType">
+		<xsd:sequence>
+			<xsd:element name="getraenk" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="zustand" type="zustandType" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="waechterType">
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:simpleType name="datumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-3][0-9].[0-1][0-9].[0-9][0-9]" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="zustandType">
+		<xsd:complexContent>
+			<xsd:restriction base="xsd:anyType">
+				<xsd:attribute name="nuechtern" type="xsd:boolean" />
+				<xsd:attribute name="ledig" type="xsd:boolean" />
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE party SYSTEM "party.dtd">
+<party datum="31.12.14" >
+    <gast name="Albert Angsthase">
+        <getraenk>
+            Wein
+        </getraenk>
+        <getraenk>
+            Bier
+        </getraenk>
+        <zustand ledig="true" nuechtern="false"/>
+    </gast>
+    <gast name="Elsa Ehrlich">
+        <getraenk>
+            Apfelsaft
+        </getraenk>
+        <zustand ledig="true" nuechtern="true"/>
+    </gast>
+	<waechter name="Schorsch Schrecklich"/>
+</party>
