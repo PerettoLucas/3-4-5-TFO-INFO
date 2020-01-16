@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 import net.tfobz.funktionsplotter.Wurzel;
 
@@ -27,6 +28,7 @@ public class GUI extends JFrame
 	private JPanel contentPane;
 	private TreePopup treePopup = null;
 	private DefaultMutableTreeNode wurzel = null;
+	private TreePath treePath;
 	
 	
 	/**
@@ -66,7 +68,8 @@ public class GUI extends JFrame
 		
 		//DefaultMutableTreeNode ermöglicht es Dynamisch "Kinder hinzuzufügen"
 		wurzel = new DefaultMutableTreeNode("Operation");
-		wurzel.add(new Addition(new Konstante(3), new Konstante(2)));
+		wurzel.add(new Konstante(3));
+	
 		
 		//Renderer setzt die Icons der Baumäste
 		MeinDefaultTreeCellRenderer meinDefaultTreeCellRenderer = new MeinDefaultTreeCellRenderer();
@@ -152,10 +155,27 @@ public class GUI extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					wurzel.add(new Konstante(4));
+					int x=1;
+					wurzel.add(new Konstante(x));
+					x++;
 				}
 			});
-			      
+			additionItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					DefaultMutableTreeNode SelectedNode;
+					
+					treePath = tree.getSelectionPath();
+					
+					
+					SelectedNode = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+					
+					wurzel.add(new Addition());
+				}
+			});   
+			
 			      
 			add(DeleteItem);
 			add(new JSeparator());

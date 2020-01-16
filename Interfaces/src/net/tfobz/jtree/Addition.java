@@ -1,5 +1,6 @@
 package net.tfobz.jtree;
 
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 public class Addition extends Operation
@@ -28,7 +29,12 @@ public class Addition extends Operation
 	@Override
 	public TreeNode getParent()
 	{
-		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public void insert(MutableTreeNode child, int index)
+	{
+		this.insert(child, index);
 	}
 }
