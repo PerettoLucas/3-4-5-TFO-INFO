@@ -7,22 +7,28 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 
+import net.tfobz.funktionsplotter.Wurzel;
+
+@SuppressWarnings("serial")
 public class GUI extends JFrame
 {
 
 	private JPanel contentPane;
 	private TreePopup treePopup = null;
-
+	private DefaultMutableTreeNode wurzel = null;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -58,32 +64,22 @@ public class GUI extends JFrame
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		TreeNode k = new Division(
-				new Multiplikation(
-						new Konstante(2),
-							new Addition(
-									new Konstante(3.0),
-									new Konstante(4.0)
-							)
-					),
-					new Subtraktion(
-						new Konstante(7.0),
-						new Konstante(2.0)
-					)
-				);
-		/*  http://esus.com/displaying-a-popup-menu-when-right-clicking-on-a-jtree-node/  */
+		//DefaultMutableTreeNode ermöglicht es Dynamisch "Kinder hinzuzufügen"
+		wurzel = new DefaultMutableTreeNode("Operation");
+		wurzel.add(new Addition(new Konstante(3), new Konstante(2)));
 		
+		//Renderer setzt die Icons der Baumäste
 		MeinDefaultTreeCellRenderer meinDefaultTreeCellRenderer = new MeinDefaultTreeCellRenderer();
-		TreeModel treeModel = new DefaultTreeModel(k);
+		TreeModel treeModel = new DefaultTreeModel(wurzel);
+		
 		JTree tree = new JTree(treeModel);
 		tree.setBounds(12, 0, 600, 418);
 		contentPane.add(tree);
-		
-		
-
+		//SetEditable true damit mann den inhalt verändern kann
+		tree.setEditable(true);
 		tree.setCellRenderer(meinDefaultTreeCellRenderer);
-		
-		
+
+		//treePopup bietet das Menu um Veränderungen durchzuführen
 		treePopup = new TreePopup(tree);
 		
 		tree.addMouseListener(new MouseListener() {
@@ -123,30 +119,47 @@ public class GUI extends JFrame
 		});
 	}
 	
-	@SuppressWarnings("serial")
+	
 	class TreePopup extends JPopupMenu 
 	{
-		   public TreePopup(JTree tree) 
-		   {
-		      JMenuItem itemDelete = new JMenuItem("Delete");
-		      JMenuItem itemAdd = new JMenuItem("Add");
-		      
-		      //Action Listener
-		      itemDelete.addActionListener(new ActionListener() {
-		         public void actionPerformed(ActionEvent ae) {
-		            System.out.println("Delete child");
-		         }
-		      });
-		      itemAdd.addActionListener(new ActionListener() {
-		         public void actionPerformed(ActionEvent ae) {
-		            System.out.println("Add child");
-		            
-		         }
-		      });
-		  
-		      add(itemDelete);
-		      add(new JSeparator());
-		      add(itemAdd);
-		   }
-	}
+		public TreePopup(JTree tree) 
+		{
+			JMenuItem DeleteItem = new JMenuItem("Delete");
+			JMenu AddItem = new JMenu("Neu");
+			      
+			JMenuItem konstanteItem = new JMenuItem("Konstante");
+			JMenuItem additionItem = new JMenuItem("Addition");
+			JMenuItem subtraktionItem = new JMenuItem("Subtraktion");
+			JMenuItem multiplikationItem = new JMenuItem("Multiplikation");
+			JMenuItem divisionItem = new JMenuItem("Division");
+			      
+			//Adding Items to the Menu-List
+			AddItem.add(konstanteItem);
+			AddItem.add(additionItem);
+			AddItem.add(subtraktionItem);
+			AddItem.add(multiplikationItem);
+			AddItem.add(divisionItem);
+	
+			//Action Listener
+			DeleteItem.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent ae) 
+			  {
+			 	 System.out.println("Delete child");
+			   }
+			});
+	
+			konstanteItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					wurzel.add(new Konstante(4));
+				}
+			});
+			      
+			      
+			add(DeleteItem);
+			add(new JSeparator());
+			add(AddItem);
+		}
+	}	
 }
