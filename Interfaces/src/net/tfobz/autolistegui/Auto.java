@@ -2,7 +2,7 @@ package net.tfobz.autolistegui;
 
 public class Auto
 {
-	private String name = null;
+	public String name = null;
 	private int erstzulassung = 0;
 	
 	public Auto() {
