@@ -19,6 +19,28 @@ public class RssReader
 	ArrayList<Item> itemList=new ArrayList<>();
 	Item item;
 	
+	private String rss_reader_name;
+
+	/**RssReader parses the XML content of a website
+	 * 
+	 * Automaticly sets a Name for the current RssParser
+	 * 
+	 * @param url the url to parse
+	 */
+	public RssReader(String url) 
+	{
+		try {
+			urlParser(url);
+		} catch (XMLStreamException | IOException e) {e.printStackTrace();}
+	
+		this.rss_reader_name = this.channel.getTitle();
+	}
+	
+	public String getRss_reader_name() 
+	{
+		return rss_reader_name;
+	}
+
 	public void urlParser(String url) throws XMLStreamException, IOException
 	{
 		this.url = new URL(url);

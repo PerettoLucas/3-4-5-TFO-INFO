@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.xml.stream.XMLStreamException;
@@ -20,6 +21,9 @@ public class GUI extends JFrame
 
 	private JPanel contentPane;
 	private ArrayList<RssReader> rssReaderList = new ArrayList<>();
+	private RssReader reader ;
+	private String url;
+	
 	
 	/**
 	 * Launch the application.
@@ -82,6 +86,12 @@ public class GUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				url = JOptionPane.showInputDialog("Geben sie die URL ein : ");
+				
+				//TODO If einbauen
+				
+				rssReaderList.add(new RssReader(url));
+				
 				
 			}
 		});
@@ -91,16 +101,29 @@ public class GUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				RssReader reader = new RssReader();
-				try {
-					reader.urlParser("https://www.suedtirolnews.it/feed");
-				} catch (XMLStreamException | IOException e1) {e1.printStackTrace();}
+				String text_to_show;
+				
+				for (RssReader rssReader : rssReaderList) 
+				{
+					
+					
+				}
 				
 				editorPane.setText(reader.getNewest());				
 				
-				
 			}
 		});
-		
 	}
 }
+
+//TODO ScrollPane hinzufügen
+
+
+/*
+ * 	https://www.suedtirolnews.it/feed
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
