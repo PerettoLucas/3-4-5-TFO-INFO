@@ -60,7 +60,7 @@ public class Konstante extends Operand
 	@Override
 	public int getIndex(TreeNode node)
 	{
-		return 0;
+		return -1;
 	}
 	@Override
 	public boolean getAllowsChildren()

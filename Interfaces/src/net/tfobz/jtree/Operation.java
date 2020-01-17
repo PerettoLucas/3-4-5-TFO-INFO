@@ -53,8 +53,6 @@ public abstract class Operation extends Operand
 	}
 	
 	
-	
-	
 	@Override
 	public TreeNode getChildAt(int childIndex) 
 	{
@@ -64,7 +62,7 @@ public abstract class Operation extends Operand
 	@Override
 	public int getChildCount() 
 	{
-		return 2;
+		return (this.operand[0] != null ? 1 : 0) + (this.operand[1] != null ? 1 : 0);
 	}
 
 	@Override
@@ -159,4 +157,10 @@ public abstract class Operation extends Operand
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public TreeNode getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

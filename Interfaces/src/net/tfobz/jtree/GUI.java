@@ -16,10 +16,9 @@ import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-
-import net.tfobz.funktionsplotter.Wurzel;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame
@@ -67,8 +66,7 @@ public class GUI extends JFrame
 		setResizable(false);
 		
 		//DefaultMutableTreeNode ermöglicht es Dynamisch "Kinder hinzuzufügen"
-		wurzel = new DefaultMutableTreeNode("Operation");
-		wurzel.add(new Konstante(3));
+		wurzel = new DefaultMutableTreeNode(new Addition());
 	
 		
 		//Renderer setzt die Icons der Baumäste
@@ -155,9 +153,31 @@ public class GUI extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					int x=1;
-					wurzel.add(new Konstante(x));
-					x++;
+					
+					DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
+					if(tree.getSelectionPath() == null)
+					{
+						//Hänge einen neuen Knoten an die Wurzel
+						DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
+						if(root.getChildCount() == 0)
+						{
+							treeModel.insertNodeInto(new Konstante(), root, 0);
+							treeModel.reload();
+						}
+						tree.setSelectionPath(new TreePath(root));
+					}else 
+					{
+						//Hänge den Knoten zum ausgewählten knoten
+						MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+						if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
+						{
+							treeModel.insertNodeInto(new Konstante(), treeNode, 0);
+							TreePath treePath = tree.getSelectionPath();
+							treeModel.reload();
+							tree.expandPath(treePath);
+						}
+					}
+					
 				}
 			});
 			additionItem.addActionListener(new ActionListener() {

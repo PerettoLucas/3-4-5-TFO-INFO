@@ -26,15 +26,5 @@ public class Addition extends Operation
 			return "(" + this.getOperand(0) + "+" + this.getOperand(1) +")" + "=" + getErgebnis() + ")";
 		return null;
 	}
-	@Override
-	public TreeNode getParent()
-	{
-		return null;
-	}
-	
-	@Override
-	public void insert(MutableTreeNode child, int index)
-	{
-		this.insert(child, index);
-	}
+
 }
