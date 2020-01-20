@@ -110,7 +110,7 @@ public abstract class Operation extends Operand
 			@Override
 			public TreeNode nextElement() 
 			{
-				index = index + 1;
+				index += 1;
 				if (index > 1)
 					index = 0;
 				return Operation.this.operand[index];
@@ -124,19 +124,24 @@ public abstract class Operation extends Operand
 	@Override
 	public void insert(MutableTreeNode child,int index)
 	{
-		// TODO Auto-generated method stub
+		if(index != 0 && index != 1) return;
 		
+		if(this.operand[0] == null && index == 0) this.operand[0] = (Operand)child;
+		else if (this.operand[0] != null && this.operand[1] == null) this.operand[1] = (Operand)child;
 	}
 	@Override
 	public void remove(int index)
 	{
-		// TODO Auto-generated method stub
+		if(index != 0 && index != 1) return;
 		
+		if(index == 0 && this.operand[0] != null) this.operand[0] = null;
+		if(index == 1 && this.operand[1] != null) this.operand[1] = null;
 	}
+	
 	@Override
 	public void remove(MutableTreeNode node)
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 	@Override
@@ -149,7 +154,6 @@ public abstract class Operation extends Operand
 	public void removeFromParent()
 	{
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void setParent(MutableTreeNode newParent)

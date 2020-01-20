@@ -1,8 +1,6 @@
 package net.tfobz.jtree;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -128,7 +126,9 @@ public class GUI extends JFrame
 		public TreePopup(JTree tree) 
 		{
 			JMenuItem DeleteItem = new JMenuItem("Delete");
+			JMenuItem VertauscheItem = new JMenuItem("Vertausche");
 			JMenu AddItem = new JMenu("Neu");
+			
 			      
 			JMenuItem konstanteItem = new JMenuItem("Konstante");
 			JMenuItem additionItem = new JMenuItem("Addition");
@@ -144,66 +144,104 @@ public class GUI extends JFrame
 			AddItem.add(divisionItem);
 	
 			//Action Listener
-			DeleteItem.addActionListener(new ActionListener() {
-			  public void actionPerformed(ActionEvent ae) 
-			  {
-			 	 System.out.println("Delete child");
-			   }
-			});
-	
-			konstanteItem.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) 
-				{
-					
-					DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
-					if(tree.getSelectionPath() == null)
-					{
-						//Hänge einen neuen Knoten an die Wurzel
-						DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
-						if(root.getChildCount() == 0)
-						{
-							treeModel.insertNodeInto(new Konstante(), root, 0);
-							treeModel.reload();
-						}
-						tree.setSelectionPath(new TreePath(root));
-					} else {
-						//Hänge den Knoten zum ausgewählten knoten
-						MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
-						System.out.println(treeNode.getChildCount());
-						if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
-						{	
-							System.out.println("New");
-							treeModel.insertNodeInto(new Konstante(), treeNode, 0);
-							TreePath treePath = tree.getSelectionPath();
-							System.out.println(treePath.toString());
-							treeModel.reload();
-							tree.expandPath(treePath);
-						}
-					}
-					
-				}
-			});
-			additionItem.addActionListener(new ActionListener() {
+			DeleteItem.addActionListener(event ->
+			{
 				
-				@Override
-				public void actionPerformed(ActionEvent e)
+				
+				DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
+				if(tree.getSelectionPath() != null)
 				{
-					DefaultMutableTreeNode SelectedNode;
+					//Hänge den Knoten zum ausgewählten knoten
+					MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
 					
-					treePath = tree.getSelectionPath();
+					//System.out.println(treeNode.getChildCount());
+					System.out.println("Delete");
 					
+					//treeModel.insertNodeInto(new Konstante(), treeNode, 0);
 					
-					SelectedNode = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+					//treeNode.remove(0);
 					
-					wurzel.add(new Addition());
+					TreePath treePath = tree.getSelectionPath();
+				
+					System.out.println(treePath.toString());
+					
+					treeModel.reload();
+					tree.expandPath(treePath);
+					
 				}
-			});   
+				
+				  
+				  
+			});
+
+			VertauscheItem.addActionListener(event ->
+			{
+				DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
+				
+				MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+				
+				
+				if(tree.getSelectionPath() != null)
+				{
+					if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
+					{	
+						treeModel.insertNodeInto(new Konstante(), treeNode, 0);
+						
+						treeModel.removeNodeFromParent(treeNode);
+						
+						TreePath treePath = tree.getSelectionPath();
+						System.out.println(treePath.toString());
+						treeModel.reload();
+						tree.expandPath(treePath);
+					}else if(treeNode instanceof Konstante)
+					{
+						
+					}
+				}
+				
+			});
 			
-			      
+			konstanteItem.addActionListener(event -> insertOperand(tree, new Konstante()));
+			additionItem.addActionListener(event -> insertOperand(tree, new Addition()));   
+			subtraktionItem.addActionListener(event -> insertOperand(tree, new Subtraktion()));
+			multiplikationItem.addActionListener(event -> insertOperand(tree, new Multiplikation()));
+			divisionItem.addActionListener(event -> insertOperand(tree, new Division()));
+			
+			
+			
+			
 			add(DeleteItem);
 			add(new JSeparator());
 			add(AddItem);
 		}
+		
+		private void insertOperand(JTree tree, Operand operation_to_set)
+		{
+			DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
+			if(tree.getSelectionPath() == null)
+			{
+				//Hänge einen neuen Knoten an die Wurzel
+				DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
+				if(root.getChildCount() == 0)
+				{
+					treeModel.insertNodeInto(new Konstante(), root, 0);
+					treeModel.reload();
+				}
+			} else {
+				//Hänge den Knoten zum ausgewählten knoten
+				MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+				System.out.println(treeNode.getChildCount());
+				if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
+				{	
+					System.out.println("New");
+					treeModel.insertNodeInto(operation_to_set, treeNode, 0);
+					TreePath treePath = tree.getSelectionPath();
+					System.out.println(treePath.toString());
+					treeModel.reload();
+					tree.expandPath(treePath);
+				}
+			}
+		}
+		
 	}	
 }
