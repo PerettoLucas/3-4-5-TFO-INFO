@@ -99,13 +99,14 @@ public class MeineDefaultListe implements MeineListe
 			 * @return false falls das �bergebene Element null ist oder kein aktuelles Element 
 			 * angesprungen wurde
 			 */
-			public boolean setzenAktuellesElement(Object element) {
+			public boolean setzenAktuellesElement(Object element) 
+			{
 				if(element != null && this.aktuellesElem != null)
 				{
 					this.aktuellesElem.element = element;
 					return true;
 				}
-				return false;
+				else return false;
 			}
 
 			/**

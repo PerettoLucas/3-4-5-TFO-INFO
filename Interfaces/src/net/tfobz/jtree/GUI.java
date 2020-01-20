@@ -66,7 +66,8 @@ public class GUI extends JFrame
 		setResizable(false);
 		
 		//DefaultMutableTreeNode ermöglicht es Dynamisch "Kinder hinzuzufügen"
-		wurzel = new DefaultMutableTreeNode(new Addition());
+		wurzel = new DefaultMutableTreeNode("unsichtbare Wurzel");
+		wurzel.add(new Addition());
 	
 		
 		//Renderer setzt die Icons der Baumäste
@@ -79,6 +80,7 @@ public class GUI extends JFrame
 		//SetEditable true damit mann den inhalt verändern kann
 		tree.setEditable(true);
 		tree.setCellRenderer(meinDefaultTreeCellRenderer);
+		tree.setRootVisible(false);
 
 		//treePopup bietet das Menu um Veränderungen durchzuführen
 		treePopup = new TreePopup(tree);
@@ -165,14 +167,16 @@ public class GUI extends JFrame
 							treeModel.reload();
 						}
 						tree.setSelectionPath(new TreePath(root));
-					}else 
-					{
+					} else {
 						//Hänge den Knoten zum ausgewählten knoten
 						MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+						System.out.println(treeNode.getChildCount());
 						if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
-						{
+						{	
+							System.out.println("New");
 							treeModel.insertNodeInto(new Konstante(), treeNode, 0);
 							TreePath treePath = tree.getSelectionPath();
+							System.out.println(treePath.toString());
 							treeModel.reload();
 							tree.expandPath(treePath);
 						}
