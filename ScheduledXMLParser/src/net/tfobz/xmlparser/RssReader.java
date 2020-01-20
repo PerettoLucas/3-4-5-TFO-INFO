@@ -2,6 +2,7 @@ package net.tfobz.xmlparser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -26,12 +27,13 @@ public class RssReader
 	 * Automaticly sets a Name for the current RssParser
 	 * 
 	 * @param url the url to parse
+	 * @throws MalformedURLException 
 	 */
-	public RssReader(String url) 
+	public RssReader(String url) throws MalformedURLException
 	{
 		try {
 			urlParser(url);
-		} catch (XMLStreamException | IOException e) {e.printStackTrace();}
+		} catch (Exception e) {throw new MalformedURLException();}
 	
 		this.rss_reader_name = this.channel.getTitle();
 	}
@@ -41,7 +43,7 @@ public class RssReader
 		return rss_reader_name;
 	}
 
-	public void urlParser(String url) throws XMLStreamException, IOException
+	public void urlParser(String url) throws XMLStreamException, IOException , MalformedURLException
 	{
 		this.url = new URL(url);
 		InputStream in = this.url.openStream();

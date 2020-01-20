@@ -1,20 +1,20 @@
 package net.tfobz.xmlparser;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.xml.stream.XMLStreamException;
-import javax.swing.JEditorPane;
-import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class GUI extends JFrame
 {
@@ -57,6 +57,8 @@ public class GUI extends JFrame
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
@@ -77,8 +79,11 @@ public class GUI extends JFrame
 		btnAddUrl.setBackground(Color.LIGHT_GRAY);
 		btnAddUrl.setBounds(304, 438, 114, 25);
 		contentPane.add(btnAddUrl);
-		setLocationRelativeTo(null);
-		setResizable(false);
+		
+		JScrollPane scrollPane = new JScrollPane(editorPane);
+		scrollPane.setVerticalScrollBarPolicy(Scrollbar.VERTICAL);
+		contentPane.add(scrollPane);
+		
 		
 		btnAddUrl.addActionListener(new ActionListener()
 		{
@@ -87,10 +92,12 @@ public class GUI extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				url = JOptionPane.showInputDialog("Geben sie die URL ein : ");
-				
-				//TODO If einbauen
-				
-				rssReaderList.add(new RssReader(url));
+				if(url == null || url.isEmpty()) JOptionPane.showMessageDialog(getParent(), "Cannot be Empty");
+				try 
+				{
+					rssReaderList.add(new RssReader(url));
+				} catch (Exception e2) 
+				{JOptionPane.showMessageDialog(getParent(), "Cannot parse given URL");}
 				
 				
 			}
@@ -101,15 +108,14 @@ public class GUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				String text_to_show;
+				String text_to_show = "";
 				
 				for (RssReader rssReader : rssReaderList) 
 				{
-					
-					
+					text_to_show += rssReader.getNewest();
 				}
 				
-				editorPane.setText(reader.getNewest());				
+				editorPane.setText(text_to_show);				
 				
 			}
 		});
@@ -121,8 +127,8 @@ public class GUI extends JFrame
 
 /*
  * 	https://www.suedtirolnews.it/feed
- * 
- * 
+ * 	http://www.provinz.bz.it/wetter/rss.asp
+ * 	https://www.spiegel.de/schlagzeilen/tops/index.rss
  * 
  * 
  * 
