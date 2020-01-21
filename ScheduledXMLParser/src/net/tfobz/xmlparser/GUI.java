@@ -2,19 +2,19 @@ package net.tfobz.xmlparser;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 public class GUI extends JFrame
 {
@@ -23,7 +23,7 @@ public class GUI extends JFrame
 	private ArrayList<RssReader> rssReaderList = new ArrayList<>();
 	private RssReader reader ;
 	private String url;
-	
+	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	
 	/**
 	 * Launch the application.
@@ -62,8 +62,6 @@ public class GUI extends JFrame
 		
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
-		editorPane.setBounds(12, 12, 735, 411);
-		contentPane.add(editorPane);
 		
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setBackground(Color.LIGHT_GRAY);
@@ -81,7 +79,7 @@ public class GUI extends JFrame
 		contentPane.add(btnAddUrl);
 		
 		JScrollPane scrollPane = new JScrollPane(editorPane);
-		scrollPane.setVerticalScrollBarPolicy(Scrollbar.VERTICAL);
+		scrollPane.setBounds(0, 0, 753, 437);
 		contentPane.add(scrollPane);
 		
 		
@@ -98,7 +96,6 @@ public class GUI extends JFrame
 					rssReaderList.add(new RssReader(url));
 				} catch (Exception e2) 
 				{JOptionPane.showMessageDialog(getParent(), "Cannot parse given URL");}
-				
 				
 			}
 		});
@@ -120,10 +117,18 @@ public class GUI extends JFrame
 			}
 		});
 	}
+	class RunnableUpdate implements Runnable
+	{
+
+		@Override
+		public void run() 
+		{
+			
+			
+		}
+		
+	}
 }
-
-//TODO ScrollPane hinzufügen
-
 
 /*
  * 	https://www.suedtirolnews.it/feed

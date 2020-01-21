@@ -57,76 +57,65 @@ public class RssReader
 							case "title":
 							{
 								item.setTitle(characters);
-								characters ="";
 								break;
 							}
 							case "link":
 							{
 								item.setLink(characters);
-								characters ="";
 								break;
 							}
 							case "description":
 							{
 								item.setDescription(characters);
-								characters ="";
 								break;
 							}
 							case "author":
 							{
 								item.setAuthor(characters);
-								characters ="";
 								break;
 							}
 							case "pubDate":
 							{
 								item.setPubDate(characters);
-								characters ="";
 								break;
 							}
 						}
-						
+						characters ="";
 					}else {
 						switch(element)
 						{
 							case "url":
 							{
 								channel.setUrl(characters);
-								characters ="";
 								break;
 							}
 							case "title": 
 							{
 								channel.setTitle(characters);
-								characters ="";
 								break;
 							}
 							case "link":
 							{
 								channel.setLink(characters);
-								characters ="";
 								break;
 							}
 							case "description": 
 							{
 								channel.setDescription(characters);
-								characters ="";
 								break;
 							}
 							case "language":
 							{
 								channel.setLanguage(characters);
-								characters ="";
 								break;
 							}
 							case "copyright":
 							{
 								channel.setCopyright(characters);
-								characters ="";
 								break;
 							}
 						}
-						
+						characters ="";
 					}
 					if(isitem && parser.getLocalName().equals("item")) {
 						itemList.add(item);

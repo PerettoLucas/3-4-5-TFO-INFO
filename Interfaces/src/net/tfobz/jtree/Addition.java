@@ -1,8 +1,5 @@
 package net.tfobz.jtree;
 
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-
 public class Addition extends Operation
 {
 	public Addition(Operand operand0, Operand operand1) {
