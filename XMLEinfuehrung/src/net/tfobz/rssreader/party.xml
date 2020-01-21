@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pty:party xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.tfobz.net/partySchema party.xsd"
+	xmlns:pty="http://www.tfobz.net/partySchema"
+	datum="31.12.14">
+    <pty:gast name="Albert Angsthase">
+        <pty:getraenk>
+     		Wein
+        </pty:getraenk>
+        <pty:getraenk>
+            Bier
+        </pty:getraenk>
+        <pty:zustand ledig="true" nuechtern="false"/>
+    </pty:gast>
+    <pty:gast name="Elsa Ehrlich">
+        <pty:getraenk>
+            Milch
+        </pty:getraenk>
+        <pty:zustand ledig="true" nuechtern="true"/>
+    </pty:gast>
+    <pty:waechter name="Schorsch Schrecklich"/>
+</pty:party>

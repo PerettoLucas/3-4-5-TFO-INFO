@@ -1,23 +1,29 @@
 package net.tfobz.xmlparser;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JEditorPane;
 import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 public class GUI extends JFrame
 {
 
 	private JPanel contentPane;
 	private ArrayList<RssReader> rssReaderList = new ArrayList<>();
+	private RssReader reader ;
+	private String url;
+	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	
 	/**
 	 * Launch the application.
@@ -51,16 +57,16 @@ public class GUI extends JFrame
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
-		editorPane.setBounds(12, 12, 735, 411);
-		contentPane.add(editorPane);
 		
-		JButton btnNewButton = new JButton("Update");
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
-		btnNewButton.setBounds(633, 438, 114, 25);
-		contentPane.add(btnNewButton);
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBackground(Color.LIGHT_GRAY);
+		btnUpdate.setBounds(633, 438, 114, 25);
+		contentPane.add(btnUpdate);
 		
 		JButton btnDisactivateScheduler = new JButton("Disactivate Scheduler");
 		btnDisactivateScheduler.setBackground(Color.LIGHT_GRAY);
@@ -71,8 +77,11 @@ public class GUI extends JFrame
 		btnAddUrl.setBackground(Color.LIGHT_GRAY);
 		btnAddUrl.setBounds(304, 438, 114, 25);
 		contentPane.add(btnAddUrl);
-		setLocationRelativeTo(null);
-		setResizable(false);
+		
+		JScrollPane scrollPane = new JScrollPane(editorPane);
+		scrollPane.setBounds(0, 0, 753, 437);
+		contentPane.add(scrollPane);
+		
 		
 		btnAddUrl.addActionListener(new ActionListener()
 		{
@@ -80,11 +89,52 @@ public class GUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				url = JOptionPane.showInputDialog("Geben sie die URL ein : ");
+				if(url == null || url.isEmpty()) JOptionPane.showMessageDialog(getParent(), "Cannot be Empty");
+				try 
+				{
+					rssReaderList.add(new RssReader(url));
+				} catch (Exception e2) 
+				{JOptionPane.showMessageDialog(getParent(), "Cannot parse given URL");}
 				
 			}
 		});
 		
-		
+		btnUpdate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				String text_to_show = "";
+				
+				for (RssReader rssReader : rssReaderList) 
+				{
+					text_to_show += rssReader.getNewest();
+				}
+				
+				editorPane.setText(text_to_show);				
+				
+			}
+		});
+	}
+	class RunnableUpdate implements Runnable
+	{
+
+		@Override
+		public void run() 
+		{
+			
+			
+		}
 		
 	}
 }
+
+/*
+ * 	https://www.suedtirolnews.it/feed
+ * 	http://www.provinz.bz.it/wetter/rss.asp
+ * 	https://www.spiegel.de/schlagzeilen/tops/index.rss
+ * 
+ * 
+ * 
+ */

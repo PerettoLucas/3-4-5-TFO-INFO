@@ -1,7 +1,5 @@
 package net.tfobz.jtree;
 
-import javax.swing.tree.TreeNode;
-
 public class Addition extends Operation
 {
 	public Addition(Operand operand0, Operand operand1) {
@@ -25,10 +23,5 @@ public class Addition extends Operation
 			return "(" + this.getOperand(0) + "+" + this.getOperand(1) +")" + "=" + getErgebnis() + ")";
 		return null;
 	}
-	@Override
-	public TreeNode getParent()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }

@@ -1,8 +1,7 @@
-package net.tfobz.xmlparser;
+package net.tfobz.rssreader;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -20,30 +19,7 @@ public class RssReader
 	ArrayList<Item> itemList=new ArrayList<>();
 	Item item;
 	
-	private String rss_reader_name;
-
-	/**RssReader parses the XML content of a website
-	 * 
-	 * Automaticly sets a Name for the current RssParser
-	 * 
-	 * @param url the url to parse
-	 * @throws MalformedURLException 
-	 */
-	public RssReader(String url) throws MalformedURLException
-	{
-		try {
-			urlParser(url);
-		} catch (Exception e) {throw new MalformedURLException();}
-	
-		this.rss_reader_name = this.channel.getTitle();
-	}
-	
-	public String getRss_reader_name() 
-	{
-		return rss_reader_name;
-	}
-
-	public void urlParser(String url) throws XMLStreamException, IOException , MalformedURLException
+	public void urlParser(String url) throws XMLStreamException, IOException
 	{
 		this.url = new URL(url);
 		InputStream in = this.url.openStream();
@@ -140,7 +116,6 @@ public class RssReader
 							}
 						}
 						characters ="";
-						
 					}
 					if(isitem && parser.getLocalName().equals("item")) {
 						itemList.add(item);
@@ -168,10 +143,5 @@ public class RssReader
 		}
 		System.out.println();
 		
-	}
-	
-	public String getNewest()
-	{
-		return "Channel : |" + channel.getTitle() + "| Newest Item : " + itemList.get(0).getTitle();
 	}
 }

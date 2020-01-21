@@ -42,76 +42,54 @@ public class Konstante extends Operand
 	@Override
 	public void setUserObject(Object object)
 	{
-		if(object != null)
-			this.ergebnis = ((Operand)object).getErgebnis();
-		
-		
-		//TODO 
+		try {
+			if(object instanceof String) this.ergebnis = Double.parseDouble((String)object);
+		} catch (Exception e) {e.printStackTrace();}
 	}
-	
-	
-	
-	
-	
 	
 	@Override
 	public TreeNode getChildAt(int childIndex)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public int getChildCount()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public int getIndex(TreeNode node)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return -1;
 	}
 	@Override
 	public boolean getAllowsChildren()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public Enumeration<? extends TreeNode> children()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public void insert(MutableTreeNode child,int index)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void remove(int index)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void remove(MutableTreeNode node)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void removeFromParent()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void setParent(MutableTreeNode newParent)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 }
