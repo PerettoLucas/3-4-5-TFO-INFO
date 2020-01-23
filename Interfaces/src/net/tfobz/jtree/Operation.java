@@ -36,20 +36,26 @@ public abstract class Operation extends Operand
 		else
 			return null;
 	}
-	public void vertausche() {
-		if (this.operand[0] != null && this.operand[1] != null) {
+	public void vertausche() 
+	{
+		if (this.operand[0] != null && this.operand[1] != null) 
+		{
 			Operand operand = this.operand[0];
 			this.operand[0] = this.operand[1];
 			this.operand[1] = operand;
-		}
+		}else throw new IllegalArgumentException("Vertauschen nicht möglich da Operand == null");
 	}
-	public void loescheOperand(int position) {
-		if (position == 0) {
+	/**Removes Child at Position 0 or 1 from the Operand Array
+	 * 
+	 * @param position
+	 */
+	public void loescheOperand(int position) 
+	{
+		if (position == 0) 
+		{
 			this.operand[0] = this.operand[1];
 			this.operand[1] = null;
-		} else
-			if (position == 1)
-				this.operand[1] = null;
+		} else if (position == 1) this.operand[1] = null;
 	}
 	
 	
@@ -124,7 +130,8 @@ public abstract class Operation extends Operand
 	@Override
 	public void insert(MutableTreeNode child,int index)
 	{
-		if(index != 0 && index != 1) return;
+		if(index != 0 && index != 1)
+			throw new IllegalArgumentException("Index out of bounds");
 		
 		if(this.operand[0] == null && index == 0) this.operand[0] = (Operand)child;
 		else if (this.operand[0] != null && this.operand[1] == null) this.operand[1] = (Operand)child;
@@ -132,18 +139,21 @@ public abstract class Operation extends Operand
 	@Override
 	public void remove(int index)
 	{
-		if(index != 0 && index != 1) return;
+		if(index != 0 && index != 1)
+			throw new IllegalArgumentException("Index out of bounds");
 		
-		if(index == 0 && this.operand[0] != null) this.operand[0] = null;
-		if(index == 1 && this.operand[1] != null) this.operand[1] = null;
+		loescheOperand(index);
 	}
 	
 	@Override
 	public void remove(MutableTreeNode node)
 	{
+		if (node == null)
+			throw new IllegalArgumentException("node == null");
 		
-		
+		remove(getIndex(node));
 	}
+
 	@Override
 	public void setUserObject(Object object)
 	{
@@ -155,12 +165,14 @@ public abstract class Operation extends Operand
 	{
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void setParent(MutableTreeNode newParent)
 	{
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public TreeNode getParent() {
 		// TODO Auto-generated method stub

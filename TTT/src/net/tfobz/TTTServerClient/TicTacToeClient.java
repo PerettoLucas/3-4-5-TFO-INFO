@@ -26,7 +26,7 @@ import net.tfobz.tictactoe.Spielfeld;
 public class TicTacToeClient extends Spielfeld
 {
 	private Socket client = null;
-	private static String ipAdresse = "127.0.0.1";
+	private static String ipAdresse = "10.216.220.153";
 	private static int PORT = 1024;
 	private static int FELDGROESSE = 3;
 	

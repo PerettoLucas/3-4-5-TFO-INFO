@@ -1,6 +1,8 @@
 package net.tfobz.jtree;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -25,7 +27,6 @@ public class GUI extends JFrame
 	private JPanel contentPane;
 	private TreePopup treePopup = null;
 	private DefaultMutableTreeNode wurzel = null;
-	private TreePath treePath;
 	
 	
 	/**
@@ -146,58 +147,43 @@ public class GUI extends JFrame
 			//Action Listener
 			DeleteItem.addActionListener(event ->
 			{
-				
-				
 				DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
 				if(tree.getSelectionPath() != null)
 				{
-					//Hänge den Knoten zum ausgewählten knoten
+					TreePath parentTreePath = tree.getSelectionPath().getParentPath();
+					
+					//Getting TreeNode to delete from tree
 					MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+					MutableTreeNode parentTreeNode = (MutableTreeNode) parentTreePath.getLastPathComponent();
 					
-					//System.out.println(treeNode.getChildCount());
-					System.out.println("Delete");
-					
-					//treeModel.insertNodeInto(new Konstante(), treeNode, 0);
-					
-					//treeNode.remove(0);
-					
-					TreePath treePath = tree.getSelectionPath();
-				
-					System.out.println(treePath.toString());
-					
+					//removing Child from parenttree
+					parentTreeNode.remove(treeNode);
+
 					treeModel.reload();
-					tree.expandPath(treePath);
-					
+					tree.expandPath(parentTreePath);
 				}
-				
-				  
-				  
 			});
 
 			VertauscheItem.addActionListener(event ->
 			{
 				DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
 				
-				MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
-				
-				
 				if(tree.getSelectionPath() != null)
 				{
-					if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
-					{	
-						treeModel.insertNodeInto(new Konstante(), treeNode, 0);
-						
-						treeModel.removeNodeFromParent(treeNode);
-						
-						TreePath treePath = tree.getSelectionPath();
-						System.out.println(treePath.toString());
-						treeModel.reload();
-						tree.expandPath(treePath);
-					}else if(treeNode instanceof Konstante)
-					{
-						
-					}
+					TreePath parentTreePath = tree.getSelectionPath().getParentPath();
+					
+
+					MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
+					MutableTreeNode parentTreeNode = (MutableTreeNode) parentTreePath.getLastPathComponent();
+					
+					((Operation)parentTreeNode).vertausche();
+					
+					
+					treeModel.reload();
+					tree.expandPath(parentTreePath);
 				}
+				
+				
 				
 			});
 			
@@ -207,12 +193,20 @@ public class GUI extends JFrame
 			multiplikationItem.addActionListener(event -> insertOperand(tree, new Multiplikation()));
 			divisionItem.addActionListener(event -> insertOperand(tree, new Division()));
 			
+			konstanteItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 			
 			
-			
-			add(DeleteItem);
-			add(new JSeparator());
 			add(AddItem);
+			add(new JSeparator());
+			add(VertauscheItem);
+			add(new JSeparator());
+			add(DeleteItem);
 		}
 		
 		private void insertOperand(JTree tree, Operand operation_to_set)
