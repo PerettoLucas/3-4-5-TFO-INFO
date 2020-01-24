@@ -5,8 +5,10 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -20,11 +22,11 @@ public class GUI extends JFrame
 {
 
 	private JPanel contentPane;
-	private ArrayList<RssReader> rssReaderList = new ArrayList<>();
+	private ArrayList<RssReader2Runnable> rssReaderList = new ArrayList<>();
 	private RssReader reader ;
 	private String url;
 	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -37,6 +39,11 @@ public class GUI extends JFrame
 				try
 				{
 					GUI frame=new GUI();
+					//TODO editorPane definieren
+					frame.rssReaderList.add(new RssReader2Runnable("https://www.suedtirolnews.it/feed", null));
+					frame.rssReaderList.add(new RssReader2Runnable("http://www.provinz.bz.it/wetter/rss.asp", null));
+					frame.rssReaderList.add(new RssReader2Runnable("https://www.spiegel.de/schlagzeilen/tops/index.rss", null));
+	
 					frame.setVisible(true);
 				}catch(Exception e)
 				{
@@ -93,7 +100,7 @@ public class GUI extends JFrame
 				if(url == null || url.isEmpty()) JOptionPane.showMessageDialog(getParent(), "Cannot be Empty");
 				try 
 				{
-					rssReaderList.add(new RssReader(url));
+//					rssReaderList.add(new RssReader(url));
 				} catch (Exception e2) 
 				{JOptionPane.showMessageDialog(getParent(), "Cannot parse given URL");}
 				
@@ -103,16 +110,14 @@ public class GUI extends JFrame
 		btnUpdate.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				String text_to_show = "";
-				
-				for (RssReader rssReader : rssReaderList) 
-				{
-					text_to_show += rssReader.getNewest();
+			public void actionPerformed(ActionEvent e) {
+				for (RssReader2Runnable rssReader2Runnable : rssReaderList) {
+					scheduler.scheduleAtFixedRate(
+							rssReader2Runnable,
+							0,
+							10,
+							TimeUnit.SECONDS);
 				}
-				
-				editorPane.setText(text_to_show);				
 				
 			}
 		});
@@ -120,10 +125,19 @@ public class GUI extends JFrame
 	class RunnableUpdate implements Runnable
 	{
 
+		 
+		
+		public RunnableUpdate() 
+		{
+			
+			
+		}
+		
+		
 		@Override
 		public void run() 
 		{
-			
+			//Getting all New Items / Calling Update Button
 			
 		}
 		
