@@ -9,8 +9,7 @@ public class MeineDefaultListe implements MeineListe
 	{
 		private Object element = null;
 		private ListenElement naechstesElem = null;
-		private ListenElement(
-			Object element, ListenElement naechstesElem) {
+		private ListenElement(Object element, ListenElement naechstesElem) {
 			this.element = element;
 			this.naechstesElem = naechstesElem;
 		}

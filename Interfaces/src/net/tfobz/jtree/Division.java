@@ -23,10 +23,5 @@ public class Division extends Operation
 			return "(" + this.getOperand(0) + "/" + this.getOperand(1) +")" + "=" + getErgebnis() + ")";
 		return null;
 	}
-	@Override
-	public TreeNode getParent()
-	{
-		
-		return null;
-	}
+	
 }

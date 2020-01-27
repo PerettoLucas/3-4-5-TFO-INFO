@@ -176,7 +176,13 @@ public class GUI extends JFrame
 					MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
 					MutableTreeNode parentTreeNode = (MutableTreeNode) parentTreePath.getLastPathComponent();
 					
-					((Operation)parentTreeNode).vertausche();
+					try {
+						((Operation)parentTreeNode).vertausche();
+					} catch (Exception e) 
+					{
+						treeModel.reload();
+						tree.expandPath(parentTreePath);
+					}
 					
 					
 					treeModel.reload();
@@ -192,14 +198,6 @@ public class GUI extends JFrame
 			subtraktionItem.addActionListener(event -> insertOperand(tree, new Subtraktion()));
 			multiplikationItem.addActionListener(event -> insertOperand(tree, new Multiplikation()));
 			divisionItem.addActionListener(event -> insertOperand(tree, new Division()));
-			
-			konstanteItem.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
 			
 			
 			add(AddItem);

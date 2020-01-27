@@ -11,7 +11,7 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-public class RssReader2
+public class ScheduledRssReader
 {
 	
 	private String urlString;
@@ -23,7 +23,7 @@ public class RssReader2
 	 * @param url the url to parse
 	 * @throws MalformedURLException 
 	 */
-	public RssReader2(String urlString) 
+	public ScheduledRssReader(String urlString) 
 	{
 		this.urlString = urlString;
 	}
@@ -146,7 +146,7 @@ public class RssReader2
 				}
 			}
 		}
-		return "Channel : |" + channel.getTitle() + "| Newest Item : " + itemList.get(0).getTitle();
+		return "<b>Channel : </b> " + channel.getTitle() + "<b> Newest Item : </b>" + itemList.get(0).getTitle() + " <b>Date : </b>" + itemList.get(0).getPubDate();
 	}
 	
 }

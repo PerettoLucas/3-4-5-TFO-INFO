@@ -26,19 +26,6 @@ public class Konstante extends Operand
 		return String.valueOf(this.ergebnis);
 	}
 
-	
-	@Override
-	public TreeNode getParent()
-	{
-		return null;
-	}
-	
-	@Override
-	public boolean isLeaf()
-	{
-		return true;
-	}
-	
 	@Override
 	public void setUserObject(Object object)
 	{
@@ -47,6 +34,23 @@ public class Konstante extends Operand
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	
+	
+	@Override
+	public boolean isLeaf()
+	{
+		return true;
+	}
+	
+	/*Diese Methoden werden nicht gebraucht 
+	 * 
+	 * (non-Javadoc)
+	 * @see javax.swing.tree.TreeNode#getParent()
+	 */
+	@Override
+	public TreeNode getParent()
+	{
+		return null;
+	}
 	@Override
 	public TreeNode getChildAt(int childIndex)
 	{
