@@ -57,7 +57,6 @@ public class Engine
 	 * Initialisiert Bewegung der Objekte
 	 */
 	public void initGame() {
-		// TODO Auto-generated method stub
 		gametimer.start();	
 		System.out.println("[DEBUG] Obstacles movement initialized");
 	}

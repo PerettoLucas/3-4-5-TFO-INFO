@@ -57,8 +57,6 @@ public class Spielfeld
 	 * return: das Spielfeld aufgeteilt auf mehrere Zeilen
 	 */
 	public String toString(){
-		//TODO X/O einbinden 
-		
 		String ret = "";
 		
 		for(int i = 0; i < spielfeld.length; i++)

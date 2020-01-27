@@ -41,31 +41,23 @@ public class Obstacle extends JPanel
 				try {
 					cactus = ImageIO.read(this.getClass().getResource("assets\\Cactus-1.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 				break;
 			case 2:
 				try {
 					cactus = ImageIO.read(this.getClass().getResource("assets\\Cactus-2.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
 			case 3:
 				try {
 					cactus = ImageIO.read(this.getClass().getResource("assets\\Cactus-3.png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+				} catch (IOException e) {}
 			case 4:
 				try {
 					cactus = ImageIO.read(this.getClass().getResource("assets\\Cactus-4.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
@@ -73,7 +65,6 @@ public class Obstacle extends JPanel
 				try {
 					cactus = ImageIO.read(this.getClass().getResource("assets\\Cactus-5.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
@@ -101,12 +92,10 @@ public class Obstacle extends JPanel
 	//Darf dur einmal aufgerufen werden.
 	@Deprecated
 	public void updatePos() {
-		// TODO Auto-generated method stub
 		Thread t = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				
 				while(hitbox.getMaxX()>0) {
 					locx -= speed;
@@ -115,7 +104,6 @@ public class Obstacle extends JPanel
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} 
 				}

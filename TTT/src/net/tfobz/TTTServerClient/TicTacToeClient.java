@@ -103,7 +103,6 @@ public class TicTacToeClient extends Spielfeld
 		return ret;
 	}
 		
-	//TODO kommentieren
 	public void close() throws IOException
 	{		
 		if(client != null) {

@@ -22,7 +22,6 @@ public class Ground extends JPanel
 		try {
 			ground = ImageIO.read(this.getClass().getResource("assets\\Ground.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	

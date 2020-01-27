@@ -11,7 +11,6 @@ import javax.swing.tree.TreePath;
 
 public class MenueActionListener implements ActionListener
 {
-	//TODO set JTree
 	private JTree jTree ;
 	
 	public MenueActionListener(JTree jTree)
@@ -30,7 +29,7 @@ public class MenueActionListener implements ActionListener
 		DefaultTreeModel treeModel = (DefaultTreeModel)jTree.getModel();
 		if(jTree.getSelectionPath() == null)
 		{
-			//Hänge einen neuen Knoten an die Wurzel
+			//Hï¿½nge einen neuen Knoten an die Wurzel
 			DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
 			if(root.getChildCount() == 0)
 			{
@@ -39,7 +38,7 @@ public class MenueActionListener implements ActionListener
 			}
 			jTree.setSelectionPath(new TreePath(root));
 		} else {
-			//Hänge den Knoten zum ausgewählten knoten
+			//Hï¿½nge den Knoten zum ausgewï¿½hlten knoten
 			MutableTreeNode treeNode = (MutableTreeNode) jTree.getSelectionPath().getLastPathComponent();
 			System.out.println(treeNode.getChildCount());
 			if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 

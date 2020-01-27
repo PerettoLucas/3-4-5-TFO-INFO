@@ -26,7 +26,6 @@ public class Multiplikation extends Operation
 	@Override
 	public TreeNode getParent()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

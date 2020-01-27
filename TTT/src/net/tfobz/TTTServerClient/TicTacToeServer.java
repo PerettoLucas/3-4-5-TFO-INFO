@@ -118,7 +118,6 @@ public class TicTacToeServer extends Spielfeld
 		
 		return 0;
 	}
-	//TODO kommentieren
 	public int setMeinZug(int zug) throws IOException
 	{
 		int retzug2 = setZugSpieler2(zug);

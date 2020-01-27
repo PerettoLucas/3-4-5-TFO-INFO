@@ -83,7 +83,7 @@ public class Player extends JPanel
 	}
 
 	/**
-	 * Lädt die einzellnen Bilder des Spielers in ein Feld.
+	 * Lï¿½dt die einzellnen Bilder des Spielers in ein Feld.
 	 */
 	private void laodspritesheet() {
 		
@@ -92,7 +92,6 @@ public class Player extends JPanel
 			dinosprite[1] = ImageIO.read(this.getClass().getResource("assets\\Dino-left-up.png"));
 			dinosprite[2] = ImageIO.read(this.getClass().getResource("assets\\Dino-right-up.png"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		dino = dinosprite[animation_state];
@@ -112,7 +111,6 @@ public class Player extends JPanel
 	 * @param y Position des Spielers
 	 */
 	public void updatePos(int x, int y) {
-		// TODO Auto-generated method stub
 		hitbox.setLocation( x , y );
 	}
 	
@@ -125,7 +123,6 @@ public class Player extends JPanel
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				in_air = true;
 				timer.stop();
 				for( int i = 0; i <= 15; i++) {

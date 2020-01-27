@@ -43,7 +43,7 @@ public abstract class Operation extends Operand
 			Operand operand = this.operand[0];
 			this.operand[0] = this.operand[1];
 			this.operand[1] = operand;
-		}else throw new IllegalArgumentException("Vertauschen nicht möglich da Operand == null");
+		}else throw new IllegalArgumentException("Vertauschen nicht mï¿½glich da Operand == null");
 	}
 	/**Removes Child at Position 0 or 1 from the Operand Array
 	 * 
@@ -157,13 +157,11 @@ public abstract class Operation extends Operand
 	@Override
 	public void setUserObject(Object object)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void removeFromParent()
 	{
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -175,7 +173,6 @@ public abstract class Operation extends Operand
 
 	@Override
 	public TreeNode getParent() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

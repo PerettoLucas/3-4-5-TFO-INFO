@@ -1,20 +1,30 @@
 package net.tfobz.xmlparser;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame
 {
 
@@ -23,7 +33,9 @@ public class GUI extends JFrame
 	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	private JEditorPane editorPane;
 	private StringBuilder stringBuilder = new StringBuilder();
-	private boolean active_flag = true;
+	private boolean active_flag = false;
+	private TrayIcon trayIcon ;
+	
 	
 	/**
 	 * Launch the application.
@@ -65,7 +77,7 @@ public class GUI extends JFrame
 		btnUpdate.setBounds(633, 438, 114, 25);
 		contentPane.add(btnUpdate);
 		
-		JButton btnDisactivateScheduler = new JButton("Disactivate Scheduler");
+		JButton btnDisactivateScheduler = new JButton("Activate Scheduler");
 		btnDisactivateScheduler.setBackground(Color.LIGHT_GRAY);
 		btnDisactivateScheduler.setBounds(430, 438, 191, 25);
 		contentPane.add(btnDisactivateScheduler);
@@ -88,14 +100,12 @@ public class GUI extends JFrame
 		rssReaderList.add(new RssReaderRunnable("http://www.provinz.bz.it/wetter/rss.asp", editorPane, stringBuilder));
 		rssReaderList.add(new RssReaderRunnable("https://www.spiegel.de/schlagzeilen/tops/index.rss", editorPane, stringBuilder));
 		
-		for (RssReaderRunnable rssReader2Runnable : rssReaderList) 
-		{
-			scheduler.scheduleAtFixedRate(rssReader2Runnable, 0, 10, TimeUnit.SECONDS);
-		}		
+		/*
+		 * ActionListener für die Knöpfe
+		 */
 		
 		btnAddUrl.addActionListener(e -> 
 		{
-
 			String url = JOptionPane.showInputDialog("Geben sie die URL ein : ");
 			if(url == null || url.isEmpty()) JOptionPane.showMessageDialog(getParent(), "Cannot be Empty");
 			try 
@@ -120,7 +130,6 @@ public class GUI extends JFrame
 			
 		});
 		
-		
 		btnDisactivateScheduler.addActionListener(e -> 
 		{
 			
@@ -137,13 +146,14 @@ public class GUI extends JFrame
 			else
 			{
 				btnDisactivateScheduler.setText("Deactivate Scheduler");
-				stringBuilder.append("<br><b> Scheduler is now Active (schedule Period = 10 Sec.) </b><br>");
+				stringBuilder.append("<b> Scheduler is now Active (schedule Period = 10 Sec.) </b><br>");
 				editorPane.setText(stringBuilder.toString());
+				
 				
 				scheduler = Executors.newScheduledThreadPool(10);
 				
-				MessageRunnable messageRunnable = new MessageRunnable(editorPane, stringBuilder);
-				scheduler.scheduleAtFixedRate(messageRunnable, 0, 10, TimeUnit.SECONDS);
+				//Sending updating message to Pane and Tray Icon
+				scheduler.scheduleAtFixedRate(new MessageRunnable(editorPane, stringBuilder, trayIcon), 0, 10, TimeUnit.SECONDS);
 				
 				for (RssReaderRunnable rssReaderRunnable : rssReaderList) 
 				{
@@ -154,6 +164,72 @@ public class GUI extends JFrame
 			}
 		});
 		
+		
+	}
+	
+	
+	public class Tray
+	{
+		public Tray() 
+		{
+			// Schedule a job for the event-dispatching thread:
+			// adding TrayIcon.
+			SwingUtilities.invokeLater(()-> createAndShowGUI());
+		}
+
+		private void createAndShowGUI() 
+		{
+			// Check the SystemTray support
+			if (!SystemTray.isSupported()) 
+			{
+				System.out.println("SystemTray is not supported");
+				return;
+			}
+			
+			final PopupMenu popup = new PopupMenu();
+			trayIcon = new TrayIcon(createImage("bulb.gif", "tray icon"));
+			final SystemTray tray = SystemTray.getSystemTray();
+
+			trayIcon.setToolTip("New Items\nThere are new RSS Items");
+			trayIcon.setImageAutoSize(true);
+			// Create a popup menu components
+			MenuItem aboutItem = new MenuItem("About");
+			MenuItem exitItem = new MenuItem("Exit");
+
+			// Add components to popup menu
+			popup.add(aboutItem);
+			popup.addSeparator();
+			popup.add(exitItem);
+
+			trayIcon.setPopupMenu(popup);
+
+			try {
+				tray.add(trayIcon);
+			} catch (AWTException e) {
+				System.out.println("TrayIcon could not be added.");
+				return;
+			}
+
+			trayIcon.addActionListener(e->JOptionPane.showMessageDialog(null, "This dialog box is run from System Tray"));
+			aboutItem.addActionListener(e->JOptionPane.showMessageDialog(null, "This is the Tray of the RSS-Feed-GUI"));
+			exitItem.addActionListener(e->
+			{
+				tray.remove(trayIcon);
+				System.exit(0);
+			});
+		}
+
+		// Obtain the image URL
+		protected Image createImage(String path, String description) 
+		{
+			URL imageURL = Tray.class.getResource(path);
+			if (imageURL == null) {
+				System.err.println("Resource not found: " + path);
+				return null;
+			} else {
+				return (new ImageIcon(imageURL, description)).getImage();
+			}
+		}
 	}
 	
 }

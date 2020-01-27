@@ -87,7 +87,6 @@ public class GUI extends JFrame
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if (e.getKeyChar()==' ' && !engine.player.isIn_air()) {
 					System.out.println("[DEBUG] Space pressed");
 					engine.player.jump();
@@ -96,13 +95,11 @@ public class GUI extends JFrame
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -111,7 +108,6 @@ public class GUI extends JFrame
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				engine.player.setDead(false);
 				engine.generate_obstacles(5);
 				engine.initGame();
@@ -125,7 +121,6 @@ public class GUI extends JFrame
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				System.out.println("[DEBUG] Quit pressed");
 				System.exit(0);
 			}

@@ -64,24 +64,24 @@ public class GUI extends JFrame
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		//DefaultMutableTreeNode ermöglicht es Dynamisch "Kinder hinzuzufügen"
+		//DefaultMutableTreeNode ermï¿½glicht es Dynamisch "Kinder hinzuzufï¿½gen"
 		wurzel = new DefaultMutableTreeNode("unsichtbare Wurzel");
 		wurzel.add(new Addition());
 	
 		
-		//Renderer setzt die Icons der Baumäste
+		//Renderer setzt die Icons der Baumï¿½ste
 		MeinDefaultTreeCellRenderer meinDefaultTreeCellRenderer = new MeinDefaultTreeCellRenderer();
 		TreeModel treeModel = new DefaultTreeModel(wurzel);
 		
 		JTree tree = new JTree(treeModel);
 		tree.setBounds(12, 0, 600, 418);
 		contentPane.add(tree);
-		//SetEditable true damit mann den inhalt verändern kann
+		//SetEditable true damit mann den inhalt verï¿½ndern kann
 		tree.setEditable(true);
 		tree.setCellRenderer(meinDefaultTreeCellRenderer);
 		tree.setRootVisible(false);
 
-		//treePopup bietet das Menu um Veränderungen durchzuführen
+		//treePopup bietet das Menu um Verï¿½nderungen durchzufï¿½hren
 		treePopup = new TreePopup(tree);
 		
 		tree.addMouseListener(new MouseListener() {
@@ -101,21 +101,18 @@ public class GUI extends JFrame
 			@Override
 			public void mouseExited(MouseEvent e)
 			{
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e)
 			{
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -212,7 +209,7 @@ public class GUI extends JFrame
 			DefaultTreeModel treeModel = (DefaultTreeModel)tree.getModel();
 			if(tree.getSelectionPath() == null)
 			{
-				//Hänge einen neuen Knoten an die Wurzel
+				//Hï¿½nge einen neuen Knoten an die Wurzel
 				DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
 				if(root.getChildCount() == 0)
 				{
@@ -220,7 +217,7 @@ public class GUI extends JFrame
 					treeModel.reload();
 				}
 			} else {
-				//Hänge den Knoten zum ausgewählten knoten
+				//Hï¿½nge den Knoten zum ausgewï¿½hlten knoten
 				MutableTreeNode treeNode = (MutableTreeNode) tree.getSelectionPath().getLastPathComponent();
 				System.out.println(treeNode.getChildCount());
 				if(treeNode instanceof Operation && ((Operation)treeNode).getChildCount() < 2) 
