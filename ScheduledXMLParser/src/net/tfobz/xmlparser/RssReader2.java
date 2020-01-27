@@ -23,11 +23,12 @@ public class RssReader2
 	 * @param url the url to parse
 	 * @throws MalformedURLException 
 	 */
-	public RssReader2(String urlString) {
+	public RssReader2(String urlString) 
+	{
 		this.urlString = urlString;
 	}
 	
-	public String getNewest() throws XMLStreamException, IOException , MalformedURLException
+	public String getNewest() throws IOException, XMLStreamException
 	{
 		boolean isitem = false;
 		Channel channel=new Channel();

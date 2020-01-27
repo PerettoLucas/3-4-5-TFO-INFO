@@ -2,8 +2,6 @@ package net.tfobz.xmlparser;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,10 +21,10 @@ public class GUI extends JFrame
 
 	private JPanel contentPane;
 	private ArrayList<RssReader2Runnable> rssReaderList = new ArrayList<>();
-	private RssReader reader ;
-	private String url;
 	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
-
+	private JEditorPane editorPane;
+	private StringBuilder stringBuilder = new StringBuilder();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -39,10 +37,6 @@ public class GUI extends JFrame
 				try
 				{
 					GUI frame=new GUI();
-					//TODO editorPane definieren
-					frame.rssReaderList.add(new RssReader2Runnable("https://www.suedtirolnews.it/feed", null));
-					frame.rssReaderList.add(new RssReader2Runnable("http://www.provinz.bz.it/wetter/rss.asp", null));
-					frame.rssReaderList.add(new RssReader2Runnable("https://www.spiegel.de/schlagzeilen/tops/index.rss", null));
 	
 					frame.setVisible(true);
 				}catch(Exception e)
@@ -67,7 +61,7 @@ public class GUI extends JFrame
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		JEditorPane editorPane = new JEditorPane();
+		editorPane = new JEditorPane();
 		editorPane.setEditable(false);
 		
 		JButton btnUpdate = new JButton("Update");
@@ -89,57 +83,42 @@ public class GUI extends JFrame
 		scrollPane.setBounds(0, 0, 753, 437);
 		contentPane.add(scrollPane);
 		
+		//TODO editorPane definieren
+		rssReaderList.add(new RssReader2Runnable("https://www.suedtirolnews.it/feed", editorPane, stringBuilder));
+		rssReaderList.add(new RssReader2Runnable("http://www.provinz.bz.it/wetter/rss.asp", editorPane, stringBuilder));
+		rssReaderList.add(new RssReader2Runnable("https://www.spiegel.de/schlagzeilen/tops/index.rss", editorPane, stringBuilder));
 		
-		btnAddUrl.addActionListener(new ActionListener()
+		btnAddUrl.addActionListener(e -> 
 		{
 			
-			@Override
-			public void actionPerformed(ActionEvent e)
+			String url = JOptionPane.showInputDialog("Geben sie die URL ein : ");
+			if(url == null || url.isEmpty()) JOptionPane.showMessageDialog(getParent(), "Cannot be Empty");
+			try 
 			{
-				url = JOptionPane.showInputDialog("Geben sie die URL ein : ");
-				if(url == null || url.isEmpty()) JOptionPane.showMessageDialog(getParent(), "Cannot be Empty");
-				try 
-				{
-//					rssReaderList.add(new RssReader(url));
-				} catch (Exception e2) 
-				{JOptionPane.showMessageDialog(getParent(), "Cannot parse given URL");}
-				
-			}
-		});
-		
-		btnUpdate.addActionListener(new ActionListener() {
+				rssReaderList.add(new RssReader2Runnable(url, editorPane, stringBuilder));
+			} catch (Exception e2) 
+			{JOptionPane.showMessageDialog(getParent(), "Cannot parse given URL");}
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (RssReader2Runnable rssReader2Runnable : rssReaderList) {
-					scheduler.scheduleAtFixedRate(
-							rssReader2Runnable,
-							0,
-							10,
-							TimeUnit.SECONDS);
-				}
-				
-			}
 		});
-	}
-	class RunnableUpdate implements Runnable
-	{
-
-		 
 		
-		public RunnableUpdate() 
+		btnUpdate.addActionListener(e -> 
+		{
+			for (RssReader2Runnable rssReader2Runnable : rssReaderList) 
+			{
+				scheduler.execute(rssReader2Runnable);
+			}
+			
+		});
+		
+		
+		btnDisactivateScheduler.addActionListener(e -> 
 		{
 			
 			
-		}
-		
-		
-		@Override
-		public void run() 
-		{
-			//Getting all New Items / Calling Update Button
 			
-		}
+			
+			
+		});
 		
 	}
 }
