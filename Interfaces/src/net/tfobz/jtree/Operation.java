@@ -58,7 +58,6 @@ public abstract class Operation extends Operand
 		} else if (position == 1) this.operand[1] = null;
 	}
 	
-	
 	@Override
 	public TreeNode getChildAt(int childIndex) 
 	{
@@ -125,7 +124,6 @@ public abstract class Operation extends Operand
 		};
 	}
 	
-	
 	// Implementation of MutableNode
 	@Override
 	public void insert(MutableTreeNode child,int index)
@@ -154,6 +152,9 @@ public abstract class Operation extends Operand
 		remove(getIndex(node));
 	}
 
+	
+	//Diese Methoden werden nicht gebraucht
+	
 	@Override
 	public void setUserObject(Object object)
 	{
@@ -163,14 +164,10 @@ public abstract class Operation extends Operand
 	public void removeFromParent()
 	{
 	}
-
 	@Override
 	public void setParent(MutableTreeNode newParent)
 	{
-		// TODO Auto-generated method stub
-		
 	}
-
 	@Override
 	public TreeNode getParent() {
 		return null;
