@@ -30,5 +30,33 @@ public class Arbeitstage implements Iterable<Arbeitswoche>
 		return null;
 	}
 	
+	private void add(Wochentag wochentag) 
+	{
+		enumSet.add(wochentag);
+	}
+	
+	private void remove(Wochentag wochentag) 
+	{
+		if(enumSet.contains(wochentag)) enumSet.remove(wochentag);
+		else throw new IllegalArgumentException("Wochentag not contained in EnumSet");
+	}
+	
+	private boolean contains(Wochentag wochentag) 
+	{
+		if(enumSet.contains(wochentag)) return true;
+		else return false;
+	}
+	
+	@Override
+	public String toString() 
+	{
+		return enumSet.toString();
+	}
+	
+	private void getWochenart() 
+	{
+		
+	}
+	
 	
 }
