@@ -35,7 +35,7 @@ public class GUI extends JFrame
 	private StringBuilder stringBuilder = new StringBuilder();
 	private boolean active_flag = false;
 	private TrayIcon trayIcon ;
-	
+	private Tray tray = null;
 	
 	/**
 	 * Launch the application.
@@ -71,6 +71,8 @@ public class GUI extends JFrame
 		editorPane = new JEditorPane();
 		editorPane.setEditable(false);
 		editorPane.setContentType("text/html");
+		
+		tray = new Tray();
 		
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setBackground(Color.LIGHT_GRAY);
@@ -153,11 +155,11 @@ public class GUI extends JFrame
 				scheduler = Executors.newScheduledThreadPool(10);
 				
 				//Sending updating message to Pane and Tray Icon
-				scheduler.scheduleAtFixedRate(new MessageRunnable(editorPane, stringBuilder, trayIcon), 0, 10, TimeUnit.SECONDS);
+				scheduler.scheduleAtFixedRate(new MessageRunnable(editorPane, stringBuilder, trayIcon), 10, 10, TimeUnit.SECONDS);
 				
 				for (RssReaderRunnable rssReaderRunnable : rssReaderList) 
 				{
-					scheduler.scheduleAtFixedRate(rssReaderRunnable, 0, 10, TimeUnit.SECONDS);
+					scheduler.scheduleAtFixedRate(rssReaderRunnable, 10, 10, TimeUnit.SECONDS);
 				}
 				
 				active_flag = true;
@@ -190,14 +192,11 @@ public class GUI extends JFrame
 			trayIcon = new TrayIcon(createImage("bulb.gif", "tray icon"));
 			final SystemTray tray = SystemTray.getSystemTray();
 
-			trayIcon.setToolTip("New Items\nThere are new RSS Items");
 			trayIcon.setImageAutoSize(true);
 			// Create a popup menu components
-			MenuItem aboutItem = new MenuItem("About");
 			MenuItem exitItem = new MenuItem("Exit");
 
 			// Add components to popup menu
-			popup.add(aboutItem);
 			popup.addSeparator();
 			popup.add(exitItem);
 
@@ -211,7 +210,6 @@ public class GUI extends JFrame
 			}
 
 			trayIcon.addActionListener(e->JOptionPane.showMessageDialog(null, "This dialog box is run from System Tray"));
-			aboutItem.addActionListener(e->JOptionPane.showMessageDialog(null, "This is the Tray of the RSS-Feed-GUI"));
 			exitItem.addActionListener(e->
 			{
 				tray.remove(trayIcon);
