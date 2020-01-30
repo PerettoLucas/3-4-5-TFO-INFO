@@ -3,11 +3,12 @@ package net.tfobz.wochenenums;
 import java.util.EnumSet;
 import java.util.Iterator;
 
-public class Arbeitstage implements Iterable<Arbeitswoche>
+public class Arbeitstage implements Iterable<Wochentag>
 {
 	public static void main(String[] args)
 	{
-		Arbeitstage arbeitstage = new Arbeitstage(Wochentag.DIENSTAG,Wochentag.SONNTAG);
+		
+		
 	}
 	
 	EnumSet<Wochentag> enumSet = EnumSet.noneOf(Wochentag.class);;
@@ -25,9 +26,9 @@ public class Arbeitstage implements Iterable<Arbeitswoche>
 	
 
 	@Override
-	public Iterator<Arbeitswoche> iterator()
+	public Iterator<Wochentag> iterator()
 	{
-		return null;
+		return enumSet.iterator();
 	}
 	
 	private void add(Wochentag wochentag) 
@@ -53,9 +54,11 @@ public class Arbeitstage implements Iterable<Arbeitswoche>
 		return enumSet.toString();
 	}
 	
-	private void getWochenart() 
+	private Arbeitswoche getWochenart() 
 	{
-		
+		if(enumSet.size() == 6) return Arbeitswoche.SECHSTAGE;
+		else if(enumSet.size() == 5) return Arbeitswoche.FUENFTAGE;
+		else return null;
 	}
 	
 	
