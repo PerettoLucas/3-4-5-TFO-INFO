@@ -5,12 +5,6 @@ import java.util.Iterator;
 
 public class Arbeitstage implements Iterable<Wochentag>
 {
-	public static void main(String[] args)
-	{
-		
-		
-	}
-	
 	EnumSet<Wochentag> enumSet = EnumSet.noneOf(Wochentag.class);;
 	
 	
@@ -31,21 +25,19 @@ public class Arbeitstage implements Iterable<Wochentag>
 		return enumSet.iterator();
 	}
 	
-	private void add(Wochentag wochentag) 
+	public void add(Wochentag wochentag) 
 	{
 		enumSet.add(wochentag);
 	}
 	
-	private void remove(Wochentag wochentag) 
+	public boolean remove(Wochentag wochentag) 
 	{
-		if(enumSet.contains(wochentag)) enumSet.remove(wochentag);
-		else throw new IllegalArgumentException("Wochentag not contained in EnumSet");
+		return enumSet.remove(wochentag);
 	}
 	
-	private boolean contains(Wochentag wochentag) 
+	public boolean contains(Wochentag wochentag) 
 	{
-		if(enumSet.contains(wochentag)) return true;
-		else return false;
+		return enumSet.contains(wochentag);
 	}
 	
 	@Override
@@ -54,7 +46,7 @@ public class Arbeitstage implements Iterable<Wochentag>
 		return enumSet.toString();
 	}
 	
-	private Arbeitswoche getWochenart() 
+	public Arbeitswoche getWochenart() 
 	{
 		if(enumSet.size() == 6) return Arbeitswoche.SECHSTAGE;
 		else if(enumSet.size() == 5) return Arbeitswoche.FUENFTAGE;
