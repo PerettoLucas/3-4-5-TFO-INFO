@@ -1,14 +1,13 @@
 package net.tfobz.personen;
 
 import java.util.ArrayList;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class ListToStream
+public class LambdaTest
 {
 	
 	static Person p1 = new Person("Lucas",17);
@@ -22,33 +21,37 @@ public class ListToStream
 	public static void main(String[] args)
 	{
 		System.out.println("Übung 3");
-		ListToStream.ListToStreamOutput();
+		LambdaTest.ListToStreamOutput();
 		
 		System.out.println("Übung 4");
-		ListToStream.StreamBuilderOutput();
+		LambdaTest.StreamBuilderOutput();
 		
 		System.out.println("Übung 5");
-		ListToStream.IntStreamoutput();
+		LambdaTest.IntStreamoutput();
 		
 		System.out.println("Übung 6");
-		ListToStream.DoubleStreamOutput();
+		LambdaTest.DoubleStreamOutput();
 		
 		System.out.println("Übung 7");
-		ListToStream.GroesstenWert();
+		LambdaTest.GroesstenWert();
 		
 		System.out.println("Übung 9");
-		ListToStream.summeIntOutput();
+		LambdaTest.summeIntOutput();
 	
 		System.out.println("Übung 11");
-		ListToStream.kommaSepariert();
+		LambdaTest.kommaSepariert();
 		
 		System.out.println("Übung 12");
-		ListToStream.insUndendliche();
+		LambdaTest.insUndendliche();
 		
-		System.out.println("�bung 10");
-		ListToStream.personlistInfo();
+		System.out.println("�bung 10");
+		LambdaTest.personlistInfo();
 		
+		System.out.println("Übung 11");
+		LambdaTest.gruppieren();
 		
+		System.out.println("Gruppieren nach instance of Handwerker ");
+		LambdaTest.gruppierenPerson();
 		
 		
 		
@@ -165,7 +168,65 @@ public class ListToStream
 		
 		System.out.println("Summe des Alters aller Personen : " + list.stream().collect(Collectors.summarizingInt(Person::getAlter)).getSum());
 		
-//		System.out.println(list.stream().map(x -> x.getAlter()).collect(Collectors.summarizingInt(mapper)));
+		System.out.println("Minimum des Alters aller Personen : " + list.stream().collect(Collectors.summarizingInt(x -> x.getAlter())).getMin());
+		
+		System.out.println("Maximum des Alters aller Personen : " + list.stream().collect(Collectors.summarizingInt(x -> x.getAlter())).getMax());
+		
+		System.out.println("Durchschnitt des Alters aller Personen : " + list.stream().collect(Collectors.summarizingInt(x -> x.getAlter())).getAverage());
+	}
+	
+	
+	public static void gruppieren()
+	{
+		List<Person> list = new ArrayList<>();
+		
+		list.add(p1);
+		list.add(p2);
+		list.add(p3);
+		list.add(p4);
+		list.add(p5);
+		
+		System.out.println(list.stream()
+								.map(p -> { 
+									p.getName().charAt(0);
+									return p;
+								})
+								.collect(Collectors.groupingBy(p -> p.getName().charAt(0))));
+	}
+	
+	public static void gruppierenPerson()
+	{
+		List<Person> list = new ArrayList<>();
+		
+		list.add(p1);
+		list.add(p2);
+		list.add(p3);
+		list.add(p4);
+		list.add(p5);
+		list.add(h1);
+		list.add(h2);
+		
+		System.out.println(list.stream()
+								.collect(Collectors.groupingBy(p -> p instanceof Handwerker))
+										
+										);
+	}
+	
+	public static void loeschenKuerzerKleinerAlsVier() 
+	{
+		List<Person> list = new ArrayList<>();
+		
+		list.add(p1);
+		list.add(p2);
+		list.add(p3);
+		list.add(p4);
+		list.add(p5);
+		list.add(h1);
+		list.add(h2);
+		
+		
+		
+		
 	}
 	
 	
