@@ -1,6 +1,7 @@
 package net.tfobz.personen;
 
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -13,6 +14,8 @@ public class ListToStream
 	static Person p1 = new Person("Lucas",17);
 	static Person p2 = new Person("Filo",17);
 	static Person p3 = new Person("KAhnung",33);
+	static Person p4 = new Person("Sepp", 88);
+	static Person p5 = new Person("Franz", 78);
 	static Handwerker h1 = new Handwerker("simon",30,"hydrauliker");
 	static Handwerker h2 = new Handwerker("tommy",60,"Freiberufler");
 	
@@ -36,11 +39,17 @@ public class ListToStream
 		System.out.println("Übung 9");
 		ListToStream.summeIntOutput();
 	
-		System.out.println("Übung 10");
+		System.out.println("Übung 11");
 		ListToStream.kommaSepariert();
 		
-		System.out.println("Übung 11");
+		System.out.println("Übung 12");
 		ListToStream.insUndendliche();
+		
+		System.out.println("�bung 10");
+		ListToStream.personlistInfo();
+		
+		
+		
 		
 		
 	}
@@ -141,5 +150,23 @@ public class ListToStream
 				.limit(10)
 				.forEach(System.out::println);
 	}
+	
+	public static void personlistInfo()
+	{
+		List<Person> list = new ArrayList<>();
+		
+		list.add(p1);
+		list.add(p2);
+		list.add(p3);
+		list.add(p4);
+		list.add(p5);
+		
+		System.out.println("Anzahl Personen : " + list.stream().collect(Collectors.counting()).intValue());
+		
+		System.out.println("Summe des Alters aller Personen : " + list.stream().collect(Collectors.summarizingInt(Person::getAlter)).getSum());
+		
+//		System.out.println(list.stream().map(x -> x.getAlter()).collect(Collectors.summarizingInt(mapper)));
+	}
+	
 	
 }
