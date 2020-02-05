@@ -3,6 +3,7 @@ package net.tfobz.personen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -13,7 +14,7 @@ public class LambdaTest
 	static Person p1 = new Person("Lucas",17);
 	static Person p2 = new Person("Filo",17);
 	static Person p3 = new Person("KAhnung",33);
-	static Person p4 = new Person("Sepp", 88);
+	static Person p4 = new Person("Sep", 88);
 	static Person p5 = new Person("Franz", 78);
 	static Handwerker h1 = new Handwerker("simon",30,"hydrauliker");
 	static Handwerker h2 = new Handwerker("tommy",60,"Freiberufler");
@@ -47,13 +48,11 @@ public class LambdaTest
 		System.out.println("�bung 10");
 		LambdaTest.personlistInfo();
 		
-		System.out.println("Übung 11");
+		System.out.println("Übung 13");
 		LambdaTest.gruppieren();
 		
-		System.out.println("Gruppieren nach instance of Handwerker ");
-		LambdaTest.gruppierenPerson();
-		
-		
+		System.out.println("Übung 14");
+		LambdaTest.gruppierenNachNamenLaenge();
 		
 	}
 
@@ -186,16 +185,33 @@ public class LambdaTest
 		list.add(p4);
 		list.add(p5);
 		
-		System.out.println(list.stream()
+		
+		Supplier<Stream<Person>> supplier = () -> list.stream();
+		
+		
+		System.out.println(supplier.get()
 								.map(p -> { 
 									p.getName().charAt(0);
 									return p;
 								})
 								.collect(Collectors.groupingBy(p -> p.getName().charAt(0))));
+		
+		System.out.println("gruppieren nach instance of Handwerker : ");
+		
+		System.out.println(supplier.get()
+				.collect(Collectors.groupingBy(p -> p.getClass().getSimpleName()))
+				);
+		
+		
+		System.out.println("Gruppieren nach anfangsbuchstabe , count : ");
+		
+		System.out.println(supplier.get().collect(Collectors.groupingBy(p -> p.getName().charAt(0), Collectors.counting())));
+		
 	}
 	
-	public static void gruppierenPerson()
+	public static void gruppierenNachNamenLaenge()
 	{
+		
 		List<Person> list = new ArrayList<>();
 		
 		list.add(p1);
@@ -203,29 +219,10 @@ public class LambdaTest
 		list.add(p3);
 		list.add(p4);
 		list.add(p5);
-		list.add(h1);
-		list.add(h2);
 		
-		System.out.println(list.stream()
-								.collect(Collectors.groupingBy(p -> p instanceof Handwerker))
-										
-										);
-	}
-	
-	public static void loeschenKuerzerKleinerAlsVier() 
-	{
-		List<Person> list = new ArrayList<>();
+		List<Person> list2 = list.stream().filter(p -> p.getName().length() > 3).collect(Collectors.toList());
 		
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p5);
-		list.add(h1);
-		list.add(h2);
-		
-		
-		
+		list2.forEach(System.out::println);
 		
 	}
 	

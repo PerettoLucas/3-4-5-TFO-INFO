@@ -3,6 +3,7 @@ package net.tfobz.jtree;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -84,38 +85,15 @@ public class GUI extends JFrame
 		//treePopup bietet das Menu um Ver�nderungen durchzuf�hren
 		treePopup = new TreePopup(tree);
 		
-		tree.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e)
-			{
-				
-			}
-			
+		tree.addMouseListener(new MouseAdapter()
+		{
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
 				if(e.getButton() == MouseEvent.BUTTON3) treePopup.show(e.getComponent(), e.getX(), e.getY());;
 			}
-			
-			@Override
-			public void mouseExited(MouseEvent e)
-			{
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e)
-			{
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				
-			}
 		});
+		
 	}
 	
 	
