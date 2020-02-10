@@ -5,21 +5,22 @@ public class Main {
 	public static void main(String[] args) 
 	{
 		MyThread t = new MyThread();
-		MyThreadStateAnalyser tAnalyser = new MyThreadStateAnalyser(t);
+		MyThreadStateAnalyser ts = new MyThreadStateAnalyser(t);
+		ts.start();
+		MyThreadTerminator tt = new MyThreadTerminator(t);
+		tt.start();
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {e1.printStackTrace();}
 		
-		tAnalyser.start();
 		
-		System.out.println("MyThread started");
 		t.start();
 		
 		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {}
-		t.interrupt();
-			
-		
-		
-		
+			t.join();
+			ts.join();
+			tt.join();
+		} catch (InterruptedException e) {e.printStackTrace();}
 	}
-
 }

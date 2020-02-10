@@ -14,16 +14,14 @@ public class MyThreadStateAnalyser extends Thread
 	@Override
 	public void run() 
 	{
-		while(this.myThread.isAlive()) 
+		System.out.println("started " + this.myThread.isAlive());
+		while(this.myThread.getState() == State.NEW || this.myThread.isAlive()) 
 		{
 			System.out.println(this.myThread.getState());
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {}
 		}
-	
+		System.out.println(this.myThread.getState());
 	}
-	
-	
-	
 }

@@ -7,8 +7,8 @@ public class MyThread extends Thread
 	{
 		while(!isInterrupted())
 		{
-			
-			for(int i = 0, j = 1; i < 1000;i++)
+			//Aufwendige Schleife
+			for(int i = 0, j = 1; i < 1000000;i++)
 			{
 				j = j*2;
 			}
@@ -17,10 +17,8 @@ public class MyThread extends Thread
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				interrupt();
-				System.out.println("Terminated");
 			}
 		}
-		
 	}
 	
 	
