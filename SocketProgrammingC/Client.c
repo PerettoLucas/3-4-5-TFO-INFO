@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
   serv_addr.sin_port = htons(7);
   serv_addr.sin_family = AF_INET;
   //TODO add argv adress possibility
-  if(inet_pton(AF_INET, "10.216.20.52", &serv_addr.sin_addr) > 0)
+  if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) > 0)
   {
     int c = connect(clientsock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
@@ -48,7 +48,6 @@ int main(int argc, char const *argv[])
 
   const int FLAGS = 0;
   char buff[1024] = { 0 };
-
 
 
   //doing the echo action
@@ -72,3 +71,4 @@ int main(int argc, char const *argv[])
 
   return 0;
 }
+//10.216.20.52 Schual IP
