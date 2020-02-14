@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 
-void main()
+int main()
 {
   //Socket erstellen
   int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -19,48 +19,56 @@ void main()
 
 
   //an Port binden
-  struct sockaddr_in addr;
+  struct sockaddr_in addr = { 0 };
   addr.sin_family = AF_INET;
   addr.sin_addr.s_addr = INADDR_ANY; //oder inet_pton(..)
-  addr.sin_port = htons(12345);
-  bind(sock, &addr, sizeof(addr));
+  addr.sin_port = htons(12335);
+  bind(sock, (struct sockaddr*)&addr, sizeof(addr));
 
 
   //TCP listening socket starten
   int backlog = 5; //maximale Anzahl der nicht akzeptierten Verbindungen
 
-  const int FLAGS = 0;
-  char buffer[1024];
 
+
+
+  printf("Listening for Connection....\n");
+  listen(sock, backlog);
+  printf("Finished listening\n");
+
+  struct sockaddr clientaddr;
+  socklen_t clientaddrlen;
 
   while (1)
   {
-      printf("Listening for Connection....\n");
-      listen(sock, backlog);
-
-      struct sockaddr clientaddr;
-      socklen_t clientaddrlen;
-
       int clientsock = accept(sock, &clientaddr, &clientaddrlen);
       printf("Accepted Connection...\n");
 
-      if(fork() == 0)
+      pid_t pid = fork();
+
+      if(pid == 0)
       {
         // handle client...
 
-        //receive
-        int bytesread = recv(clientsock, buffer, sizeof(buffer),FLAGS);
-        if(bytesread <= 0)
-          return; //socket was closed
+        while (1)
+        {
+          const int FLAGS = 0;
+          char buffer[1024];
 
-        printf("%s", buffer);
+          //receive
+          int bytesread = recv(clientsock, buffer, sizeof(buffer),FLAGS);
+          if(bytesread <= 0)
+            return bytesread; //socket was closed
 
-        //Sending to the Client
-        send(clientsock, buffer, strlen(buffer), FLAGS);
+          printf("Empfangen %s", buffer);
 
+          //Sending to the Client
+          send(clientsock, buffer, strlen(buffer), FLAGS);
+        }
 
-      }else
+      }else if(pid > 0)
       {
+      }else {
         printf("Error forking the Child\n");
         exit(1);
       }

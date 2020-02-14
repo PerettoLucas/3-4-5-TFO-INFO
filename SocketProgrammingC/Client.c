@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 
-int main(int argc, char const *argv[])
+int main()
 {
   //Socket erstellen
   int clientsock = socket(AF_INET, SOCK_STREAM, 0);
@@ -16,19 +16,9 @@ int main(int argc, char const *argv[])
   int value = 1;
   setsockopt(clientsock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &value, sizeof(value));
 
-  //optional: an Port binden
-  struct sockaddr_in addr;
-  addr.sin_family = AF_INET;
-  addr.sin_addr.s_addr = INADDR_ANY;
-  addr.sin_port = htons(12345); //network-byte-order = big-endian
-
-
-  bind(clientsock, &addr, sizeof(addr));
-
   //TCP: connect
-  struct sockaddr_in serv_addr;
-  memset(&serv_addr, '0', sizeof(serv_addr));
-  serv_addr.sin_port = htons(7);
+  struct sockaddr_in serv_addr = { 0 };
+  serv_addr.sin_port = htons(12335);
   serv_addr.sin_family = AF_INET;
   //TODO add argv adress possibility
   if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) > 0)
@@ -40,6 +30,7 @@ int main(int argc, char const *argv[])
       printf("Connection could not be established\n");
       exit(1);
     }
+    printf("Connection established\n");
   }else
   {
     printf("Connection could not be established\n");
@@ -68,6 +59,8 @@ int main(int argc, char const *argv[])
     printf("%s", buff);
 
   }
+
+  //close(clientsock);
 
   return 0;
 }
