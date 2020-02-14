@@ -1,16 +1,20 @@
 package net.tfobz.threads.compression;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
-import java.awt.Font;
-import java.awt.Color;
+import javax.swing.JSpinner;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -48,12 +52,30 @@ public class GUI extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		imageComponent = new ImageComponent();
+		
 		contentPane.add(imageComponent, BorderLayout.CENTER);
 		
 		JPanel panelControl = new JPanel();
 		contentPane.add(panelControl, BorderLayout.SOUTH);
 		
 		JButton btnOpen = new JButton("Open");
+		btnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG", "jpg");
+				chooser.setFileFilter(filter);
+				
+				int returnVal = chooser.showOpenDialog(GUI.this);
+				
+				if(returnVal == JFileChooser.APPROVE_OPTION) 
+				{
+					   System.out.println("You chose to open this file: " +
+					        chooser.getSelectedFile().getName());
+				}
+				
+			}
+		});
 		btnOpen.setBackground(new Color(240, 240, 240));
 		btnOpen.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panelControl.add(btnOpen);

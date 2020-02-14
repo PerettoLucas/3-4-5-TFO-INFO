@@ -25,9 +25,9 @@ import javax.imageio.stream.ImageOutputStream;
 public class JPGImageCompress
 {
 	public static void main(String[] args) throws IOException {
-		BufferedImage image = ImageIO.read(new File("images/image1.jpg"));
+		BufferedImage image = ImageIO.read(new File("H:\\Desktop\\FujiGarden.jpg"));
 		for (double quality = 1.0; quality >= 0; quality -= 0.1)
-			compressImage(image, "images/image.", quality);
+			compressImage(image, "H:\\Desktop\\FujiGardenCompressed.", quality);
 	}
 
 	/**
