@@ -9,13 +9,13 @@
 	<title>Übung zu HTM, CSS, und Javascript</title>
 </head>
 <body id="body">
-	<h1>Meine Homepage</h1>
+	<h1 id="title">Meine Homepage</h1>
 	
-	<table style="width: 100%;"	border="">
+	<table border="">
 	  	<tr>
 	    	<td>Daten :</td>
 	    	<td>
-	    		<table id="DatenTable" border="">
+	    		<table border="">
 				  	<tr>
 				    	<td>Vorname : </td>
 				    	<td>Lucas</td>
@@ -49,7 +49,7 @@
 			<td>Was sagt das Netz ueber mich</td>
 		</tr>
 		<tr>
-			<td>	<img src="OrdnerGeschlossen.png">	</td>
+			<td>	<a href="#Lebenslauf">	<img src="OrdnerGeschlossen.png">	</a>	</td>
 			<td>Mein Leben bis jetzt und in Zukunft</td>
 		</tr>
 		<tr>
@@ -65,10 +65,41 @@
 		
 	<hr>	
 	
-	<article >
+	<article id="Lebenslauf">
 		<h1>Mein Leben bis jetzt und in Zukunft</h1>
+		Dies ist ein kurzer recap zu meinem Lebenslauf. Ich bin Lucas. 
+		<br>
+		<br>
+		<a href="#body">Nach Oben</a>
+	</article>
+	
+	<hr>
+	
+	<article id="Hobbys">
+		<h1>Wenn ich mal nicht arbeite</h1>
+		<ul>
+			<li>Fussball
+			<li>Skifahren
+			<li>Schwimmen
+			<li>Feiern
+			<li>Mit Freunden chillen
+		</ul>
+		<a href="#body">Nach Oben</a>
 	
 	</article>
+	
+	<hr>
+	
+	<article id="Projects">
+		<h1>Meine Projekte</h1>
+		<ol>
+			<li> <a href="Projects/project1.html">Project1</a> 
+			<li> <a href="Projects/project2.html">Project2</a> 
+			<li> <a href="Projects/project3.html">Project3</a> 
+		</ol>
+		<a href="#body">Nach Oben</a>
+	</article>
+	
 	
 	
 </body>
