@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -15,6 +16,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -70,8 +72,9 @@ public class GUI extends JFrame {
 				
 				if(returnVal == JFileChooser.APPROVE_OPTION) 
 				{
-					   System.out.println("You chose to open this file: " +
-					        chooser.getSelectedFile().getName());
+					try {
+						imageComponent.setImage(chooser.getSelectedFile());
+					} catch (IOException e1) {e1.printStackTrace();}
 				}
 				
 			}
