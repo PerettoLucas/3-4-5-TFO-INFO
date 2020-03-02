@@ -12,6 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.time.chrono.JapaneseEra;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -34,6 +38,9 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private ImageComponent imageComponent;
 	private ArrayList<CompressorThread> compressorThreadList = new ArrayList<CompressorThread>();
+	private ExecutorService executor = Executors.newCachedThreadPool();
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -128,6 +135,7 @@ public class GUI extends JFrame {
 				
 				btnOpen.setEnabled(false);
 				btnCompress.setEnabled(false);
+				spinner.setEnabled(false);
 				
 				String path = JOptionPane.showInputDialog("Path to Save Images to :");
 				
@@ -144,38 +152,31 @@ public class GUI extends JFrame {
 				for (double quality = 0; quality < spinnervalue ; quality+= 0.1) 
 				{
 					final double quality_copy = Math.round(quality * 100.0) / 100.0;;
-					System.out.println(quality_copy);
-					
 					CompressorThread t = new CompressorThread(quality_copy, image_copy, path + chooser.getSelectedFile().getName());
-					
 					compressorThreadList.add(t);
-					
-					
 				}
-				
-				ProgressBarThread pbt = new ProgressBarThread(progressBar, compressorThreadList, spinnervalue);
-				pbt.start();
 				
 				for (CompressorThread compressorThread : compressorThreadList) {
 					compressorThread.start();
-					
-					
-					try {
-						compressorThread.join();
-					} catch (InterruptedException e1) {e1.printStackTrace();}
 				}
 				
 				
 				
+				ProgressBarThread progressBarThread = new ProgressBarThread(progressBar, compressorThreadList);
+				progressBarThread.start();
+				
+				try
+				{
+					progressBarThread.join();
+				}catch(InterruptedException e1)
+				{e1.printStackTrace();}
+				
+				spinner.setEnabled(true);
 				btnCompress.setEnabled(true);
 				btnOpen.setEnabled(true);
 				
 			}
 		});
-		
-		
-		
-		
 		
 	}
 
