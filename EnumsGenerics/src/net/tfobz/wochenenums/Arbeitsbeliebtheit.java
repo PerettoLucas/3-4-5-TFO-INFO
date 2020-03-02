@@ -24,7 +24,6 @@ public class Arbeitsbeliebtheit implements Iterable<Entry<Wochentag,Beliebtheit>
 		
 	}
 	
-	
 	@Override
 	public Iterator<Entry<Wochentag, Beliebtheit>> iterator() {
 //		return map.entrySet().iterator();
@@ -56,6 +55,4 @@ public class Arbeitsbeliebtheit implements Iterable<Entry<Wochentag,Beliebtheit>
 	{
 		return map.toString();
 	}
-	
-	//TODO kommentieren
-}
+	}

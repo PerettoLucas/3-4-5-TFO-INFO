@@ -46,7 +46,6 @@ public class MeinTastaturAbhoerer extends KeyAdapter
 					{
 						if(e.getSource() != this.jTextFields[j])
 						{
-							//TODO Auf zwei nachkommastellen runden.
 							this.euroUmrechner.setBetrag((this.euroUmrechner.getBetrag(this.euroUmrechner.getWaehrung())));
 							jTextFields[j].setText(""+(Math.round(euroUmrechner.getBetrag(j) * 100.0)) / 100.0);
 						}
