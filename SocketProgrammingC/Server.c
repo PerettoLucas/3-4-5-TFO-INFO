@@ -53,14 +53,14 @@ int main()
         while (1)
         {
           const int FLAGS = 0;
-          char buffer[1024];
+          char buffer[1024] = { 0 };
 
           //receive
           int bytesread = recv(clientsock, buffer, sizeof(buffer),FLAGS);
           if(bytesread <= 0)
             return bytesread; //socket was closed
 
-          printf("Empfangen %s", buffer);
+          printf("Empfangen :  %s", buffer);
 
           //Sending to the Client
           send(clientsock, buffer, strlen(buffer), FLAGS);

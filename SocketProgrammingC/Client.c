@@ -41,25 +41,25 @@ int main()
   char buff[1024] = { 0 };
 
 
-  //doing the echo action
   while (1)
   {
     fgets(buff,sizeof(buff),stdin);
+
     //send buffer
     send(clientsock, buff, strlen(buff), FLAGS);
+
+    if(strcmp("exit\n", buff) == 0) exit(0);
 
     //receive
     int bytesread = recv(clientsock, buff, sizeof(buff), FLAGS);
     if(bytesread <= 0)
       return bytesread; //socket was closed
 
+
     //Printing result
     printf("%s", buff);
 
   }
-
-  //close(clientsock);
-
   return 0;
 }
 //10.216.20.52 Schual IP
