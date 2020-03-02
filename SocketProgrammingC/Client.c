@@ -44,8 +44,6 @@ int main()
   //doing the echo action
   while (1)
   {
-
-
     fgets(buff,sizeof(buff),stdin);
     //send buffer
     send(clientsock, buff, strlen(buff), FLAGS);
