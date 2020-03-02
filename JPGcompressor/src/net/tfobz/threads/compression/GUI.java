@@ -14,6 +14,7 @@ import java.time.chrono.JapaneseEra;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -38,8 +39,7 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private ImageComponent imageComponent;
 	private ArrayList<CompressorThread> compressorThreadList = new ArrayList<CompressorThread>();
-	private ExecutorService executor = Executors.newCachedThreadPool();
-	
+	private ArrayList<Future<CompressorFutureThread>> compressFuturesList = new ArrayList<>();
 	
 	
 	/**
@@ -159,8 +159,6 @@ public class GUI extends JFrame {
 				for (CompressorThread compressorThread : compressorThreadList) {
 					compressorThread.start();
 				}
-				
-				
 				
 				ProgressBarThread progressBarThread = new ProgressBarThread(progressBar, compressorThreadList);
 				progressBarThread.start();
