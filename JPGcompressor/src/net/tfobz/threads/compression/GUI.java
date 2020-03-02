@@ -10,8 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.time.chrono.JapaneseEra;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -39,7 +42,10 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private ImageComponent imageComponent;
 	private ArrayList<CompressorThread> compressorThreadList = new ArrayList<CompressorThread>();
-	private ArrayList<Future<CompressorFutureThread>> compressFuturesList = new ArrayList<>();
+	
+	private java.util.List<Future<BufferedImage>> compressFuturesList = new ArrayList<Future<BufferedImage>>();
+	private ArrayList<Callable<BufferedImage>> compressCallableList = new ArrayList<Callable<BufferedImage>>();
+	private ExecutorService executor = Executors.newCachedThreadPool();
 	
 	
 	/**
@@ -175,6 +181,102 @@ public class GUI extends JFrame {
 				
 			}
 		});
+
+		
+		btnCompress.addActionListener(new ActionListener() {
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if(chooser.getSelectedFile() == null)
+				{
+					JOptionPane.showMessageDialog(GUI.this, "A JPG must be Opened!");
+					return;
+				}
+				
+				btnOpen.setEnabled(false);
+				btnCompress.setEnabled(false);
+				spinner.setEnabled(false);
+				
+				
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(chooser.getSelectedFile());
+				} catch (IOException e2) {e2.printStackTrace();}
+				
+				final BufferedImage image_copy = image;
+				double spinnervalue = (double) spinner.getValue();
+				
+
+				
+				for (double quality = 0; quality < spinnervalue ; quality+= 0.1) 
+				{
+					final double quality_copy = Math.round(quality * 100.0) / 100.0;;
+					Callable<BufferedImage> t = new CompressorFutureThread(quality_copy, image_copy);
+					compressCallableList.add(t);
+				}
+				
+				System.out.println("Added to List");
+//				try {
+//					compressFuturesList = executor.invokeAll(compressCallableList);
+//				} catch (InterruptedException e1) {e1.printStackTrace();}
+//				
+//				System.out.println("Invoked all");
+				
+				
+//				for (Future<BufferedImage> future : compressFuturesList) 
+//				{
+//					while(!future.isDone()) {}
+//						EventQueue.invokeLater(() -> {
+//							try {
+//								imageComponent.setImage(future.get());
+//							} catch (InterruptedException | ExecutionException e1) {e1.printStackTrace();}
+//						});
+//							
+//					
+//					System.out.println("TOSTRING : "+future.toString());
+//					
+//					try {
+//						Thread.sleep(2000);
+//					} catch (InterruptedException e1) {e1.printStackTrace();}
+//				}
+
+				for (Callable<BufferedImage> callable : compressCallableList) {
+					System.out.println("manually setting");
+					EventQueue.invokeLater(() ->
+					{
+						try {
+							imageComponent.setImage(executor.submit(callable).get());
+						} catch (InterruptedException | ExecutionException e1) {e1.printStackTrace();}
+					});
+					
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {e1.printStackTrace();}
+					
+				}
+				
+				
+				
+				btnOpen.setEnabled(true);
+				btnCompress.setEnabled(true);
+				spinner.setEnabled(true);
+				
+				
+//				System.out.println("Setting one !");
+//				Callable<BufferedImage> test = new CompressorFutureThread(0, image_copy);
+//				EventQueue.invokeLater(() -> {
+//					try {
+//						imageComponent.setImage(executor.submit(test).get());
+//					} catch (InterruptedException | ExecutionException e1) {e1.printStackTrace();}
+//				});
+				
+				
+			}
+		});
+		
+		
 		
 	}
 
