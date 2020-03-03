@@ -1,5 +1,5 @@
 package net.tfobz.meinedefaultliste;
-
+class Auto
 {
 	public String name = null;
 	private int erstzulassung = 0;
