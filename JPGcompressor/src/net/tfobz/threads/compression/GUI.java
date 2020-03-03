@@ -32,6 +32,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Dimension;
@@ -46,6 +47,8 @@ public class GUI extends JFrame {
 	private java.util.List<Future<BufferedImage>> compressFuturesList = new ArrayList<Future<BufferedImage>>();
 	private ArrayList<Callable<BufferedImage>> compressCallableList = new ArrayList<Callable<BufferedImage>>();
 	private ExecutorService executor = Executors.newCachedThreadPool();
+	
+	private ExecutorService mainExecutor = Executors.newSingleThreadExecutor();
 	
 	
 	/**
@@ -210,10 +213,10 @@ public class GUI extends JFrame {
 				
 
 				
-				for (double quality = 0; quality < spinnervalue ; quality+= 0.1) 
+				for (int quality = (int)(spinnervalue * 10); quality > -1 ; --quality) 
 				{
-					final double quality_copy = Math.round(quality * 100.0) / 100.0;;
-					Callable<BufferedImage> t = new CompressorFutureThread(quality_copy, image_copy);
+					Callable<BufferedImage> t = new CompressorFutureThread(quality / 10., image_copy);
+					System.out.println(quality / 10.);
 					compressCallableList.add(t);
 				}
 				
@@ -242,27 +245,22 @@ public class GUI extends JFrame {
 //					} catch (InterruptedException e1) {e1.printStackTrace();}
 //				}
 
+				
+				
 				for (Callable<BufferedImage> callable : compressCallableList) {
 					System.out.println("manually setting");
-					EventQueue.invokeLater(() ->
-					{
-						try {
-							imageComponent.setImage(executor.submit(callable).get());
-						} catch (InterruptedException | ExecutionException e1) {e1.printStackTrace();}
-					});
 					
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e1) {e1.printStackTrace();}
+					mainExecutor.submit(new DisplayThread(imageComponent, callable, executor));
 					
 				}
 				
-				
-				
-				btnOpen.setEnabled(true);
-				btnCompress.setEnabled(true);
-				spinner.setEnabled(true);
-				
+				mainExecutor.submit(() -> {
+					SwingUtilities.invokeLater(() -> {
+						btnOpen.setEnabled(true);
+						btnCompress.setEnabled(true);
+						spinner.setEnabled(true);
+					});
+				});			
 				
 //				System.out.println("Setting one !");
 //				Callable<BufferedImage> test = new CompressorFutureThread(0, image_copy);
@@ -282,3 +280,4 @@ public class GUI extends JFrame {
 
 }
 // C:\\Users\\lilboy\\Desktop\\SCHULE\\TESTBestImageCompressed\\
+// H:\Desktop\\TestCompressed\\
