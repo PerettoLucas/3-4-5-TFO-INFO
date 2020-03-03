@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.lang.reflect.InvocationTargetException;
 import java.time.chrono.JapaneseEra;
 import java.util.ArrayList;
@@ -42,7 +43,8 @@ public class GUI extends JFrame {
 
 	private JPanel contentPane;
 	private ImageComponent imageComponent;
-	private ArrayList<CompressorThread> compressorThreadList = new ArrayList<CompressorThread>();
+	private JPGImageCompress jpgImageCompress;
+	private ArrayList<Thread> compressorThreadList = new ArrayList<Thread>();
 	
 	private java.util.List<Future<BufferedImage>> compressFuturesList = new ArrayList<Future<BufferedImage>>();
 	private ArrayList<Callable<BufferedImage>> compressCallableList = new ArrayList<Callable<BufferedImage>>();
@@ -81,6 +83,7 @@ public class GUI extends JFrame {
 		
 		
 		imageComponent = new ImageComponent();
+		jpgImageCompress = new JPGImageCompress();
 		JFileChooser chooser = new JFileChooser();
 		
 		
@@ -160,23 +163,74 @@ public class GUI extends JFrame {
 				
 				for (double quality = 0; quality < spinnervalue ; quality+= 0.1) 
 				{
-					final double quality_copy = Math.round(quality * 100.0) / 100.0;;
-					CompressorThread t = new CompressorThread(quality_copy, image_copy, path + chooser.getSelectedFile().getName());
+					final double quality_copy = Math.round(quality * 100.0) / 100.0;
+					
+					Thread t = new Thread(new Runnable()
+					{
+						@SuppressWarnings("static-access")
+						@Override
+						public void run()
+						{
+							try {
+								Thread.sleep(2000);
+							} catch (InterruptedException e1) {e1.printStackTrace();}
+							
+							
+							try {
+								jpgImageCompress.compressImage(image_copy, path + ".", quality_copy);
+							} catch (IOException e) {e.printStackTrace();}
+						}
+					});
+					
+//					CompressorThread t = new CompressorThread(quality_copy, image_copy, path + chooser.getSelectedFile().getName());
 					compressorThreadList.add(t);
 				}
 				
-				for (CompressorThread compressorThread : compressorThreadList) {
-					compressorThread.start();
-				}
+//				ProgressBarThread progressBarThread = new ProgressBarThread(progressBar, compressorThreadList);
+//				progressBarThread.start();
 				
-				ProgressBarThread progressBarThread = new ProgressBarThread(progressBar, compressorThreadList);
-				progressBarThread.start();
-				
-				try
+				Thread progressThread = new Thread(new Runnable()
 				{
-					progressBarThread.join();
-				}catch(InterruptedException e1)
-				{e1.printStackTrace();}
+					
+					@Override
+					public void run()
+					{
+						progressBar.setMaximum(compressorThreadList.size());
+						
+						while(compressorThreadList.size() > 0)
+						{
+							try
+							{
+								Thread.sleep(500);
+							}catch(InterruptedException e)
+							{e.printStackTrace();}
+							
+							progressBar.setValue(compressorThreadList.size());
+						}
+						
+						
+					}
+				});
+				progressThread.start();
+				
+				
+//				for(int i = 0; i < compressorThreadList.size();i++)	
+//				{
+//					Thread compressorThread;
+//					synchronized(compressorThreadList)
+//					{
+//						compressorThread = compressorThreadList.get(i);
+//					}
+//					
+//					compressorThread.start();
+//					try
+//					{
+//						compressorThread.join();
+//					}catch(InterruptedException e1)
+//					{e1.printStackTrace();}
+//				}
+				
+				
 				
 				spinner.setEnabled(true);
 				btnCompress.setEnabled(true);
@@ -185,10 +239,10 @@ public class GUI extends JFrame {
 			}
 		});
 
+		//TODO progressBar Thread
 		
 		btnCompress.addActionListener(new ActionListener() {
 			
-			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -197,12 +251,11 @@ public class GUI extends JFrame {
 					JOptionPane.showMessageDialog(GUI.this, "A JPG must be Opened!");
 					return;
 				}
-				
+
 				btnOpen.setEnabled(false);
 				btnCompress.setEnabled(false);
 				spinner.setEnabled(false);
-				
-				
+
 				BufferedImage image = null;
 				try {
 					image = ImageIO.read(chooser.getSelectedFile());
@@ -210,7 +263,6 @@ public class GUI extends JFrame {
 				
 				final BufferedImage image_copy = image;
 				double spinnervalue = (double) spinner.getValue();
-				
 
 				
 				for (int quality = (int)(spinnervalue * 10); quality > -1 ; --quality) 
@@ -221,38 +273,33 @@ public class GUI extends JFrame {
 				}
 				
 				System.out.println("Added to List");
-//				try {
-//					compressFuturesList = executor.invokeAll(compressCallableList);
-//				} catch (InterruptedException e1) {e1.printStackTrace();}
-//				
-//				System.out.println("Invoked all");
+				
+				try {
+					compressFuturesList = executor.invokeAll(compressCallableList);
+				} catch (InterruptedException e1) {e1.printStackTrace();}
+				
+				System.out.println("Invoked all");
 				
 				
-//				for (Future<BufferedImage> future : compressFuturesList) 
-//				{
-//					while(!future.isDone()) {}
-//						EventQueue.invokeLater(() -> {
-//							try {
-//								imageComponent.setImage(future.get());
-//							} catch (InterruptedException | ExecutionException e1) {e1.printStackTrace();}
-//						});
-//							
-//					
-//					System.out.println("TOSTRING : "+future.toString());
-//					
-//					try {
-//						Thread.sleep(2000);
-//					} catch (InterruptedException e1) {e1.printStackTrace();}
-//				}
-
-				
-				
-				for (Callable<BufferedImage> callable : compressCallableList) {
-					System.out.println("manually setting");
+				Thread displayThread = new Thread(()->
+				{
+					for (Future<BufferedImage> future : compressFuturesList) 
+					{
+						while(!future.isDone()) {}
+							SwingUtilities.invokeLater(() -> {
+								try {
+									imageComponent.setImage(future.get());
+								} catch (InterruptedException | ExecutionException e11) {e11.printStackTrace();}
+							});
+						
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e12) {e12.printStackTrace();}
+					}
 					
-					mainExecutor.submit(new DisplayThread(imageComponent, callable, executor));
-					
-				}
+				});
+				displayThread.start();
+				
 				
 				mainExecutor.submit(() -> {
 					SwingUtilities.invokeLater(() -> {
@@ -261,16 +308,6 @@ public class GUI extends JFrame {
 						spinner.setEnabled(true);
 					});
 				});			
-				
-//				System.out.println("Setting one !");
-//				Callable<BufferedImage> test = new CompressorFutureThread(0, image_copy);
-//				EventQueue.invokeLater(() -> {
-//					try {
-//						imageComponent.setImage(executor.submit(test).get());
-//					} catch (InterruptedException | ExecutionException e1) {e1.printStackTrace();}
-//				});
-				
-				
 			}
 		});
 		
@@ -278,6 +315,80 @@ public class GUI extends JFrame {
 		
 	}
 
+//	class CompressorThread extends Thread
+//	{
+//		private JPGImageCompress jpgImageCompress;
+//		private BufferedImage image;
+//		private double quality;
+//		private String filename;
+//		
+//		public CompressorThread(double quality, BufferedImage image, String filename)
+//		{
+//			this.quality = quality;
+//			this.image = image;
+//			this.filename = filename;
+//			this.jpgImageCompress = new JPGImageCompress();
+//		}
+//		
+//		@SuppressWarnings("static-access")
+//		@Override
+//		public void run()
+//		{
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e1) {e1.printStackTrace();}
+//			
+//			
+//			try {
+//				jpgImageCompress.compressImage(this.image, this.filename + ".", this.quality);
+//			} catch (IOException e) {e.printStackTrace();}
+//		}
+//		
+//	}
+
+	
+	
+	class ProgressBarThread extends Thread
+	{
+		private JProgressBar jProgressBar;
+		private ArrayList<Thread> compressorThreadList;
+		private double anzahl_gesamt;
+		
+		public ProgressBarThread(JProgressBar jProgressBar , ArrayList<Thread> compressorThreadList2)
+		{
+			this.jProgressBar = jProgressBar;
+			this.compressorThreadList = compressorThreadList2;
+			this.anzahl_gesamt = compressorThreadList2.size();
+			
+		}
+		
+		
+		@Override
+		public void run()
+		{
+			jProgressBar.setMaximum(compressorThreadList.size() - 1);
+			
+			while(compressorThreadList.size() > 0)
+			{
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				for(int i = 0; i < compressorThreadList.size();i++)	
+				{
+					Thread compressorThread = compressorThreadList.get(i);
+					System.out.println(compressorThreadList.size());
+					EventQueue.invokeLater(()->jProgressBar.setValue((int)(anzahl_gesamt - compressorThreadList.size())));
+					synchronized(compressorThreadList)
+					{
+						if(compressorThread.getState() == State.TERMINATED) compressorThreadList.remove(compressorThread);
+					}
+				}
+			}
+		}
+	}
 }
 // C:\\Users\\lilboy\\Desktop\\SCHULE\\TESTBestImageCompressed\\
 // H:\Desktop\\TestCompressed\\
