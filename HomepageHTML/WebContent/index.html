@@ -5,6 +5,12 @@
 <meta charset="utf-8">
 <meta name="author" content="Peretto Lucas">
 <meta name="description"content="Profilseite von Peretto Lucas. Diese Seite dient lediglich zur Verständnis von HTML, CSS und Javascript">
+<script type="text/javascript" src="javascript.js"></script>
+
+<!-- This is for local script -->
+<script>
+</script>
+
 <link rel="stylesheet" href="css.css">
 	<title>Übung zu HTM, CSS, und Javascript</title>
 </head>
@@ -13,12 +19,14 @@
 	
 	<table id="outerTable">
 	  	<tr>
-	    	<td>Daten :</td>
+	    	<td id="tdDaten">Daten :</td>
 	    	<td>
-	    		<table id="innerTable">
+	    		<table id="innerTable" >
 				  	<tr>
 				    	<td>Vorname : </td>
 				    	<td>Lucas</td>
+			    		<td id="tdFoto" rowspan="6"> <img id="foto" alt="Photo from Peretto Lucas" src="https://www.afc-terlan.com/wp-content/uploads/2019/10/Lucas-Peretto-300x300.jpg">	</td>
+				    	
 				  	</tr>
 				  	<tr>
 				    	<td>Nachname :</td>
@@ -32,37 +40,40 @@
 				    	<td>Wohnort : </td>
 				    	<td>Voelseggerweg 9 Tiers BZ</td>
 				  	</tr>
+					<tr>
+				    	</tr>	
 				  	<tr>
 				    	<td>Erreichbar : </td>
 				    	<td><a href="mailto:lucas.tiers.it@gmail.com">lucas.tiers.it@gmail.com</a></td>
 				  	</tr>
+			    	
+			    	
+			    		
 				</table>
-	    	
-	    	</td>
-	    	
-	    	<td>	<img alt="Photo from Peretto Lucas" src="https://www.afc-terlan.com/wp-content/uploads/2019/10/Lucas-Peretto-300x300.jpg" style="width: 150px;">	</td>
+	    		
 	    	
 	    	
 	 	</tr>
+	 	
 		<tr>
-			<td><a href="https://www.google.com/search?client=firefox-b-d&q=peretto+lucas" target="_blank">	<img src="OrdnerGeschlossen.png"> 	</a>		</td>
+			<td> <img onclick="leavePage();" src="OrdnerGeschlossen.png" onmouseover="hover(this);" onmouseout="unhover(this);" > </td>
 			<td>Was sagt das Netz ueber mich</td>
 		</tr>
 		<tr>
-			<td>	<a href="#Lebenslauf">	<img src="OrdnerGeschlossen.png">	</a>	</td>
+			<td> <a href="#Lebenslauf">	<img src="OrdnerGeschlossen.png" onmouseover="hover(this);" onmouseout="unhover(this);" > </a> </td>
 			<td>Mein Leben bis jetzt und in Zukunft</td>
 		</tr>
 		<tr>
-			<td>	<img src="OrdnerGeschlossen.png">	</td>
+			<td> <a href="#Hobbys">	<img src="OrdnerGeschlossen.png" onmouseover="hover(this);" onmouseout="unhover(this);" > </a> </td>
 			<td>Wenn ich mal nicht arbeite</td>
 		</tr>
 		<tr>
-			<td>	<img src="OrdnerGeschlossen.png">	</td>
+			<td> <a href="#Projects"> <img src="OrdnerGeschlossen.png" onmouseover="hover(this);" onmouseout="unhover(this);" > </a> </td>
 			<td>Meine Projekte zum Nachlesen und Staunen</td>
 		</tr>
 		
 		<!-- TODO bei Aeuseren Table die Zellen width 100% machen   -->
-		
+			
 	</table>
 		
 	<hr>	
@@ -101,8 +112,6 @@
 		</ol>
 		<a href="#body">Nach Oben</a>
 	</article>
-	
-	
 	
 </body>
 </html>

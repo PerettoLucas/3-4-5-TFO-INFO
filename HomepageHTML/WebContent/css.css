@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body {
 	font-family: Verdana;
 	font-size: 90%;
@@ -34,5 +36,41 @@ article {
 	width: 100%;
 	text-align: center;
 	background-color: rgb(230,230,230);
+	align-content: center;
 }
+#outerTable tr td table tr td{
+	background-color: rgb(230,230,230);
+}
+#tdFoto{
+	width: 200px;
+}
+#foto {
+	width: 100%;
+}
+#tdDaten {
+	display: table-header-group;
+	text-align: center;
+}
+a {
+	font-size: 90%;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:visited {
+	color: blue;
+}
+a:link {
+	color: rgb(192,80,77);
+}
+a:focus, a:hover, a:active {
+	color: red;
+	text-decoration: underline;
+}
+#outerTable{
+	width: 100%;
+}
+
+
+
+
 	
