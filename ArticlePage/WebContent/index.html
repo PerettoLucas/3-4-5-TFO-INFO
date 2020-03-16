@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Peretto Lucas">
+<meta name="description"content="Übung zur Artikel präsentation">
+<link rel="stylesheet" href="html5reset.css">
+<link rel="stylesheet" href="css.css">
+
+
+<!-- This is for Local script -->
+<script type="text/javascript">
+	
+	
+	function setArticlePosition() {
+		for(var i = 1; i < 5;i++)
+		{
+			console.log(i);
+			Article = document.getElementById("Article" + i);
+			switch (i) {
+			case 1:
+				Article.style.top = "50px";
+				break;
+			case 2:
+				Article.style.top = "50px";
+				Article.style.left = "250px";
+				
+				break;
+			case 3:
+				Article.style.top = "280px";
+				break;
+			case 4:
+				Article.style.top = "280px";
+				Article.style.left = "250px";
+				break;
+	
+			default:
+				break;
+			}
+		}
+	}
+	
+	window.addEventListener('load', function () {
+		setArticlePosition();	
+	})
+</script>
+
+
+
+<title>Artikel kachelartig präsentieren</title>
+</head>
+<body id="body">
+	
+	<header id="Header">Das ist ein Header</header>
+	
+
+	<div class="ArticleContainer">
+
+	<!-- div containing all 4 Articles -->
+	
+		<div class="divArticle" id="Article1">
+			<div class="divText"> 
+				<aside class="asideImage"> <img class="img" alt="HTML" src="HTML5.png"></aside>
+				<header class="divArticle_Header"> Artikel 1 </header>
+				<p> TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT </p>
+			</div>
+		</div> 	
+		
+		<div class="divArticle" id="Article2">
+			<div class="divText"> 
+				<aside class="asideImage"> <img class="img" alt="HTML" src="HTML5.png"></aside>
+				<header class="divArticle_Header"> Artikel 2 </header>
+				<p>TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT  </p>
+			</div>
+		</div>
+		
+		<div class="divArticle" id="Article3">
+			<div class="divText"> 
+				<aside class="asideImage"> <img class="img" alt="HTML" src="HTML5.png"></aside>
+				<header class="divArticle_Header"> Artikel 3 </header>
+				<p> TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT  TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT </p>
+			</div>
+		</div>
+		
+		<div class="divArticle" id="Article4">
+			<div class="divText"> 
+				<aside class="asideImage"> <img class="img" alt="HTML" src="HTML5.png"></aside>
+				<header class="divArticle_Header"> Artikel 4 </header>
+				<p> TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT TXT </p>
+			</div>
+		</div>
+	
+	</div>
+	
+	<aside id="asideNav">
+		<nav id="rightNav"> 
+			<p id="pNavigation"> Navigation </p>
+			<p class="pWerbung"> Werbung </p>
+			<p class="pWerbung"> Werbung </p>
+			<p class="pWerbung"> Werbung </p>
+		</nav>
+	</aside>
+
+
+
+	<nav id="navBottom"> Artikelnavigation </nav>
+
+	<footer id="MainFooter"> Das ist ein Footer </footer>
+
+
+</body>
+</html>
