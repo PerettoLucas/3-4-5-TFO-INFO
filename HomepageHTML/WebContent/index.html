@@ -9,6 +9,7 @@
 
 <!-- This is for local script -->
 <script>
+ 	window.setInterval(getDate,1000);
 </script>
 
 <link rel="stylesheet" href="css.css">
@@ -17,16 +18,17 @@
 <body id="body">
 	<h1 id="title">Meine Homepage</h1>
 	
+	<div id="divDate"> Date :  </div>
+	
 	<table id="outerTable">
-	  	<tr>
+	  	<tr>      
 	    	<td id="tdDaten">Daten :</td>
 	    	<td>
 	    		<table id="innerTable" >
 				  	<tr>
 				    	<td>Vorname : </td>
 				    	<td>Lucas</td>
-			    		<td id="tdFoto" rowspan="6"> <img id="foto" alt="Photo from Peretto Lucas" src="https://www.afc-terlan.com/wp-content/uploads/2019/10/Lucas-Peretto-300x300.jpg">	</td>
-				    	
+			    		<td id="tdFoto" rowspan="6"> <img id="foto" onclick="getInfo();" alt="Photo from Peretto Lucas" src="https://www.afc-terlan.com/wp-content/uploads/2019/10/Lucas-Peretto-300x300.jpg">	</td>
 				  	</tr>
 				  	<tr>
 				    	<td>Nachname :</td>

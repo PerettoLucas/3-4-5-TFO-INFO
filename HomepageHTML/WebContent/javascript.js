@@ -14,3 +14,13 @@ function hover(element) {
 function unhover(element) {
 	  element.setAttribute('src', 'OrdnerGeschlossen.png');
 }
+
+function getDate(){
+	var d = new Date();
+	divDate.innerText = "Date : " + d.toLocaleString();
+	
+}
+
+function getInfo(){
+	alert("This is a Cool boy minding his own Buissnes. His name is Lucas.");
+}

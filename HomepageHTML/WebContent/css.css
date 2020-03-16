@@ -56,21 +56,20 @@ a {
 	font-weight: bold;
 	text-decoration: none;
 }
-a:visited {
-	color: blue;
-}
-a:link {
-	color: rgb(192,80,77);
-}
 a:focus, a:hover, a:active {
 	color: red;
 	text-decoration: underline;
 }
-#outerTable{
-	width: 100%;
+a:visited {
+	color: green;
 }
-
-
+#divDate{
+	margin-top: 20px;
+	position: absolute;
+    right: 10px;
+    top: 0;
+    width: 250px;
+}
 
 
 	
