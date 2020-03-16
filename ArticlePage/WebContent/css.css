@@ -42,17 +42,17 @@ body {
 }
 #MainFooter {
 	position: fixed;
-	
-	bottom: 10px;
+	top: 570px;
 	background-color: graytext;
 	width: 600px;
-	padding: 10px;
+	height: 30px;
 	color: black;
+	text-align: inherit;
 }
 #navBottom {
+	top: 530px;
 	position: fixed;
-	width: 600px;
-	bottom: 50px;
+	width: 440px;
 	
 	font-size: large;
 	
@@ -88,6 +88,9 @@ body {
 #pNavigation {
 	background-color: orange;
 }
-
-
+#outerDiv {
+	width: 600px;
+	height: 600px;
+	background-color: rgb(20,20,20);
+}
 
