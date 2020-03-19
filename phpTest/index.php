@@ -1,20 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css.css">
+<title>PHP Login Page</title>
+</head>
 
+<body>
+	
+	<div id="formDiv">
+    	<form id="form" action="post">
+    		<label id="Username">Username : </label>
+    		<input type="text"> 
+    		
+    		<label id="Password">Password : </label>
+    		<input type="password">
+    	
+    	</form>
+	</div>
+	
+	
 
-<p style="color: green;"> This is a HTML formatted text </p>
-<header id="Header">Das ist ein Header</header>
-
-
-<?php
-
-    for($i = 0;$i <= 5; $i++){
-       ?>
-       
-       <p> Zahl : <?php echo $i ?></p>
-
-
-    <?php
-    }
-
-
-
-?>
+</body>
+</html>

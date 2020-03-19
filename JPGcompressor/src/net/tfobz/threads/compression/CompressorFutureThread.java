@@ -1,4 +1,4 @@
-package net.tfobz.threads.compression;
+	package net.tfobz.threads.compression;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.Callable;
