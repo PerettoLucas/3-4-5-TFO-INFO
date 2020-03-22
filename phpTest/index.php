@@ -2,23 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css.css">
+<link rel="stylesheet" href="css2.css">
 <title>PHP Login Page</title>
 </head>
 
 <body>
 	
 	<div id="formDiv">
-    	<form id="form" action="post">
-    		<label id="Username">Username : </label>
-    		<input type="text"> 
+    	<form id="form" method="post" action="loginFormAction.php">
+    		<label> Username : </label>
+    		<input type="text" name="username"> 
     		
-    		<label id="Password">Password : </label>
-    		<input type="password">
-    	
+    		<label> Password : </label>
+    		<input type="password" name="password">
+    		
+    		<input type="submit" value="Login">
     	</form>
 	</div>
-	
 	
 
 </body>
