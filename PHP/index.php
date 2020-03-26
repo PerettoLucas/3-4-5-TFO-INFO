@@ -6,16 +6,14 @@
 </head>
 <body>
 
-<table>
+<table border="">
 	<tr>
-		<td><?php include 'header.php'; ?></td>
+		<td><?php include_once 'header.php'; ?></td>
 	
 	
 	</tr>
 	<tr> 
 		<td> <h1> Das ist ein Absatz </h1> </td>
-		
-	
 	
 	</tr>
 
