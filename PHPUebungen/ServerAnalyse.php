@@ -29,6 +29,13 @@
 			 </td>
 		</tr>
 
+		<tr>
+			 <td> <b> Lingue </b> </td>
+			 <td>
+				<?php include "Language.php"; ?>
+			 </td>
+		</tr>
+
 	</table>
 
 
