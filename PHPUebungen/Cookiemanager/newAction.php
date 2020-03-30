@@ -20,7 +20,7 @@
 			case "1H":
 				$expire = 3600;
 				break;
-			case "5M":
+			case "5M": 
 				$expire = 300;
 				break;
 			case "1M":
