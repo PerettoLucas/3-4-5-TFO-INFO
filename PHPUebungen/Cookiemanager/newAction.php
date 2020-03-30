@@ -16,37 +16,31 @@
 		switch($_GET["selectMenu"]){
 			case "7D":
 				$expire = 3600*24*7;
-				echo"7D";
 				break;
 			case "1H":
-				echo"1H";
 				$expire = 3600;
 				break;
 			case "5M":
 				$expire = 300;
-				echo "5M";
 				break;
 			case "1M":
 				$expire = 60;
-				echo "1M";
 				break;
 			case "30S":
 				$expire = 30;
-				echo "30S";
 				break;
 			case "death":
 				$expire = 1;
-				echo "death";
 				break;
 			default: 
 				break;
 		}
 		setcookie($_GET["name"], $_GET["wert"], time() + $expire );
-		header("Location:index.php?id=1");
+
+		echo "<h1><b> Cookie erfolgreich hinzugefügt </b></h1>";
+
+		echo "<a href=\"index.php?id=1&\"> Zurück </a>";
+
 	}
-	
-
-
-
-
 ?>
+

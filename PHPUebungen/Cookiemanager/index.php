@@ -27,11 +27,11 @@
 					if($_GET == null) include $selected;
 					else{
 					switch ($_GET["id"]) {
-						case 1: {
+						case "1": {
 							$selected = "List.php";
 							break;
 						}
-						case 2: {
+						case "2": {
 							$selected = "New.php";
 							break;
 						}
