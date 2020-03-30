@@ -1,7 +1,6 @@
-
+ 
 function leavePage(){
 	var leave = confirm("Möchten Sie wirklich diese Seite verlassen ?");
-	
 	if(leave == true){
 		window.open("https://www.google.com/search?client=firefox-b-d&q=peretto+lucas");
 	}

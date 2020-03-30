@@ -1,0 +1,48 @@
+table {
+	width: 100%;
+	border: double;
+	border-collapse: collapse;
+}
+#innerHeadTable {
+	width: 100%;
+	height: 100%;
+	border: none;
+	text-align: right;
+}
+#listTable {
+	border-collapse: collapse;
+	border: none;
+	height: 100%;
+	width: 100%;
+}
+#newTable {
+	margin-top: -40px;
+	margin-bottom: 20px;
+	border: none;
+	width: 60%;
+	height: 120px;
+}
+#newTable input{
+	border: none;
+}
+#zuruecksetzenBtn {
+	height: 30px;
+	color: blue;
+}
+#erstellenBtn {
+	height: 30px;
+	color: green;
+}
+#selectMenu {
+	width: 100%;
+	border: none;
+	background-color: transparent;
+}
+#failOnCookie {
+	position: absolute;
+	margin-top: 30%;
+	margin-left: 40%;
+}
+
+
+
