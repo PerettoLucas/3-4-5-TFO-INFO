@@ -15,13 +15,18 @@ public class Increment extends Thread
 	{	
 		while(this.I.i < 1000000) 
 		{
-			this.I.i = this.I.i + 1;
-//			System.out.println(this.I.i);
-			try
-			{
-				Thread.sleep(1);
-			}catch(InterruptedException e)
-			{e.printStackTrace();}
+			synchronized (I) {
+				this.I.i = this.I.i + 1;
+			}
+			if(I.i % 10000 == 0) {
+				
+				System.out.println(this.I.i);
+				try
+				{
+					Thread.sleep(20);
+				}catch(InterruptedException e)
+				{e.printStackTrace();}
+			}
 		}
 	}
 	

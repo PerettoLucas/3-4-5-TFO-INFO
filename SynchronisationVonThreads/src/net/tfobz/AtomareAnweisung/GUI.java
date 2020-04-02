@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
 import java.awt.TextField;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.FlowLayout;
@@ -51,6 +52,7 @@ public class GUI extends JFrame
 		setTitle("AtomareAnweisung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100,100,446,236);
+		setResizable(false);
 		contentPane=new JPanel();
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(contentPane);
@@ -78,16 +80,23 @@ public class GUI extends JFrame
 		
 		btnIncrement.addActionListener(e->{
 			increment1.start();
-			while(I.i < 1000000)
-			{
-				SwingUtilities.invokeLater(()->{
-					progressBar.setValue(I.i);
-				});
-			}
+			
 		});
 		
-		
-		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(I.i < 1000000)
+				{
+					try {
+						SwingUtilities.invokeAndWait(()->{
+								progressBar.setValue(I.i);
+						});
+					} catch (InvocationTargetException | InterruptedException e1) {e1.printStackTrace();}
+				}
+			}
+		}).start();
 	}
 
 }
