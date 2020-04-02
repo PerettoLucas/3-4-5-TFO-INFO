@@ -14,10 +14,13 @@ public class CounterIncrementThread extends Thread
 	{
 		int counterCopy = 0;
 		
-		while(counterCopy <= 1000)
+		while(counterCopy < 1000)
 		{
-			serializedCounter.getIncrementedValue();
-			counterCopy = serializedCounter.getValue();
+			synchronized(serializedCounter)
+			{
+				serializedCounter.getIncrementedValue();
+			}
+			counterCopy++;
 		}
 	}
 	
