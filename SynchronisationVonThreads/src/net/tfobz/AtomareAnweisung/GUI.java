@@ -60,6 +60,7 @@ public class GUI extends JFrame
 		
 		I = new Int();
 		Increment increment1 = new Increment(I);
+		Increment increment2 = new Increment(I);
 		
 		JButton btnIncrement = new JButton("Start Incrementation");
 		contentPane.add(btnIncrement, BorderLayout.NORTH);
@@ -75,23 +76,24 @@ public class GUI extends JFrame
 		textField.setColumns(30);
 		panel.add(textField);
 		
-		JProgressBar progressBar = new JProgressBar(0,1000000);
+		JProgressBar progressBar = new JProgressBar(0,2000000);
 		contentPane.add(progressBar, BorderLayout.CENTER);
 		
 		btnIncrement.addActionListener(e->{
 			increment1.start();
-			
+			increment2.start();
 		});
 		
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				while(I.i < 1000000)
+				while(I.i <= 2000000)
 				{
 					try {
 						SwingUtilities.invokeAndWait(()->{
 								progressBar.setValue(I.i);
+								textField.setText(""+I.i);
 						});
 					} catch (InvocationTargetException | InterruptedException e1) {e1.printStackTrace();}
 				}

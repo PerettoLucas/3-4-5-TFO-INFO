@@ -13,14 +13,14 @@ public class Increment extends Thread
 	@Override
 	public void run()
 	{	
-		while(this.I.i < 1000000) 
+		int copyi = 0;
+		while(copyi < 1000000) 
 		{
+			copyi++;
 			synchronized (I) {
-				this.I.i = this.I.i + 1;
+				this.I.i++;
 			}
 			if(I.i % 10000 == 0) {
-				
-				System.out.println(this.I.i);
 				try
 				{
 					Thread.sleep(20);
