@@ -34,6 +34,7 @@ public class SerializedCounter
 	 * in the application directory
 	 * @param value ob the counter to be stored
 	 */
+	
 	private synchronized void saveCounter(int value) {
 		String path = System.getProperty("user.dir") + "\\"
 				+ getClass().getSimpleName() + ".obj";
