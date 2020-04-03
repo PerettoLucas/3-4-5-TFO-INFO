@@ -12,18 +12,21 @@ import java.net.Socket;
 public class ChatClient
 {
 	public static final int PORT = 65535;
+	public static BufferedReader in = null;
+	public static PrintStream out = null;
 	
 	public static void main(String[] args) {
 		Socket client = null;
 		try {
-			client = new Socket("localhost", PORT);
-			BufferedReader in = 
-				new BufferedReader( new InputStreamReader(client.getInputStream()));
-			PrintStream out = new PrintStream(client.getOutputStream());
+			client = new Socket(args[1], PORT);
+			in = new BufferedReader( new InputStreamReader(client.getInputStream()));
+			out = new PrintStream(client.getOutputStream());
 			BufferedReader consoleIn =
 				new BufferedReader(new InputStreamReader(System.in));
 			// sending the name of the client to the server
-			out.println(args[0]);
+			synchronized (out) {
+				out.println(args[0]);
+			}
 			
 			new ChatClientThread(in).start();
 			
