@@ -12,15 +12,13 @@ import java.net.Socket;
 public class ChatClient
 {
 	public static final int PORT = 65535;
-	public static BufferedReader in = null;
-	public static PrintStream out = null;
 	
 	public static void main(String[] args) {
 		Socket client = null;
 		try {
 			client = new Socket(args[1], PORT);
-			in = new BufferedReader( new InputStreamReader(client.getInputStream()));
-			out = new PrintStream(client.getOutputStream());
+			BufferedReader in = new BufferedReader( new InputStreamReader(client.getInputStream()));
+			PrintStream out  = new PrintStream(client.getOutputStream());
 			BufferedReader consoleIn =
 				new BufferedReader(new InputStreamReader(System.in));
 			// sending the name of the client to the server
@@ -30,7 +28,7 @@ public class ChatClient
 			
 			new ChatClientThread(in).start();
 			
-			while (true) {
+			while (true && PORT != -1) {
 				String line = consoleIn.readLine();
 				if (line == null)
 					// pressed [Ctrl]+Z to sign out

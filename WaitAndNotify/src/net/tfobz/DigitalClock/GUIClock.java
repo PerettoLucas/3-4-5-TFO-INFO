@@ -1,4 +1,4 @@
-package net.tfobz.DigitalClockLabel;
+package net.tfobz.DigitalClock;
 
 import java.awt.EventQueue;
 
@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 public class GUIClock extends JFrame {
 
 	private JPanel contentPane;
-	private DigitalClockLabel digitalClockLabel = null;
+	private JDigitalClock digitalClockLabel = null;
 
 	/**
 	 * Launch the application.
@@ -44,7 +44,7 @@ public class GUIClock extends JFrame {
 		setContentPane(contentPane);
 		setResizable(false);
 		
-		digitalClockLabel = new DigitalClockLabel();
+		digitalClockLabel = new JDigitalClock();
 		digitalClockLabel.setSize(500, 250);
 		digitalClockLabel.setBounds(100, 50, 500, 250);
 		
@@ -56,7 +56,6 @@ public class GUIClock extends JFrame {
 		
 		JButton btnContinue = new JButton("Continue");
 		btnContinue.addActionListener(e -> digitalClockLabel.setStopped(false));
-		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
