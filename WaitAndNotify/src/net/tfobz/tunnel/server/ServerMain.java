@@ -1,11 +1,15 @@
 package net.tfobz.tunnel.server;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 /**
  * In dieser Konsolenanwendung wird zuerst ein VisitorsMonitor angelegt, und dann 
  * wartet das Programm in einer Endlosschleife auf Clientanfragen. Erreicht ihm 
  * eine solche, so wird diese in einem Thread vom Typ ServerThread abgearbeitet.
  * Dadurch dass jede Anfrage in einem eigenen Thread abgearbeitet wird,
- * können mehrere Anfragen gleichzeitig bearbeitet werden
+ * kï¿½nnen mehrere Anfragen gleichzeitig bearbeitet werden
  */
 public class ServerMain 
 {
@@ -16,12 +20,29 @@ public class ServerMain
 	
 	/**
 	 * Besuchermonitor wird angelegt, und in einer Endlosschleife wird auf 
-	 * Clientanfragen gewartet, welche alle über einzelne ServerThreads abgearbeitet
+	 * Clientanfragen gewartet, welche alle ï¿½ber einzelne ServerThreads abgearbeitet
 	 * werden. Dadurch dass jede Anfrage in einem eigenen Thread abgearbeitet wird,
-	 * können mehrere Anfragen gleichzeitig bearbeitet werden
+	 * kï¿½nnen mehrere Anfragen gleichzeitig bearbeitet werden
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
+		System.out.println("S E R V E R");
+		System.out.println("===========");
+		
+		VisitorsMonitor visitorsMonitor = new VisitorsMonitor();
+		ServerSocket server = null;
+		
+		try
+		{
+			server = new ServerSocket(PORT);
+			while (true) 
+			{
+				Socket client = server.accept();
+				new ServerThread(client, visitorsMonitor).start();
+			}
+		} catch (IOException e){behandleException(e);}
+		
 	}
 	
 	/**

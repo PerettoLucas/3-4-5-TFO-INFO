@@ -1,8 +1,8 @@
 package net.tfobz.tunnel.server;
 
 /**
- * Diese Klasse verwaltet die verfügbaren Besucher, welche eingelassen werden 
- * können
+ * Diese Klasse verwaltet die verfï¿½gbaren Besucher, welche eingelassen werden 
+ * kï¿½nnen
  */
 public class VisitorsMonitor 
 {
@@ -11,7 +11,7 @@ public class VisitorsMonitor
 	 */
 	protected final int MAX_VISITORS = 50;
 	/**
-	 * Anzahl der Besucher die in den Tunnel noch eingelassen werden können
+	 * Anzahl der Besucher die in den Tunnel noch eingelassen werden kï¿½nnen
 	 */
 	protected int availableVisitors = MAX_VISITORS;
 	
@@ -20,23 +20,32 @@ public class VisitorsMonitor
 	 * aus
 	 * @param count
 	 */
-	public synchronized void request(int count) {
+	public synchronized void request(int count) 
+	{
+		System.out.println("Requested "+ count + " Visitors");
+		while(availableVisitors < count)
+			try{this.wait();} catch (InterruptedException e){}
+		availableVisitors -= count;
+		System.out.println("Recieved " + count + " Visitors");
 	}
 	
 	/**
-	 * Gibt count Besucher an den VisitorsMonitor zurück und gibt Statusmeldungen
+	 * Gibt count Besucher an den VisitorsMonitor zurï¿½ck und gibt Statusmeldungen
 	 * an der Serverkonsole aus
 	 * @param count
 	 */
-	public synchronized void release(int count) {
+	public synchronized void release(int count) 
+	{
+		availableVisitors += count;
+		notifyAll();
 	}
 	
 	/**
-	 * Liefert die Anzahl der momentan noch verfügbaren Besucher zurück, die in den
-	 * Tunnel eingelassen werden können
+	 * Liefert die Anzahl der momentan noch verfï¿½gbaren Besucher zurï¿½ck, die in den
+	 * Tunnel eingelassen werden kï¿½nnen
 	 * @return Anzahl der noch in den Tunnel einlassbaren Besucher
 	 */
 	public synchronized int getAvailableVisitors() {
-		return -1;
+		return this.availableVisitors;
 	}
 }

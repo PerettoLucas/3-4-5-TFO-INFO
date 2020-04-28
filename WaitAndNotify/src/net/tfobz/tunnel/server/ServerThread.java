@@ -3,10 +3,10 @@ package net.tfobz.tunnel.server;
 import java.net.Socket;
 
 /**
- * Der Thread liest vom Socket die Anzahl, und dabei werden die drei Fälle 
- * – größer 0, kleiner 0 oder gleich 0 – unterschieden und entsprechen am 
+ * Der Thread liest vom Socket die Anzahl, und dabei werden die drei Fï¿½lle 
+ * ï¿½ grï¿½ï¿½er 0, kleiner 0 oder gleich 0 ï¿½ unterschieden und entsprechen am 
  * VisitorsMonitor die Anfragen gestellt. Das  Ergebnis wird an den Client 
- * zurück geschickt. der ServerThread erhält den Socket des Clients und eine 
+ * zurï¿½ck geschickt. der ServerThread erhï¿½lt den Socket des Clients und eine 
  * Referenz auf VisitorsMonitor
  */
 public class ServerThread extends Thread
@@ -16,15 +16,15 @@ public class ServerThread extends Thread
 	 */
 	protected Socket client = null;
 	/**
-	 * VisitorsMonitor an dem die Anfrage nach Besuchern bzw. die Rückgabe
+	 * VisitorsMonitor an dem die Anfrage nach Besuchern bzw. die Rï¿½ckgabe
 	 * der Besucher nach Beendigung einer Besichtigung gestellt werden kann
 	 */
 	protected VisitorsMonitor visitorsMonitor = null;
 	
 	/**
-	 * Konstruktor erhält den Clientsocket und den VisitorsMonitor als
+	 * Konstruktor erhï¿½lt den Clientsocket und den VisitorsMonitor als
 	 * Referenz. Als Threadname wird die IP-Adresse des Clients gesetzt.
-	 * Die IP-Adresse kann über den Clientsocket durch die Methode
+	 * Die IP-Adresse kann ï¿½ber den Clientsocket durch die Methode
 	 * getInetAdress() erfragt werden
 	 * @param client
 	 * @param visitorsMonitor
@@ -36,13 +36,23 @@ public class ServerThread extends Thread
 	 * Diese Methode liest zuerst vom Clientsocket die Anzahl. Je nach dem
 	 * welche Werte in anzahl stehen, werden folgende Aufgaben erledigt:<br><br>
 	 * <b>anzahl == 0</b><br>
-	 * Es wird die Anzahl der am VisitorsMonitor momentan verfügbaren Benutzer
-	 * abgefragt und an den Client zurück geschickt<br><br>
+	 * Es wird die Anzahl der am VisitorsMonitor momentan verfï¿½gbaren Benutzer
+	 * abgefragt und an den Client zurï¿½ck geschickt<br><br>
 	 * <b>anzahl > 0</b><br>
 	 * Es werden am VisitorsMonitor die Benutzer angefordert<br><br>
 	 * <b>anzahl < 0</b><br>
-	 * Es werden dem VisitorsMonitor die Anzahl an Benutzer zurück gegeben
+	 * Es werden dem VisitorsMonitor die Anzahl an Benutzer zurï¿½ck gegeben
 	 */
-	public void run() {
+	public void run() 
+	{
+		while(true)
+		{
+			
+			
+			
+			
+		}
+		
+		
 	}
 }

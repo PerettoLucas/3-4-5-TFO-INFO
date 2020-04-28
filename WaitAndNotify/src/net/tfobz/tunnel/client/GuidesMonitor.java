@@ -1,18 +1,18 @@
 package net.tfobz.tunnel.client;
 
 /**
- * An ihm kann ein Führer angefordert aber auch ein solcher zurückgegeben 
+ * An ihm kann ein Fï¿½hrer angefordert aber auch ein solcher zurï¿½ckgegeben 
  * werden. Dieser muss eine Referenz auf ClientForm haben, damit die 
- * Statusmeldungen dort angezeigt werden können
+ * Statusmeldungen dort angezeigt werden kï¿½nnen
  */
 public class GuidesMonitor 
 {
 	/**
-	 * Maximalanzahl der am Eingang vorhanden Führer
+	 * Maximalanzahl der am Eingang vorhanden Fï¿½hrer
 	 */
 	protected final int MAX_GUIDES = 4;
 	/**
-	 * Anzahl der momentan verfügbaren Führer
+	 * Anzahl der momentan verfï¿½gbaren Fï¿½hrer
 	 */
 	protected int availableGuides = MAX_GUIDES;
 	/**
@@ -21,31 +21,48 @@ public class GuidesMonitor
 	protected ClientForm clientForm = null;
 	
 	/**
-	 * Konstruktor, dem eine Referenz auf das ClientForm übergeben wird
+	 * Konstruktor, dem eine Referenz auf das ClientForm ï¿½bergeben wird
 	 * @param clientForm
 	 */
-	public GuidesMonitor(ClientForm clientForm) {
+	public GuidesMonitor(ClientForm clientForm) 
+	{
+		this.clientForm = clientForm;
 	}
 	
 	/**
-	 * Ein Führer wird angefordert, gleichzeitig werden die Statusmeldungen im
+	 * Ein Fï¿½hrer wird angefordert, gleichzeitig werden die Statusmeldungen im
 	 * ClientForm ausgegeben und die Benutzerschnittstelle angepasst
 	 */
-	public synchronized void request() {
+	public synchronized void request() 
+	{
+		clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Guide Requestet...");
+		while(availableGuides <= 0)
+			try{this.wait();} catch (InterruptedException e){}
+		availableGuides--;
+		clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Guide Reserved. Available Guides : " + availableGuides);
+		clientForm.lblAvailableGuides.setText("Available Guides: " + availableGuides);
 	}
 	
 	/**
-	 * Führer wird bei Beendigung einer Führung zurück gegeben. Statusmeldungen 
+	 * Fï¿½hrer wird bei Beendigung einer Fï¿½hrung zurï¿½ck gegeben. Statusmeldungen 
 	 * werden ausgegeben und die Benutzerschnittstelle angepasst
 	 */
-	public synchronized void release() {
+	public synchronized void release() 
+	{
+		if(availableGuides == 0) {
+			availableGuides++;
+			notifyAll();
+		}else availableGuides++;
+
+		clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Guide released. Available Guides: " + availableGuides);
+		clientForm.lblAvailableGuides.setText("Available Guides: " + availableGuides);
 	}
 
 	/**
-	 * Die Anzahl der momentan verfügbaren Führer wird zurück geliefert
-	 * @return Anzahl der momentan verfügbaren Führer
+	 * Die Anzahl der momentan verfï¿½gbaren Fï¿½hrer wird zurï¿½ck geliefert
+	 * @return Anzahl der momentan verfï¿½gbaren Fï¿½hrer
 	 */
 	public synchronized int getAvailableGuides() {
-		return -1;
+		return this.availableGuides;
 	}
 }
