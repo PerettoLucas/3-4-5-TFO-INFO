@@ -1,7 +1,12 @@
 package net.tfobz.tunnel.client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.Socket;
+
+import javax.swing.SwingUtilities;
 
 /**
  * Jede Anfrage um Start einer Besichtigung oder Beendigung einer solchen muss in 
@@ -98,18 +103,30 @@ public class ClientThread extends Thread
 	{
 		Socket client = null;
 		
-		if(count > 0){
+		if(this.count > 0){
 			guidesMonitor.request();
 			try
 			{
 				client = new Socket(HOST, PORT);
-				//TODO anzahl der neuen besichtigung dem Server schicken
+				BufferedReader in = new BufferedReader( new InputStreamReader(client.getInputStream()));
+				PrintStream out  = new PrintStream(client.getOutputStream());
+				
+				out.print(this.count);
+				
+				int retcount = 0;
+				
+				retcount = in.read();
+				
+				SwingUtilities.invokeLater(() -> clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Visit with " + count + " visitors requested..."));
+				
+				if(retcount == count) 
+					SwingUtilities.invokeLater(() -> clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Visit with " + count + " visitors entered the tunnel")); 
+				
 				//TODO JList mit dem eintrag aktualisieren
-				//TODO an ClientForm änderungen anführen
 			}catch(IOException e) {behandleException(e);}
 			finally {try { client.close(); } catch (Exception e1) { ; }}
 			
-		}else if(count < 0) {
+		}else if(this.count < 0) {
 			guidesMonitor.release();
 			try
 			{
@@ -119,14 +136,27 @@ public class ClientThread extends Thread
 				//TODO an ClientForm änderungen anführen
 			}catch(IOException e) {e.printStackTrace();}
 			finally {try { client.close(); } catch (Exception e1) { ; }}
-		}else if(count == 0) {
+		}else if(this.count == 0) {
 			try
 			{
 				client = new Socket(HOST, PORT);
-				//TODO anfrage an Server wieviele Besucher noch platz haben
-				//TODO 0 an den Server schicken
-				//TODO Server antwortet mit anzahl an freien Plätzen => ausgabe an ClientForm
-			}catch(IOException e) {e.printStackTrace();}
+				
+				BufferedReader in = new BufferedReader( new InputStreamReader(client.getInputStream()));
+				PrintStream out  = new PrintStream(client.getOutputStream());
+				
+				out.print(this.count);
+				
+				int retcount = 0;
+				
+				retcount = in.read();
+				final int retcount_copy = retcount;
+				
+				if(retcount > 0 ) 
+					SwingUtilities.invokeLater(() -> {clientForm.lblAvailableVisitors.setText("Available Visitors: " + retcount_copy);});
+				else 
+					SwingUtilities.invokeLater(() -> {clientForm.lblAvailableVisitors.setText("Available Visitors: " + 0);});
+
+			}catch(Exception e) {}
 			finally {try { client.close(); } catch (Exception e1) { ; }}
 		}
 		

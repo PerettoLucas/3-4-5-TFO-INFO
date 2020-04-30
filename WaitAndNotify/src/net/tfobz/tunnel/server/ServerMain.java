@@ -24,6 +24,7 @@ public class ServerMain
 	 * werden. Dadurch dass jede Anfrage in einem eigenen Thread abgearbeitet wird,
 	 * k�nnen mehrere Anfragen gleichzeitig bearbeitet werden
 	 * @param args
+	 * 
 	 */
 	public static void main(String[] args) 
 	{
@@ -50,5 +51,6 @@ public class ServerMain
 	 * @param e
 	 */
 	public static void behandleException(Exception e) {
+		e.printStackTrace();
 	}
 }

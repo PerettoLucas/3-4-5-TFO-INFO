@@ -195,17 +195,11 @@ public class ClientForm extends JFrame {
 			{
 				try
 				{
-					//TODO visitors cannot be greater than the available visitors.
+					//TODO JList aktualisieren
 					int visitors = Integer.parseInt(txtVisitors.getText());
-					if(visitors > 50 || visitors > 1) JOptionPane.showMessageDialog(ClientForm.this, "Visitors can not be greater than 50 or less than 1!");
+					if(visitors > 50 || visitors < 1) JOptionPane.showMessageDialog(ClientForm.this, "Visitors can not be greater than 50 or less than 1!");
 					else {
-						if (guidesMonitor.availableGuides > 0)
-							new Thread(() -> guidesMonitor.request()).start();
-						else if(!getFlag()) 
-						{
-							setFlag(true);
-							new Thread(() -> guidesMonitor.request()).start();
-						}
+						new ClientThread(visitors, ClientForm.this, guidesMonitor).start();
 					}
 				} catch (java.lang.NumberFormatException e2){JOptionPane.showMessageDialog(ClientForm.this, "Visitors: Null or not a Number");}
 			}
@@ -234,21 +228,22 @@ public class ClientForm extends JFrame {
 				
 			}
 		});
+
 		
+		//jede sekunde -> Serveranfrage(anzahl der verfügbaren Visitors) -> an clientForm ausgeben
 		new Thread(new Runnable() {
 			
 			@Override
-			public void run() {
-				while(true)
+			public void run()
+			{
+				System.out.println("executed !");
+				while (true) 
 				{
+					try {Thread.sleep(1000);} catch (InterruptedException e) {}
 					new ClientThread(0, ClientForm.this, guidesMonitor).start();
 				}
 			}
 		}).start();
-		
-		
-		
-		//TODO jede sekunde ->Serveranfrage(anzahl der verfügbaren Visitors)
 	}
 	private void setFlag(boolean set) {this.flag = set; }
 	private boolean getFlag() { return this.flag; }
