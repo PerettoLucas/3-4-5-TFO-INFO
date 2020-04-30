@@ -22,11 +22,11 @@ public class VisitorsMonitor
 	 */
 	public synchronized void request(int count) 
 	{
-		System.out.println("Requested "+ count + " Visitors");
+		System.out.println(Thread.currentThread().getName() + " Requested "+ count + " Visitors");
 		while(availableVisitors < count)
 			try{this.wait();} catch (InterruptedException e){}
 		availableVisitors -= count;
-		System.out.println("Recieved " + count + " Visitors");
+		System.out.println(Thread.currentThread().getName() + " Recieved " + count + " Visitors");
 	}
 	
 	/**
@@ -36,6 +36,7 @@ public class VisitorsMonitor
 	 */
 	public synchronized void release(int count) 
 	{
+		System.out.println(Thread.currentThread().getName() + " Releases "+ count + " Visitors. " + availableVisitors + " visitors available.");
 		availableVisitors += count;
 		notifyAll();
 	}

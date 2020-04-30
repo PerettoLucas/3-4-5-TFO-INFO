@@ -5,20 +5,20 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import java.awt.Component;
-import javax.swing.SwingConstants;
-import java.awt.ComponentOrientation;
-import javax.swing.JTextArea;
 
 /**
  * Diese Klasse erstellt die Benutzerschnittstelle und den GuidesMonitor zur 
@@ -58,7 +58,6 @@ public class ClientForm extends JFrame {
 	protected DefaultListModel<String> mActiveVisits = null;
 	
 	public JTextField txtVisitors;
-	public JTextField txtFieldActiveVisits;
 	
 	public JLabel lblEntrance;
 	public JLabel lblAvailableGuides;
@@ -67,8 +66,8 @@ public class ClientForm extends JFrame {
 	public JLabel lblAvailableVisitors;
 	public JLabel lblStatus;
 	public JTextArea txtAreaStatus;
+	public JList<String> activeList;
 	
-	private boolean flag = false;
 	
 	/**
 	 * Legt das Formular an und macht es sichtbar. Beim Anlegen des Forumulas
@@ -100,6 +99,7 @@ public class ClientForm extends JFrame {
 	public ClientForm()
 	{
 		guidesMonitor = new GuidesMonitor(this);
+		mActiveVisits = new DefaultListModel<String>();
 		
 		setResizable(false);
 		setTitle("Entrance");
@@ -150,14 +150,13 @@ public class ClientForm extends JFrame {
 		lblActiveVisits.setBounds(12, 12, 193, 15);
 		panel_1.add(lblActiveVisits);
 		
-		txtFieldActiveVisits = new JTextField();
-		txtFieldActiveVisits.setBounds(12, 39, 193, 172);
-		panel_1.add(txtFieldActiveVisits);
-		txtFieldActiveVisits.setColumns(10);
-		
 		JButton btnFinishVisit = new JButton("Finish visit");
 		btnFinishVisit.setBounds(12, 223, 193, 36);
 		panel_1.add(btnFinishVisit);
+		
+		activeList = new JList<String>(mActiveVisits);
+		activeList.setBounds(12, 38, 193, 168);
+		panel_1.add(activeList);
 		
 		lblAvailableVisitors = new JLabel("Available Visitors: ");
 		lblAvailableVisitors.setBounds(22, 459, 207, 15);
@@ -224,8 +223,27 @@ public class ClientForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				//TODO 
-				
+				if(mActiveVisits.isEmpty()) JOptionPane.showMessageDialog(ClientForm.this, "No Active Visits");
+				else 
+				{
+					if(activeList.getSelectedIndex() >= 0) 
+					{
+						String selected = mActiveVisits.getElementAt(activeList.getSelectedIndex());
+						
+						int visitors;
+						
+						visitors = Integer.parseInt(selected.substring(0, selected.length() - 9));
+
+						activeList.remove(activeList.getSelectedIndex());
+						
+						System.out.println(-visitors);
+						
+						new ClientThread(-visitors, ClientForm.this, guidesMonitor).start();
+						
+					}
+					else JOptionPane.showMessageDialog(ClientForm.this, "No Entry selected");
+					
+				}
 			}
 		});
 
@@ -236,7 +254,6 @@ public class ClientForm extends JFrame {
 			@Override
 			public void run()
 			{
-				System.out.println("executed !");
 				while (true) 
 				{
 					try {Thread.sleep(1000);} catch (InterruptedException e) {}
@@ -245,6 +262,4 @@ public class ClientForm extends JFrame {
 			}
 		}).start();
 	}
-	private void setFlag(boolean set) {this.flag = set; }
-	private boolean getFlag() { return this.flag; }
 }

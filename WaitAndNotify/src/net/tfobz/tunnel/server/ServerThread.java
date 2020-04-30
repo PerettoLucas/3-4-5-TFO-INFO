@@ -1,9 +1,7 @@
 package net.tfobz.tunnel.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -54,29 +52,35 @@ public class ServerThread extends Thread
 	public void run() 
 	{
 		try {
-			BufferedReader in = new BufferedReader( new InputStreamReader(client.getInputStream()));
-			PrintStream out  = new PrintStream(client.getOutputStream());
+			InputStream in = client.getInputStream();
+			OutputStream out  = client.getOutputStream();
 			
 			int count = 0;
 			
 			{
 				try {
-					count = Integer.parseInt(""+in.read());
+					count = in.read();
 				} catch (java.net.SocketException e) {}
 			}
-			System.out.println(count);
+			
+			System.out.println("empfangen" + count);
 			
 			if(count == 0) {
-				out.print(visitorsMonitor.getAvailableVisitors());
+				out.write(visitorsMonitor.getAvailableVisitors());
 			}else if(count > 0) 
 			{
 				//Blockierend bis request mit den Visitors antwortet
-//				visitorsMonitor.request(count);
+				visitorsMonitor.request(count);
 				
-//				out.print(count);
+				out.write(count);
 			}else if(count < 0) 
 			{
+				System.out.println("empfangen" + count);
+
+				visitorsMonitor.release(count);
 				
+				
+				out.write(count);
 			}
 			
 			

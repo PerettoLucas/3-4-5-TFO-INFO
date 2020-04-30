@@ -2,7 +2,9 @@ package net.tfobz.tunnel.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 
@@ -102,64 +104,60 @@ public class ClientThread extends Thread
 	public void run() 
 	{
 		Socket client = null;
+		try
+		{
+			client = new Socket(HOST, PORT);
 		
-		if(this.count > 0){
-			guidesMonitor.request();
-			try
-			{
-				client = new Socket(HOST, PORT);
-				BufferedReader in = new BufferedReader( new InputStreamReader(client.getInputStream()));
-				PrintStream out  = new PrintStream(client.getOutputStream());
-				
-				out.print(this.count);
+
+			InputStream in = client.getInputStream();
+			OutputStream out = client.getOutputStream();
+			
+			if(this.count > 0){
+				guidesMonitor.request();
+					
+				out.write(count);
 				
 				int retcount = 0;
-				
+					
 				retcount = in.read();
-				
+					
 				SwingUtilities.invokeLater(() -> clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Visit with " + count + " visitors requested..."));
-				
+					
 				if(retcount == count) 
 					SwingUtilities.invokeLater(() -> clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Visit with " + count + " visitors entered the tunnel")); 
+					
+				clientForm.mActiveVisits.addElement(count + " Visitors");
 				
-				//TODO JList mit dem eintrag aktualisieren
-			}catch(IOException e) {behandleException(e);}
-			finally {try { client.close(); } catch (Exception e1) { ; }}
-			
-		}else if(this.count < 0) {
-			guidesMonitor.release();
-			try
-			{
-				client = new Socket(HOST, PORT);
-				//TODO anzahl der neuen besichtigung dem Server schicken
-				//TODO JList mit dem eintrag aktualisieren
-				//TODO an ClientForm änderungen anführen
-			}catch(IOException e) {e.printStackTrace();}
-			finally {try { client.close(); } catch (Exception e1) { ; }}
-		}else if(this.count == 0) {
-			try
-			{
-				client = new Socket(HOST, PORT);
+			}else if(this.count < 0) {
+				guidesMonitor.release();
 				
-				BufferedReader in = new BufferedReader( new InputStreamReader(client.getInputStream()));
-				PrintStream out  = new PrintStream(client.getOutputStream());
+				System.out.println("sended : " + count);
 				
-				out.print(this.count);
+				out.write(count);
 				
 				int retcount = 0;
 				
 				retcount = in.read();
-				final int retcount_copy = retcount;
 				
+				if(retcount == count) 
+					SwingUtilities.invokeLater(() -> clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Visit with " + count + " visitors finished"));
+					
+			}else if(this.count == 0) {
+	
+				out.write(this.count);
+				int retcount = 0;
+				retcount = in.read();
+					
+				final int retcount_copy = retcount;
+					
 				if(retcount > 0 ) 
 					SwingUtilities.invokeLater(() -> {clientForm.lblAvailableVisitors.setText("Available Visitors: " + retcount_copy);});
 				else 
 					SwingUtilities.invokeLater(() -> {clientForm.lblAvailableVisitors.setText("Available Visitors: " + 0);});
-
-			}catch(Exception e) {}
-			finally {try { client.close(); } catch (Exception e1) { ; }}
-		}
-		
+	
+			}
+		}catch(IOException e) {behandleException(e);}
+		finally {try { client.close(); } catch (Exception e1) { ; }}
 		
 	}
 
