@@ -194,7 +194,6 @@ public class ClientForm extends JFrame {
 			{
 				try
 				{
-					//TODO JList aktualisieren
 					int visitors = Integer.parseInt(txtVisitors.getText());
 					if(visitors > 50 || visitors < 1) JOptionPane.showMessageDialog(ClientForm.this, "Visitors can not be greater than 50 or less than 1!");
 					else {
@@ -234,7 +233,7 @@ public class ClientForm extends JFrame {
 						
 						visitors = Integer.parseInt(selected.substring(0, selected.length() - 9));
 
-						activeList.remove(activeList.getSelectedIndex());
+						mActiveVisits.remove(activeList.getSelectedIndex());
 						
 						System.out.println(-visitors);
 						

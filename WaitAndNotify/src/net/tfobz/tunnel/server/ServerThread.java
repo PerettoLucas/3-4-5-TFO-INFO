@@ -59,7 +59,7 @@ public class ServerThread extends Thread
 			
 			{
 				try {
-					count = in.read();
+					count = (byte)in.read();
 				} catch (java.net.SocketException e) {}
 			}
 			
@@ -67,20 +67,26 @@ public class ServerThread extends Thread
 			
 			if(count == 0) {
 				out.write(visitorsMonitor.getAvailableVisitors());
-			}else if(count > 0) 
+			}else if(count > 0 ) 
 			{
 				//Blockierend bis request mit den Visitors antwortet
+				
 				visitorsMonitor.request(count);
 				
 				out.write(count);
 			}else if(count < 0) 
 			{
-				System.out.println("empfangen" + count);
+				System.out.println("entered");
 
+				System.out.println("recieved       : " + count);
+				
+				
 				visitorsMonitor.release(count);
 				
+				System.out.println("send again");
 				
-				out.write(count);
+				
+				out.write((byte)count);
 			}
 			
 			

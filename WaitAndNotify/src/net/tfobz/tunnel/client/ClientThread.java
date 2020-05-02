@@ -133,11 +133,11 @@ public class ClientThread extends Thread
 				
 				System.out.println("sended : " + count);
 				
-				out.write(count);
+				out.write((byte)count);
 				
 				int retcount = 0;
 				
-				retcount = in.read();
+				retcount = (byte)in.read();
 				
 				if(retcount == count) 
 					SwingUtilities.invokeLater(() -> clientForm.txtAreaStatus.setText(clientForm.txtAreaStatus.getText() + "\n" + "Visit with " + count + " visitors finished"));

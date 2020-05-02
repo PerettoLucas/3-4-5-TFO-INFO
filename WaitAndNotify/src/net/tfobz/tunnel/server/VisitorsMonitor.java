@@ -37,7 +37,7 @@ public class VisitorsMonitor
 	public synchronized void release(int count) 
 	{
 		System.out.println(Thread.currentThread().getName() + " Releases "+ count + " Visitors. " + availableVisitors + " visitors available.");
-		availableVisitors += count;
+		availableVisitors += -count;
 		notifyAll();
 	}
 	
