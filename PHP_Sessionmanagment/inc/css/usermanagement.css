@@ -1,0 +1,50 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	background-color: #dddddd;
+}
+
+p, td {
+	font-size: 12px;
+}
+
+.* {
+	font-family : verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	font-size: 18px;
+}
+
+table {
+	font-family : verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+    padding: 2;
+    border-width: 1px;
+}
+
+th {
+	color: #000000;
+    background-color: #EEF3FB;
+    padding: 3;
+    text-align: center;
+    border: none;
+}
+
+a {
+	color: #333366;
+    text-decoration: underline;
+}
+
+a:hover {
+	color: #333366;
+    text-decoration: underline;
+}
+
+.error {
+	font-size: 10px;
+	color: #FF0000;
+}
