@@ -16,8 +16,7 @@ class User
   protected $errors;
   
   public function __construct(
-   
-      $username = null,
+    $username = null,
     $password = null,
     $passwordRepeat = null,
     $male = false,
