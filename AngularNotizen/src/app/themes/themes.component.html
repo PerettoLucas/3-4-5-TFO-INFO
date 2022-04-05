@@ -1,0 +1,16 @@
+
+<mat-selection-list #notesList [multiple]="false" >
+  <mat-list-option *ngFor="let theme of themes" [value]="theme"
+                   style="margin: 1.5%; width: 97%; height: 3%;" (click)="openDialog(false, theme)">
+    <h1>{{theme.description}}</h1>
+    <mat-divider></mat-divider>
+  </mat-list-option>
+</mat-selection-list>
+
+
+
+<div style="position:absolute; right: 0px">
+  <button mat-fab color="warn" (click)="openDialog(true)">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,30 @@
+
+<div>
+  <nav mat-tab-nav-bar backgroundColor="primary" style="width: 100%;" #navBar >
+    <a mat-tab-link routerLink="/notes/title" style="width: 33%" routerLinkActive #navBarTitle='routerLinkActive' [active]="navBarTitle.isActive">Title</a>
+    <a mat-tab-link routerLink="/notes/themes" style="width: 33%" routerLinkActive #navBarTheme='routerLinkActive' [active]="navBarTheme.isActive">Theme</a>
+    <a mat-tab-link routerLink="/notes/modDate" style="width: 33%" routerLinkActive #navBarModDate='routerLinkActive' [active]="navBarModDate.isActive">Modification Date</a>
+  </nav>
+</div>
+
+
+<mat-selection-list #notesList [multiple]="false" >
+  <mat-list-option (click)="router.navigate(['/note', note.id])" *ngFor="let note of notes" [value]="note"
+                   style="margin: 1.5%; width: 97%; height: 3%;">
+    <h1 style="font-size: 30px">{{note.title}}   ({{note.theme?.description}})</h1>
+    <span>Von: {{note.user?.username}}</span>
+    <span>Erstellt: {{note.creationDate | date}} <span *ngIf="note.modificationDate != 0; else undefModDate">Geändert: {{note.modificationDate | date}}</span> </span>
+    <span>{{note.text}}</span>
+    <mat-divider></mat-divider>
+  </mat-list-option>
+</mat-selection-list>
+
+<div style="position:absolute; right: 0px">
+  <button mat-fab color="warn" (click)="addNote()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<ng-template #undefModDate>
+  Geändert: Nicht Definiert
+</ng-template>

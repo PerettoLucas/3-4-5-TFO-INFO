@@ -1,0 +1,10 @@
+<div *ngIf="this.persons != null  && this.persons.length != 0; else noPersons">
+  <div *ngFor="let p of this.persons">
+    <ua-person-item [person]="p"></ua-person-item>
+  </div>
+</div>
+
+<ng-template #noPersons>
+  keine Personen
+
+</ng-template>

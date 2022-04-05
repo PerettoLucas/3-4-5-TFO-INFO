@@ -1,0 +1,35 @@
+
+<div style="margin-top: 50px; margin-left: 5%">
+
+    <h1>
+
+      <button style="margin-right: 30px"
+              (click)="deleteAllArticles()"
+              mat-fab color="primary"
+              aria-label="Example icon button with a delete icon">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      Delete All Articles!
+    </h1>
+
+  <div *ngIf="error != null">
+    <h3>Error : {{error.error}}</h3>
+    <h3>Message :  {{error.message}}</h3>
+    <h3>Name : {{error.name}}</h3>
+    <h3></h3>
+    <h3>ok : {{error.ok}}</h3>
+    <h3>Headers : {{error.headers}}</h3>
+    <h3>Status : {{error.status}}</h3>
+    <h3>Status text : {{error.statusText}}</h3>
+  </div>
+
+  <div *ngIf="response != null">
+    <h3>Response : {{response.status}}</h3>
+    <h3>Status Text : {{response.statusText}}</h3>
+    <h3>ok : {{response.ok}}</h3>
+  </div>
+
+
+
+</div>

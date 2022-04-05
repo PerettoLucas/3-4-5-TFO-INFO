@@ -1,0 +1,130 @@
+<div style="margin-left: 10%;" fxShow.sm="false" fxShow.xs="false" fxShow="true">
+  <h1><b>{{foundStation.name}} ({{foundStation.altitude}})</b></h1>
+  <br>
+  <h4>Zuletzt aktualisiert:
+    {{foundStation.lastUpdated.getUTCDay()}}.{{foundStation.lastUpdated.getUTCMonth()}}.{{foundStation.lastUpdated.getUTCFullYear()}}
+    {{foundStation.lastUpdated.getUTCHours()}}:{{foundStation.lastUpdated.getUTCMinutes()}}
+    Uhr, Längengrad: {{foundStation.longitude}}, Breitengrad: {{foundStation.latitude}}
+  </h4>
+  <br>
+
+  <table style="position: absolute; width: 80%; margin-left: 7%;" >
+
+    <tr>
+      <td><h3><b>{{foundStation.descriptions.t}}</b></h3></td>
+      <td class="tableData"><h3>{{foundStation.t}} {{foundStation.units.t}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.rh}} </b></h3></td>
+      <td class="tableData"><h3> {{foundStation.rh}} {{foundStation.units.rh}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.p}} </b></h3></td>
+      <td class="tableData"><h3>{{foundStation.p}} {{foundStation.units.p}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.n}} </b></h3></td>
+      <td class="tableData"><h3>{{foundStation.n}} {{foundStation.units.n}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.dd}} </b></h3></td>
+      <td class="tableData"><h3> {{foundStation.dd}} {{foundStation.units.dd}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.ff}} </b></h3></td>
+      <td class="tableData"><h3> {{foundStation.ff}} {{foundStation.units.ff}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.sd}} </b></h3></td>
+      <td class="tableData"><h3> {{foundStation.sd}} {{foundStation.units.sd}}</h3></td>
+    </tr>
+
+    <hr style="color: lightgrey; width: 110%">
+
+    <tr>
+      <td><h3><b> {{foundStation.descriptions.gs}} </b></h3></td>
+      <td class="tableData"><h3> {{foundStation.gs}} {{foundStation.units.gs}}</h3></td>
+    </tr>
+
+    <ws-measurement [foundStation]="foundStation"></ws-measurement>
+
+    <button mat-raised-button
+            color="accent"
+            style="font-size: 30px;"
+            routerLink="/stations/name">zu den Stationen-></button>
+
+  </table>
+
+</div>
+
+
+<div style="margin-left: 10%;" fxShow="false" fxShow.xs="true" fxShow.sm="true">
+  <h1><b>{{foundStation.name}} ({{foundStation.altitude}})</b></h1>
+  <br>
+  <h4>Zuletzt aktualisiert:
+    {{foundStation.lastUpdated.getUTCDay()}}.{{foundStation.lastUpdated.getUTCMonth()}}.{{foundStation.lastUpdated.getUTCFullYear()}}
+    {{foundStation.lastUpdated.getUTCHours()}}:{{foundStation.lastUpdated.getUTCMinutes()}}
+    Uhr, Längengrad: {{foundStation.longitude}}, Breitengrad: {{foundStation.latitude}}
+  </h4>
+  <br>
+
+  <mat-list>
+    <mat-list-item> <h2><b> {{foundStation.descriptions.t}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.t}} , {{foundStation.units.t}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.rh}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.rh}} , {{foundStation.units.rh}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.p}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.p}} , {{foundStation.units.p}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.n}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.n}} , {{foundStation.units.n}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.dd}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.dd}} , {{foundStation.units.dd}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.ff}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.ff}} , {{foundStation.units.ff}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.sd}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.sd}} , {{foundStation.units.sd}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{foundStation.descriptions.gs}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{foundStation.gs}} , {{foundStation.units.gs}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+  </mat-list>
+
+  <button mat-raised-button
+          color="accent"
+          style="font-size: 30px;"
+          routerLink="/stations/name">zu den Stationen-></button>
+
+
+</div>

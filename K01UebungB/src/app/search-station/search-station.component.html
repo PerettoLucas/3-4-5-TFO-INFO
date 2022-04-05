@@ -1,0 +1,15 @@
+<div style="margin-left: 5%; margin-top: 3%;">
+
+  <h1><b>Wetterstationen</b></h1>
+  <br>
+
+  <mat-form-field style=" width: 90%;">
+    <mat-label>Stationsname</mat-label>
+    <h1><input matInput #searchTerm
+               [(ngModel)]="stationName"
+               (keyup)="KeyUp()"
+               type="text" placeholder="Stationsname" ></h1>
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-hint>{{stationcount}}</mat-hint>
+  </mat-form-field>
+</div>

@@ -1,0 +1,57 @@
+1;Kofler Michael;1979-10-1
+2;Kramer David;1962-10-23
+3;Orfali Robert;1954-3-5
+4;Harkey Dan;1975-7-26
+5;Edwards Jeri;1986-3-21
+6;Ratschiller Tobias;1952-7-9
+7;Gerken Till;1973-3-6
+12;Yarger Randy Jay;1977-12-1
+13;Reese Georg;1973-9-10
+14;King Tim;1965-7-17
+15;Date Chris;1983-9-25
+16;Darween Hugh;1955-6-23
+17;Krause Jörg;1951-10-2
+19;Pohl Peter;1983-12-6
+20;Kopka Helmut;1980-11-27
+21;Komma Michael;1985-12-9
+22;Bitsch Gerhard;1977-12-23
+23;Holz Helmut;1980-2-3
+24;Schmitt Bernd;1959-4-2
+25;Tikart Andreas;1951-11-3
+26;Garfinkel Simon;1966-6-7
+30;DuBois Paul;1986-9-18
+37;Theodor Kallifatides;1976-7-12
+38;Goosens Michael;1961-10-17
+39;Rahtz Sebastian;1953-8-13
+47;Pollack Martin;1954-9-28
+48;Gilmore W.J.;1968-12-10
+51;Wellington Luke;1968-7-16
+52;Thomson Laura;1984-11-16
+53;Monjiam Bruce;1980-8-21
+55;Mankell Henning;1980-10-28
+56;Krüger Guido;1979-4-20
+57;Knausgård Karl Ove;1970-3-16
+58;Suter Martin;1974-4-2
+60;Öggl Bernd;1967-11-5
+62;Asimov Isaac;1955-9-11
+64;Laborenz Kai;1950-10-4
+65;Wolfgarten Sebastian;1958-7-16
+66;Atwood Margaret;1976-9-13
+67;Bear Greg;1984-6-20
+68;Coetzee J. M.;1983-2-9
+69;Gardell Jonas;1967-9-18
+70;Ibsen Henrik;1956-10-27
+71;Johnson Eyvind;1951-5-26
+73;Nesser Håkan;1952-2-12
+74;Riel Joern;1976-4-4
+75;Söderberg Hjalmar;1954-2-17
+76;Saramago Jose;1975-8-17
+77;van Heijden Adrianus Fr. Th.;1959-12-23
+78;Hauser Tobias;1969-2-17
+81;Lendecke Volker;1975-3-22
+82;Eller Frank;1955-1-8
+83;Schwichtenberg Holger;1952-2-1
+86;Wall Larry;1974-4-3
+87;Christiansen Tom;1968-9-13
+88;Orwant Jon;1976-4-21
+89;Gräbe Hans-Gert;1971-2-14

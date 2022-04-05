@@ -1,0 +1,17 @@
+<div >
+  <ws-search-station></ws-search-station>
+  <table *ngFor="let s of stations" style="width: 100%;">
+
+    <tr style="width: 100%;  margin-left: 5%">
+      <td style="width: 49%;"> <h3 style="margin-left: 5%"> <a routerLink="/station/{{sortOrder}}/{{s.code}}"> {{s.name}} </a> </h3> </td>
+      <td style="width: 20%"> <h3> {{s.t}} {{s.units.t}} </h3> </td>
+      <td style="width: 20%"> <h3> {{s.n}} {{s.units.n}} </h3> </td>
+      <td> <h3> {{s.p}} {{s.units.p}} </h3> </td>
+    </tr>
+
+    <hr style="position:  absolute; width: 97%; color: lightgrey;">
+    <br>
+
+  </table>
+
+</div>

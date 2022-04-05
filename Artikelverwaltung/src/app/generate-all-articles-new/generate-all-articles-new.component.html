@@ -1,0 +1,19 @@
+
+<div style="margin-left: 5%; margin-top: 50px">
+
+  <h1>
+    <--<button mat-raised-button color="primary" (click)="generateItems()">Generate Standart Items</button>-->
+  </h1>
+
+  <div *ngIf="error != null">
+    <h3>Error : {{error.error}}</h3>
+    <h3>Message :  {{error.message}}</h3>
+    <h3>Name : {{error.name}}</h3>
+    <h3></h3>
+    <h3>ok : {{error.ok}}</h3>
+    <h3>Headers : {{error.headers}}</h3>
+    <h3>Status : {{error.status}}</h3>
+    <h3>Status text : {{error.statusText}}</h3>
+  </div>
+
+</div>

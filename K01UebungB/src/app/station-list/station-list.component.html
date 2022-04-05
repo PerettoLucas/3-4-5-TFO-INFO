@@ -1,0 +1,16 @@
+<ub-search-station (notify)="onEventCecked($event)" [stationcount]="stationcount"></ub-search-station>
+
+<div *ngIf="stations != null && stations.length != 0; else noStations" style="top: 1%;">
+  <div *ngFor="let s of stations; let f=first; let i=index" style="margin-top: 1000px;  bottom: -200px;" [ngClass]="{ first: f}">
+
+    <ub-station-item [station]="s"></ub-station-item>
+
+  </div>
+
+</div>
+
+<ng-template #noStations>
+  no Stations
+</ng-template>
+
+<!-- TODO Margin TOP 0px at first element -->

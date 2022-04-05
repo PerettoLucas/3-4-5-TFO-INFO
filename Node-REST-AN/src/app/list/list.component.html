@@ -1,0 +1,8 @@
+<mat-selection-list [multiple]="false">
+  <mat-list-option *ngFor="let film of filmList">
+    {{film.title}} ({{film.year}})
+    <br>
+
+    {{film.published ? "Oeffentlich" : "Privat"}} von {{film.fullname}}
+  </mat-list-option>
+</mat-selection-list>

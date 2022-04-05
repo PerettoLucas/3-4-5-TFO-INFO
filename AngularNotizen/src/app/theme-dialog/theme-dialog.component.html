@@ -1,0 +1,20 @@
+<form [formGroup]="formGroup" >
+  <h1 mat-dialog-title>Themeneingabe : </h1>
+
+  <mat-form-field style="width: 100%" [color]="color">
+    <mat-label>Themenbeschreibung</mat-label>
+    <input matInput style="width: 100%" formControlName="desc" autocomplete="off" (keyup)="check()">
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-error>Has to have a value!</mat-error>
+    <mat-hint *ngIf="exists" style="color: red">Theme already given!</mat-hint>
+  </mat-form-field>
+
+
+  <div mat-dialog-actions>
+    <button mat-raised-button *ngIf="!data.newWindow" (click)="updateTheme()">Ändern</button>
+    <button mat-button mat-dialog-close *ngIf="!data.newWindow" (click)="this.router.navigate(['/themes'])" type="button">Zurück</button>
+    <button mat-button mat-dialog-close *ngIf="data.newWindow" type="button">Zurück</button>
+    <button mat-raised-button *ngIf="data.newWindow" color="primary" (click)="addTheme()" [disabled]="exists || !formGroup.valid">Add</button>
+    <button mat-button *ngIf="!data.newWindow"> <mat-icon color="warn" (click)="deleteTheme()">delete</mat-icon></button>
+  </div>
+</form>

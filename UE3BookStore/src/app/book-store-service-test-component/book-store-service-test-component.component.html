@@ -1,0 +1,181 @@
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+</head>
+
+<div style="position: absolute; top: 20px; width: 100%; height: 90%">
+
+  <h1 style="font-size: 55px;
+             margin-left: 10%;
+             top: 40px ;
+             font-family: 'Staatliches', cursive;">
+    UE3BookStore</h1>
+
+  <table border="2px solid grey" style="margin-top: 30px;
+                margin-left: 10% ;
+                font-size: 20px;
+                width: 80%;
+                border-collapse: separate;
+                border-spacing: 0 20px" >
+
+    <!-- Reset store to initial state -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: red; border-radius: 5px; padding: 5px">DELETE</span> /books
+      </td>
+      <td style="text-align: center;" (click)="resetStore()">
+        <div style="padding: 10px ;border: 2px solid red;">Reset store to initial state</div>
+      </td>
+    </tr>
+
+    <!-- Get all books -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: blue; border-radius: 5px; padding: 5px">GET</span> /books
+      </td>
+      <td style="text-align: center;" (click)="getAllBooks()"> <div style="padding: 10px ;border: 2px solid blue;">Get all books</div>  </td>
+    </tr>
+
+    <!-- Get all books matching the term -->
+    <tr>
+      <td style="width: 65%;"> <span style="background-color: blue; border-radius: 5px; padding: 5px">GET</span> /books/search/[searchTerm]
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="searchTerm" #searchTerm>
+        </mat-form-field>
+      </td>
+      <td style="text-align: center;" (click)="getAllBooksSearchTerm(searchTerm.value)">
+        <div style="padding: 10px ;border: 2px solid blue;">Get all books matching the term</div>
+      </td>
+    </tr>
+
+    <!-- Creates a new (random) book -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: green; border-radius: 5px; padding: 5px">POST</span> /book
+      </td>
+      <td style="text-align: center;" (click)="createBook()">
+        <div style="padding: 10px ;border: 2px solid green;">Creates a new (random) book</div>
+      </td>
+    </tr>
+
+    <!-- Deletes a book -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: red; border-radius: 5px; padding: 5px">DELETE</span> /book/[ISBN]
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="ISBN" #ISBN>
+        </mat-form-field>
+      </td>
+      <td style="text-align: center;" (click)="deleteBook(ISBN.value)">
+        <div style="padding: 10px ;border: 2px solid red;">Deletes a book</div>
+      </td>
+    </tr>
+
+    <!-- Returns a single book by ISBN -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: blue; border-radius: 5px; padding: 5px">GET</span> /book/[ISBN]
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="ISBN" #ISBN2>
+        </mat-form-field>
+      </td>
+      <td style="text-align: center;" (click)="getBook(ISBN2.value)">
+        <div style="padding: 10px ;border: 2px solid blue;">Returns a single book by ISBN</div>
+      </td>
+    </tr>
+
+    <!-- Updates an existing book -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: darkred; border-radius: 5px; padding: 5px">PUT</span> /book/[ISBN]
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="ISBN" #ISBN3>
+        </mat-form-field>
+      </td>
+      <td style="text-align: center;" (click)="updateBook(ISBN3.value)">
+        <div style="padding: 10px ;border: 2px solid darkred;">Updates an existing book</div>
+      </td>
+    </tr>
+
+    <!-- Return wether ISBN exists or not -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: blue; border-radius: 5px; padding: 5px">GET</span> /book/[ISBN]/check
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="ISBN" #ISBN4>
+        </mat-form-field>
+      </td>
+      <td style="text-align: center;" (click)="checkBook(ISBN4.value)">
+        <div style="padding: 10px ;border: 2px solid blue;">Return wether ISBN exists or not</div>
+      </td>
+    </tr>
+
+    <!-- Updates rating of a book to a given value -->
+    <tr>
+      <td style="width: 65%;">
+        <span style="background-color: green; border-radius: 5px; padding: 5px">POST</span> /book/[ISBN]/rate
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="ISBN" #ISBN5>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px">
+          <input matInput placeholder="rating" type="number" #ratinginput>
+        </mat-form-field>
+      </td>
+      <td style="text-align: center;" (click)="rateBook(ISBN5.value, ratinginput.value.toString())">
+        <div style="padding: 10px ;border: 2px solid green;">Updates rating of a book to a given value</div>
+      </td>
+    </tr>
+
+  </table>
+
+  <div id="Ausgabebereich" style="margin-left: 10%">
+
+    <h1 (click)="clearView()">Ausgabebereich : </h1>
+
+    <div id="list" *ngIf="books != null && books.length > 0">
+      <h3>Books :</h3>
+
+      <ul *ngFor="let b of books">
+        <span><b>Titel: </b>{{b.title}} </span>
+        <span><b>ISBN: </b>{{b.isbn}} </span>
+        <span><b>Autoren: </b>{{b.authors}} </span>
+        <span><b>Bewertung: </b>{{b.rating}} </span>
+      </ul>
+    </div>
+
+    <div *ngIf="error != null">
+      <h3>Error : {{error.error}}</h3>
+      <h3>Message :  {{error.message}}</h3>
+      <h3>Name : {{error.name}}</h3>
+      <h3></h3>
+      <h3>ok : {{error.ok}}</h3>
+      <h3>Headers : {{error.headers}}</h3>
+      <h3>Status : {{error.status}}</h3>
+      <h3>Status text : {{error.statusText}}</h3>
+    </div>
+
+    <div *ngIf="response != null">
+      <h3>Response : {{response.status}}</h3>
+      <h3>Status Text : {{response.statusText}}</h3>
+      <h3>ok : {{response.ok}}</h3>
+    </div>
+
+    <div *ngIf="book != null">
+      <span><b>Titel: </b>{{book.title}} </span>
+      <span><b>ISBN: </b>{{book.isbn}} </span>
+      <span><b>Autoren: </b>{{book.authors}} </span>
+      <span><b>Bewertung: </b>{{book.rating}} </span>
+    </div>
+
+    <div *ngIf="response?.valueOf() === true">
+      <h2><b>The Book Exists!</b></h2>
+    </div>
+
+    <div *ngIf="response?.valueOf() === false">
+      <h2><b>The Book doesn`t exists !</b></h2>
+    </div>
+
+  </div>
+
+
+</div>

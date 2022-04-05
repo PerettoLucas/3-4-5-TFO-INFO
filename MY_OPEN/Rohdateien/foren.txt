@@ -1,0 +1,13 @@
+1;Visual Basic 6 -- Programmiertechniken, Datenbanken, Internet;2
+3;Visual Basic Datenbankprogrammierung;2
+4;Mathematica;2
+5;Maple;2
+6;Excel-Programmierung;2
+1001;MSSQL2MYSQL converter;1
+1002;MySQL, 1. Auflage;2
+1004;Excel VBA;1
+1006;MySQL;1
+1007;Linux, 6. Auflage;2
+1013;Linux, 7. Auflage;2
+1009;VB.NET - Grundlagen, Programmiertechniken, Windows-Programmierung;2
+1011;MySQL, 2. Auflage;2

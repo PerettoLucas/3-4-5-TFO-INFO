@@ -1,0 +1,18 @@
+<h1><b> Autos </b></h1>
+
+  <mat-form-field >
+    <input matInput #input placeholder="Immatrikolationsjahr" [(ngModel)]="registrationyear">
+  </mat-form-field>
+
+<mat-list *ngIf="person.cars != null && person.cars.length != 0; else noAutos">
+  <mat-list-item *ngFor="let auto of person.carsYoungerThan(registrationyear)">
+    <img mat-line matListAvatar src="{{auto.imagelink}}">
+    <p matLine > {{auto.description}} </p>
+    <p mat-line>{{auto.licenseplate}} {{auto.registrationyear}}</p>
+  </mat-list-item>
+</mat-list>
+
+
+<ng-template #noAutos>
+  keine Autos vorhanden
+</ng-template>

@@ -1,0 +1,120 @@
+
+
+<div style="margin-left: 10%;" fxShow.sm="false" fxShow.xs="false">
+  <h1><b>{{station.name}} ({{station.altitude}})</b></h1>
+  <br>
+  <h4>Zuletzt aktualisiert:
+        {{station.lastUpdated.getUTCDay()}}.{{station.lastUpdated.getUTCMonth()}}.{{station.lastUpdated.getUTCFullYear()}}
+        {{station.lastUpdated.getUTCHours()}}:{{station.lastUpdated.getUTCMinutes()}}
+        Uhr, Längengrad: {{station.longitude}}, Breitengrad: {{station.latitude}}
+  </h4>
+  <br>
+
+  <table style="position: absolute; width: 80%; margin-left: 7%;" >
+
+      <tr>
+        <td><h3><b>{{station.descriptions.t}}</b></h3></td>
+        <td class="tableData"><h3>{{station.t}} {{station.units.t}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.rh}} </b></h3></td>
+        <td class="tableData"><h3> {{station.rh}} {{station.units.rh}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.p}} </b></h3></td>
+        <td class="tableData"><h3>{{station.p}} {{station.units.p}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.n}} </b></h3></td>
+        <td class="tableData"><h3>{{station.n}} {{station.units.n}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.dd}} </b></h3></td>
+        <td class="tableData"><h3> {{station.dd}} {{station.units.dd}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.ff}} </b></h3></td>
+        <td class="tableData"><h3> {{station.ff}} {{station.units.ff}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.sd}} </b></h3></td>
+        <td class="tableData"><h3> {{station.sd}} {{station.units.sd}}</h3></td>
+      </tr>
+
+      <hr>
+
+      <tr>
+        <td><h3><b> {{station.descriptions.gs}} </b></h3></td>
+        <td class="tableData"><h3> {{station.gs}} {{station.units.gs}}</h3></td>
+      </tr>
+
+      <ub-measurement-item [station]="station"></ub-measurement-item>
+
+  </table>
+
+</div>
+
+<div style="margin-left: 10%;" fxShow.sm="true" fxShow.xs="true">
+  <h1><b>{{station.name}} ({{station.altitude}})</b></h1>
+  <br>
+  <h4>Zuletzt aktualisiert:
+        {{station.lastUpdated.getUTCDay()}}.{{station.lastUpdated.getUTCMonth()}}.{{station.lastUpdated.getUTCFullYear()}}
+        {{station.lastUpdated.getUTCHours()}}:{{station.lastUpdated.getUTCMinutes()}}
+        Uhr, Längengrad: {{station.longitude}}, Breitengrad: {{station.latitude}}
+  </h4>
+  <br>
+
+  <mat-list>
+    <mat-list-item> <h2><b> {{station.descriptions.t}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.t}} , {{station.units.t}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.rh}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.rh}} , {{station.units.rh}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.p}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.p}} , {{station.units.p}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.n}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.n}} , {{station.units.n}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.dd}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.dd}} , {{station.units.dd}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.ff}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.ff}} , {{station.units.ff}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.sd}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.sd}} , {{station.units.sd}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+    <mat-list-item> <h2><b> {{station.descriptions.gs}} </b></h2> </mat-list-item>
+    <mat-list-item mat-line> {{station.gs}} , {{station.units.gs}}</mat-list-item>
+    <mat-divider style="width: 90%;"></mat-divider>
+
+  </mat-list>
+
+</div>

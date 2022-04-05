@@ -1,0 +1,97 @@
+<form style="margin-top: 20px; width: 90%; margin-left: 5%" [formGroup]="registerForm" autocomplete="off">
+
+  <mat-form-field style="width: 100%">
+    <input #IdInput matInput formControlName="id" placeholder="Id" type="text" [readonly]="this.id == 'new' ? false : true">
+    <mat-error *ngIf="this.registerForm.get('id').hasError('required')"> Id can not be empty</mat-error>
+    <mat-error *ngIf="this.registerForm.get('id').hasError('id')">IT has to follow 6 chars ; DE has to follow 8 chars</mat-error>
+    <mat-error *ngIf="this.registerForm.get('id').hasError('async')">ID is already taken!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="description" placeholder="Beschreibung" type="text">
+    <mat-error>beschreibung can  not be empty</mat-error>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="number" placeholder="Anzahl" type="number" value="0">
+    <mat-error *ngIf="number.hasError('decimalNum')">Darf nur Integer beinhalten</mat-error>
+    <mat-error *ngIf="number?.errors?.min">Min. 0</mat-error>
+  </mat-form-field>
+
+  <div formGroupName="einverkaufspreise">
+
+    <mat-form-field style="width: 45%">
+      <input matInput formControlName="purchasingPrice" placeholder="Einkaufspreis" type="number" min="0">
+      <mat-error *ngIf="einverkaufspreise.get('purchasingPrice')?.errors?.min">Min. 0</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field style="width: 45%; padding-left: 10%">
+      <input matInput formControlName="retailPrice" placeholder="Verkaufspreis" type="number">
+      <mat-error *ngIf="einverkaufspreise.get('retailPrice')?.errors?.min">Min. 0</mat-error>
+      <mat-hint style="color: red" *ngIf="einverkaufspreise.hasError('prices')">Retail price hast to e higher than purchasing price</mat-hint>
+    </mat-form-field>
+
+  </div>
+
+
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="launchDate" placeholder="Einfuehrungsdatum" type="date">
+    <mat-error></mat-error>
+  </mat-form-field>
+
+  <div formArrayName="images">
+    <div *ngFor="let image of images.controls; index as i">
+      <div [formGroupName]="i">
+        <mat-form-field style="width: 62%">
+          <input matInput formControlName="url" placeholder="URL" type="text">
+          <mat-error>min. 1 URL has to be defined!</mat-error>
+        </mat-form-field>
+        <mat-form-field style="width: 25%; padding-left: 5%">
+          <input matInput formControlName="title" placeholder="Titel" type="text">
+          <mat-hint>(optional)</mat-hint>
+        </mat-form-field>
+
+
+        <button *ngIf="i > 0" mat-icon-button color="warn" (click)="removeImageControl(i)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+
+        <button mat-icon-button color="primary" (click)="addImageControl()">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 30px" *ngIf="this.id == 'new'; else idContent">
+    <button mat-raised-button [disabled]="!registerForm.valid" color="primary" style="width: 100%" (click)="createItem()" type="submit">Create</button>
+  </div>
+
+  <ng-template #idContent>
+    <div style="margin-top: 30px">
+      <button mat-raised-button [disabled]="!registerForm.valid" color="primary" style="width: 50%" (click)="itemAendern()" type="button">Ändern</button>
+      <button mat-raised-button color="accent" style="width: 50%" (click)="itemLoeschen()" type="button">Löschen</button>
+    </div>
+  </ng-template>
+
+  <div>
+    <button mat-button (click)="checkIdExists(IdInput.value)">CheckIdExists</button>
+    <h1 *ngIf="Idexists == true">Already Exists</h1>
+  </div>
+
+
+  <div *ngIf="error != null">
+    <h3>Error : {{error.error}}</h3>
+    <h3>Message :  {{error.message}}</h3>
+    <h3>Name : {{error.name}}</h3>
+    <h3>ok : {{error.ok}}</h3>
+    <h3>Headers : {{error.headers}}</h3>
+    <h3>Status : {{error.status}}</h3>
+    <h3>Status text : {{error.statusText}}</h3>
+  </div>
+
+</form>
+

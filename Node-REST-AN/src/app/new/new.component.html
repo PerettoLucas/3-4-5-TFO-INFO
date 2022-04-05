@@ -1,0 +1,23 @@
+
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off" class="form">
+
+  <mat-form-field class="FormField">
+    <input matInput formControlName="title" placeholder="title" type="text" id="title">
+    <mat-error>Der Titel muss eingegeben werden</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="FormField">
+    <input matInput formControlName="year" placeholder="year" type="date" id="year">
+    <mat-error>Der Titel muss eingegeben werden</mat-error>
+  </mat-form-field>
+
+  <h4>Veroeffentlichen : </h4>
+  <mat-form-field appearance="fill">
+    <mat-select [(ngModel)]="selectedValue" name="public">
+      <mat-option *ngFor="let published of published" [value]="published.value">
+        {{published.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</form>

@@ -1,0 +1,53 @@
+
+<table style="width: 100%; margin-top: 20px" mat-table [dataSource]="items" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="bild">
+    <th mat-header-cell *matHeaderCellDef> Bild </th>
+    <td mat-cell *matCellDef="let item"> <img style="width: 150px" src="{{item.images[0].url}}"> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let item"> <a routerLink="/NewArticle/{{item.id}}">{{item.id}}</a> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="beschreibung">
+    <th mat-header-cell *matHeaderCellDef> Beschreibung </th>
+    <td mat-cell *matCellDef="let item"> {{item.description}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="anzahl">
+    <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+    <td mat-cell *matCellDef="let item"> {{item.number | number: '1.0-0'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="einkaufspreis">
+    <th mat-header-cell *matHeaderCellDef> Einkaufspreis </th>
+    <td mat-cell *matCellDef="let item"> {{item.purchasingPrice | currency:'EUR'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="verkaufspreis">
+    <th mat-header-cell *matHeaderCellDef> Verkaufspreis </th>
+    <td mat-cell *matCellDef="let item"> {{item.retailPrice | currency:'EUR'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="einführngsdatum">
+    <th mat-header-cell *matHeaderCellDef> Einführngsdatum </th>
+    <td mat-cell *matCellDef="let item"> {{item.launchDate | date: 'longDate'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let column; columns: displayedColumns;"></tr>
+</table>
+
+<div *ngIf="error != null">
+  <h3>Error : {{error.error}}</h3>
+  <h3>Message :  {{error.message}}</h3>
+  <h3>Name : {{error.name}}</h3>
+  <h3></h3>
+  <h3>ok : {{error.ok}}</h3>
+  <h3>Headers : {{error.headers}}</h3>
+  <h3>Status : {{error.status}}</h3>
+  <h3>Status text : {{error.statusText}}</h3>
+</div>
+

@@ -1,0 +1,13 @@
+1;Addison-Wesley
+2;Apress
+3;New Riders
+4;O'Reilly & Associates
+5;Hanser
+9;Bonnier Pocket
+16;Zsolnay
+17;Ordfront förlag AB
+19;Diogenes Verlag
+20;Markt und Technik
+21;Galileo
+23;dpunkt
+24;Sybex

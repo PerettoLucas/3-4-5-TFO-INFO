@@ -1,0 +1,40 @@
+<div #mainDiv style="margin-left: 5%;
+                     margin-right: 5%;">
+
+  <h1 style="font-size: 40px; margin-top: 2%"><b>Artikelverwaltung</b></h1>
+
+  <nav mat-tab-nav-bar mat-stretch-tabs
+       color="accent" backgroundColor="primary">
+
+    <a #ArticleListTab='routerLinkActive'
+       [active]='ArticleListTab.isActive'
+       mat-tab-link routerLink="/ArticleList"
+       routerLinkActive>
+      Artikelliste</a>
+
+    <a #NewArticleTab="routerLinkActive"
+       [active]="NewArticleTab.isActive"
+       mat-tab-link routerLink="/NewArticle/new"
+       routerLinkActive>
+      Neuer Artikel </a>
+
+    <a #DeleteAllArticlesTab="routerLinkActive"
+       [active]="DeleteAllArticlesTab.isActive"
+       mat-tab-link routerLink="/DeleteAllArticles"
+       routerLinkActive>
+      Alle Artikel löschen </a>
+
+    <a #GenerateAllArticlesNewTab="routerLinkActive"
+       [active]="GenerateAllArticlesNewTab.isActive"
+       mat-tab-link routerLink="/GenerateAllArticlesNewComponent"
+       routerLinkActive>
+      Alle Artikel neu anlegen </a>
+
+
+  </nav>
+
+  <router-outlet>
+
+  </router-outlet>
+
+</div>

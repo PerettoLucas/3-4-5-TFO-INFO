@@ -1,0 +1,34 @@
+<mat-card class='card mat-elevation-z10'>
+  <mat-card-header>
+    <img mat-card-avatar [src]='person.imagelink'>
+    <mat-card-title>{{ person.name }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ person.address.postcodetown }}, {{ person.address.streetnumber }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout.gt-sm='row'>
+      <div fxHide.lt-sm>
+        <img class='card-image' [src]='person.imagelink'>
+      </div>
+      <div class='card-text' fxFlex>
+        Geboren am {{ person.birthdate.toLocaleDateString() }},
+        derzeit im {{ person.ageInYears }}. Lebensjahr,
+        hat eine Größe von {{ person.height }} Metern,
+        <span *ngIf='person.height > 1.8'>
+          ist also groß,
+        </span>
+        <span *ngIf='person.male; else ist_weiblich'>
+          ist ein Mann
+        </span>
+        <ng-template #ist_weiblich>
+          ist eine Frau
+        </ng-template>
+        <div fxLayout.gt-sm='row'>
+          <ua-email-list fxFlex [emailadressen]="person.emailaddresses"></ua-email-list>
+          <ua-auto-list fxFlex [person]="person"></ua-auto-list>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,62 @@
+<mat-card style="height: 90%">
+
+  <form style="width: 100%;" [formGroup]="formGroup" (ngSubmit)="submit()" autocomplete="off">
+
+    <mat-form-field style="width: 100%;" >
+      <mat-label>Titel</mat-label>
+      <h2><input #titleInput matInput style="width: 100%" formControlName="title"></h2>
+      <mat-error>A Title must be given!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 85%; margin-top: 5%;">
+      <mat-label>Thema</mat-label>
+      <mat-select formControlName="theme">
+        <mat-option *ngFor="let theme of themes" value="{{theme.description}}" >{{theme.description}}</mat-option>
+      </mat-select>
+      <mat-error>Must be selected !</mat-error>
+    </mat-form-field>
+
+    <div style="position: absolute ; right: 20px; margin-top: -65px">
+      <button mat-mini-fab color="accent" (click)="openDialog(true)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <br>
+
+
+    <span style="width: 100%; position: absolute ;margin-top: 40px">Erstellt: {{note?.creationDate | date}}
+      <span *ngIf="note?.modificationDate != 0; else undefModDate" style="padding-left: 50%">
+        Geändert: {{note?.modificationDate | date}}
+      </span>
+    </span>
+
+    <br>
+
+    <mat-form-field class="example-full-width" style="margin-top: 70px; width: 100%">
+      <mat-label>Text</mat-label>
+      <textarea matInput formControlName="text"></textarea>
+      <mat-error>Some Text has to be Input!</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="!this.newTrue; else newContent">
+      <button mat-raised-button style=" position: relative; left: 0px" color="primary" (click)="updateNote()" [disabled]="!formGroup.valid">Ändern</button>
+      <button mat-raised-button style=" position: relative; left: 15%" (click)="this.location.back()" type="button">Zurück</button>
+      <button mat-raised-button style=" position: relative; left: 30%" (click)="delNote()" type="button" color="warn">Löschen</button>
+    </div>
+
+
+
+  </form>
+
+</mat-card>
+
+<ng-template #undefModDate>
+  Geändert: Nicht Definiert
+</ng-template>
+
+<ng-template #newContent>
+  <button mat-raised-button style=" position: relative; left: 0%" (click)="this.location.back()" type="button" >Zurück</button>
+  <button mat-raised-button style=" position: absolute; right: 5%" type="button" color="primary" (click)="addNote()" [disabled]="!formGroup.valid">Add</button>
+</ng-template>
+

@@ -1,0 +1,50 @@
+{
+  "items": [
+    {
+      "id": "DE12345678",
+      "description": "Duldmui",
+      "number": 23,
+      "purchasingPrice": 25.3,
+      "retailPrice": 26,
+      "launchDate": "2019-02-01",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/08/Sindelfingen_Haus_%26_Energie_2018_by-RaBoe_056.jpg",
+          "title": "Umwälzpumpe"
+        }
+      ]
+    },
+    {
+      "id": "IT123456",
+      "description": "Kupplung",
+      "number": 100,
+      "purchasingPrice": 5.3,
+      "retailPrice": 7.9,
+      "launchDate": "2019-02-02",
+      "images": [
+        {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Clutch-c.jpg",
+          "title": "Kraftfahrzeugkupplung"
+        }
+      ]
+    },
+    {
+      "id": "IT888765",
+      "description": "Sechs",
+      "number": 1,
+      "purchasingPrice": 12,
+      "retailPrice": 22,
+      "launchDate": "2021-01-17",
+      "images": [
+        {
+          "url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-712911,resizemode-1,msid-74487115/magazines/panache/earth-moonstruck-with-its-new-mini-moon-a-look-at-some-spectacular-lunar-miracles.jpg",
+          "title": "Servis"
+        },
+        {
+          "url": "https://img.etimg.com/thumb/width-1200,height-900,imgsize-712911,resizemode-1,msid-74487115/magazines/panache/earth-moonstruck-with-its-new-mini-moon-a-look-at-some-spectacular-lunar-miracles.jpg",
+          "title": "sss"
+        }
+      ]
+    }
+  ]
+}
